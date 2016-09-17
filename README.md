@@ -1,2 +1,9 @@
 # MatrixUI
-Matrix组件库。https://vmatrix.org.cn
+
+Matrix components library based on Angular 1.x
+
+## Install
+
+```js
+bower install MatrixUI
+```
