@@ -1,13 +1,13 @@
 {
-  "name": "MatrixUI",
+  "name": "matrixui",
   "homepage": "https://github.com/VMatrixTeam/MatrixUI",
   "authors": [
-    "吴家荣 <973430584@qq.com>"
+    "MatrixTeam"
   ],
   "description": "Matrix components library based on Angular 1.x",
   "main": "index.js",
   "keywords": [
-    "MatrixUI"
+    "matrixui"
   ],
   "license": "MIT",
   "private": true,
@@ -17,5 +17,8 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "angular": "^1.5.8"
+  }
 }

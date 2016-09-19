@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title Test Matrix UI
+    meta(charset='utf-8')
+    script(type='text/javascript', src='./bower_components/angular/angular.js')
+    script(type='text/javascript', src='./dist/matrixui.js')
+    script(type='text/javascript', src='./index.js')
+
+    link(rel='stylesheet', type='text/css', href='./dist/matrixui.css')
+
+  body(ng-app='testMatrixUIApp')
+
+    h2.header 1. 基础组件：按钮
+    .contnet
+      mu-button 测试按钮

@@ -1,0 +1,13 @@
+@import '../../commons/color';
+
+.mu-button {
+  background-color: $lightGreen;
+  border: 0px;
+
+  &:hover {
+    cursor: pointer;
+  }
+  &:focus {
+    outline: 0;
+  }
+}
