@@ -7,6 +7,9 @@ const babel = require('gulp-babel');
 const server = require('gulp-develop-server');
 const browserSync = require('browser-sync').create();
 const gulpsync = require('gulp-sync')(gulp);
+const cleanCSS = require('gulp-clean-css');
+const uglify = require('gulp-uglify');
+
 /**
  *
  * gulp sass: 编译上scss文件
@@ -118,3 +121,33 @@ gulp.task('watch', gulpsync.sync(['server', 'browser-sync']), function () {
  */
 
 gulp.task('default', ['watch']);
+
+/**
+ *
+ * gulp build: 构建matrixui产品
+ *
+ */
+
+gulp.task('build:sass', function() {
+  return gulp.src('./src/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(concat('matrixui.css'))
+    .pipe(gulp.dest('./dist/'))
+    .pipe(cleanCSS())
+    .pipe(concat('matrixui.min.css'))
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('build:babel', function() {
+  return gulp.src('./src/**/*.js')
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(concat('matrixui.js'))
+    .pipe(gulp.dest('./dist/'))
+    .pipe(uglify())
+    .pipe(concat('matrixui.min.js'))
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('build', gulpsync.sync(['build:sass', 'build:babel']));

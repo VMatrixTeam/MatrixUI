@@ -1,13 +1,41 @@
+/**
+ *
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
 @import '../../commons/color';
 
 .mu-button {
   background-color: $lightGreen;
   border: 0px;
+  display: inline-block;
+  color: white;
+  transition: all 0.2s;
+  border-radius: 8px;
+  height: 36px;
+  line-height: 36px;
+  padding-left: 30px;
+  padding-right: 30px;
 
   &:hover {
     cursor: pointer;
+    background-color: $green;
+    transition: all 0.2s;
   }
   &:focus {
     outline: 0;
   }
+}
+
+.mu-button-large {
+
+}
+
+.mu-button-middle {
+
+}
+
+.mu-button-small {
+
 }
