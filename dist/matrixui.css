@@ -1,0 +1,37 @@
+@charset "UTF-8";
+/**
+ *
+ * @description matrixui配色方案
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+/**
+ *
+ * @description matrixui配色方案
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+.mu-button {
+  background-color: rgba(71, 158, 162, 0.5);
+  border: 0px;
+  display: inline-block;
+  color: white;
+  transition: all 0.2s;
+  border-radius: 8px;
+  height: 36px;
+  line-height: 36px;
+  padding-left: 30px;
+  padding-right: 30px; }
+  .mu-button:hover {
+    cursor: pointer;
+    background-color: #479ea2;
+    transition: all 0.2s; }
+  .mu-button:focus {
+    outline: 0; }

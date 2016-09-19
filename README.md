@@ -8,6 +8,14 @@ Matrix components library based on Angular 1.x
 bower install matrixui#master
 ```
 
+## Usage
+
+```html
+<script type="text/javascript" src="path/to/angular.js"></script>
+<script type="text/javascript" src="path/to/matrixui.js"></script>
+<link rel="stylesheet" type="text/css" href="path/to/matrix.css">
+```
+
 ## Contributes
 
 ```bash
