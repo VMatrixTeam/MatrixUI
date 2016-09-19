@@ -1,0 +1,21 @@
+{
+  "name": "MatrixUI",
+  "homepage": "https://github.com/VMatrixTeam/MatrixUI",
+  "authors": [
+    "吴家荣 <973430584@qq.com>"
+  ],
+  "description": "Matrix components library based on Angular 1.x",
+  "main": "index.js",
+  "keywords": [
+    "MatrixUI"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
