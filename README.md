@@ -14,6 +14,15 @@ bower install matrixui#master
 <script type="text/javascript" src="path/to/angular.js"></script>
 <script type="text/javascript" src="path/to/matrixui.js"></script>
 <link rel="stylesheet" type="text/css" href="path/to/matrix.css">
+
+<body ng-app="your-app">
+  <mu-button>Test Button<mu-button>
+</body>
+
+<script type="text/javascript">
+  angular
+    .module('your-app', ['matrixui'])
+</script>
 ```
 
 ## Contributes
