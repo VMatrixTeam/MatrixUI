@@ -16,7 +16,12 @@ function muMarkdowndDirective() {
 
   return {
     restrict: 'E',
-    template: `<div class='markdown-body'></div>`,
+    template: `
+      <div class='markdown-body'>
+        <div ng-transclude></div>
+      </div>
+    `,
+    transclude: true,
     scope: true,
     link: muMarkdownLink
   };
@@ -27,7 +32,7 @@ function muMarkdowndDirective() {
    * @params {object} scope 指令的$scope对象
    * @params {object} element 指令对应的jqlite元素对象
    * @params {object} attrs 能拿到用户赋予指令的所有属性的值
-   *
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
    */
 
   function muMarkdownLink(scope, element, attrs) {
@@ -40,7 +45,7 @@ function muMarkdowndDirective() {
 
     let content = attrs.content;
     if (!content) {
-      content = 'This nothing to be rendered...';
+      content = '';
     }
     if (scope.$parent[scope.name]) {
       content = scope.$parent[scope.name]

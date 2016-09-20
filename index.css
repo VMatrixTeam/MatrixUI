@@ -1,0 +1,85 @@
+html, body {
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  font: 1em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.github-ribbon {
+  color: #605C89;
+  background-color: #121621;
+  top: 3.2em;
+  right: -3.7em;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-box-shadow: 0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;
+  -moz-box-shadow: 0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;
+  box-shadow: 0 0 0 1px #1d212e inset,0 0 2px 1px #fff inset,0 0 1em #888;
+  color: rgba(255,255,255,0.90)!important;
+  display: block;
+  padding: .6em 3.5em;
+  position: absolute;
+  font: bold .82em sans-serif;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: 1px -1px 8px rgba(0,0,0,0.60);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.docs-title {
+  background-color: #EBEBEB;
+  color: #006FBB;
+  margin: 0;
+  padding: 18px;
+  font-size: 48px;
+  font-weight: bold;
+  border-bottom: 1px #C6C6C6 solid;
+}
+
+.docs-sub-title {
+  font-size: 24px;
+  margin-left: 20px;
+  text-decoration: none;
+  color: #006FBB;
+}
+
+.docs-header {
+  display: block;
+  font-size: 2em;
+  -webkit-margin-before: 0.67em;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+  color: #B93A38;
+}
+
+.docs-wraper {
+
+}
+
+.docs-container {
+  padding: 20px;
+  max-width: 1080px;
+  min-width: 600px;
+}
+
+.docs-content-title {
+  font-size: 1.5em;
+  -webkit-margin-before: 0.67em;
+  -webkit-margin-after: 0.67em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  font-weight: bold;
+  color: #B93A38;
+}
+
+.docs-content {
+  padding: 20px;
+  border: 1px solid #f7f7f7;
+  border-radius: 8px;
+}
