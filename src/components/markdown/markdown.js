@@ -67,6 +67,9 @@ function muMarkdowndDirective() {
         if (!content) {
           content = scope.content;
         }
+
+        /* 如果MathJax存在，则开始渲染，否则直到MathJax加载完毕才开始渲染 */
+
         if (window.MathJax) {
           MathJax.Hub.Queue(
             [insertHTML, content],
