@@ -14,11 +14,12 @@ html
 
     h2.header 1. 基础组件：按钮
     p 用法：
-      code mu-button
-    .contnet
+      mu-markdown(content='```html\n<mu-button>测试按钮</mu-button>```\n')
+    p 示例：
       mu-button 测试按钮
 
     h2.header 2. mu-markdown
-    p 用法
-      code mu-markdown
+    p 用法：
+      mu-markdown(content='```html\n<mu-markdown content="your markdown content"></mu-markdown>```\n')
+    p 示例：
       mu-markdown(content='# 这是h1\n## 这是h2 \n```function() {alert(123);}\n```\n')
