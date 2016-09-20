@@ -116,6 +116,8 @@ function muMarkdowndDirective() {
 
   function muMarkdownLink(scope, element, attrs) {
 
+    insertMathJaxScript(scope);
+
     /* 指令绑定的ng-model属性 */
 
     scope.name = attrs.ngModel;
@@ -144,8 +146,22 @@ function muMarkdowndDirective() {
         if (!content) {
           content = scope.content;
         }
-        element.find('div').html(markdownToHTML(content));
+        if (window.MathJax) {
+          MathJax.Hub.Queue([insertHTML, content], ["Typeset", MathJax.Hub, element[0]], ["resetEquationNumbers", MathJax.InputJax.TeX]);
+        } else {
+          var callback = function callback() {
+            return function () {
+              MathJax.Hub.Queue([insertHTML, content], ["Typeset", MathJax.Hub, element[0]], ["resetEquationNumbers", MathJax.InputJax.TeX]);
+            };
+          };
+
+          window._mathJaxCallback[scope.$id] = callback();
+        }
       });
+    }
+
+    function insertHTML(content) {
+      element.find('div').html(markdownToHTML(content));
     }
   }
 
@@ -158,7 +174,7 @@ function muMarkdowndDirective() {
    */
 
   function markdownToHTML(content) {
-    if (marked) {
+    if (window.marked) {
       if (hljs) {
         marked.setOptions({
           highlight: function highlight(code) {
@@ -170,6 +186,76 @@ function muMarkdowndDirective() {
     } else {
       throw Error('marked is not defined');
     }
+  }
+
+  /**
+   *
+   * @description 添加MathJax的脚本和设置config
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  function insertMathJaxScript(scope) {
+
+    /* 记录添加过MathJax脚本，防止多次添加 */
+
+    if (window._addingMathJax) {
+      return;
+    } else {
+      window._addingMathJax = true;
+      window._mathJaxCallback = {};
+    }
+
+    /* 添加config脚本 */
+
+    var configScript = document.createElement('script');
+    configScript.type = 'text/x-mathjax-config';
+    configScript.text = '\n      MathJax.Hub.Config({\n        showProcessingMessages: false,\n        tex2jax: { inlineMath: [[\'$\',\'$\'],[\'\\(\',\'\\)\']] },\n        TeX: { equationNumbers: {autoNumber: "AMS"} }\n      });\n    ';
+    document.body.appendChild(configScript);
+
+    /* 添加MathJax脚本 */
+
+    var mathJaxScript = document.createElement('script');
+    mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathJaxScript.type = 'text/javascript';
+    mathJaxScript.onload = function () {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var key = _step.value;
+
+          var func = window._mathJaxCallback[key];
+          setTimeout(function () {
+            return function () {
+              try {
+                func();
+              } catch (e) {}
+            };
+          }(), 0);
+        };
+
+        for (var _iterator = Object.keys(window._mathJaxCallback)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    };
+    document.body.appendChild(mathJaxScript);
   }
 };
 "use strict";

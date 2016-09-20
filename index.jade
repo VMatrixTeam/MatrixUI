@@ -7,6 +7,13 @@ html
     script(type='text/javascript', src='./bower_components/angular/angular.js')
     script(type='text/javascript', src='./bower_components/marked/lib/marked.js')
     script(type='text/javascript', src='./bower_components/highlightjs/highlight.pack.min.js')
+    //- script(type='text/x-mathjax-config').
+    //-   MathJax.Hub.Config({
+    //-     showProcessingMessages: false,
+    //-     tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
+    //-     TeX: { equationNumbers: {autoNumber: "AMS"} }
+    //-   });
+    //- script(type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js")
     script(type='text/javascript', src='./dist/matrixui.js')
     script(type='text/javascript', src='./index.js')
 
@@ -32,11 +39,9 @@ html
       .docs-wraper
         .docs-container
           .docs-header mu-markdown
-          .docs-content-title 依赖
-          .docs-content marked.js
           .docs-content-title 使用文档
           .docs-content
-            mu-markdown(ng-model='markdownDocs')
-          .docs-content-title 示例
+            mu-markdown(ng-model='markdownDocs' content='加载中...')
+          .docs-content-title(ng-click='testMathJax($event)') 示例
           .docs-content
             mu-markdown(ng-model='markdown' content='加载中...')
