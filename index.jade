@@ -5,21 +5,24 @@ html
     meta(charset='utf-8')
     script(type='text/javascript', src='./bower_components/angular/angular.js')
     script(type='text/javascript', src='./bower_components/marked/lib/marked.js')
+    script(type='text/javascript', src='./bower_components/highlightjs/highlight.pack.min.js')
     script(type='text/javascript', src='./dist/matrixui.js')
     script(type='text/javascript', src='./index.js')
 
     link(rel='stylesheet', type='text/css', href='./dist/matrixui.css')
 
   body(ng-app='testMatrixUIApp')
+    h1 MatrixUI
 
-    h2.header 1. 基础组件：按钮
+    h2.header 1. mu-button
     p 用法：
       mu-markdown(content='```html\n<mu-button>测试按钮</mu-button>```\n')
     p 示例：
       mu-button 测试按钮
 
     h2.header 2. mu-markdown
+    p 依赖：marked.js
     p 用法：
       mu-markdown(content='```html\n<mu-markdown content="your markdown content"></mu-markdown>```\n')
     p 示例：
-      mu-markdown(content='# 这是h1\n## 这是h2 \n```function() {alert(123);}\n```\n')
+      mu-markdown(content='# 这是h1\n## 这是h2 \n```js\nfunction() {\n\talert(a.lalal(), 123);\n}\n```\n')

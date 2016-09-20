@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ *
+ * @description button组件
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
 angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.markdown']);
 'use strict';
 
@@ -95,7 +102,15 @@ function muMarkdowndDirective() {
   };
 
   function muMarkdownLink(scope, element, attrs) {
+
     if (marked) {
+      if (hljs) {
+        marked.setOptions({
+          highlight: function highlight(code) {
+            return hljs.highlightAuto(code).value;
+          }
+        });
+      }
       element.html(marked(attrs.content));
     } else {
       throw Error('marked is not defined');

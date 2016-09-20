@@ -19,7 +19,15 @@ function muMarkdowndDirective() {
   };
 
   function muMarkdownLink(scope, element, attrs) {
+
     if (marked) {
+      if (hljs) {
+        marked.setOptions({
+          highlight: function (code) {
+            return hljs.highlightAuto(code).value;
+          }
+        });
+      }
       element.html(marked(attrs.content));
     } else {
       throw Error('marked is not defined');
