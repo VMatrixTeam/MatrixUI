@@ -4,6 +4,7 @@ html
     title Test Matrix UI
     meta(charset='utf-8')
     script(type='text/javascript', src='./bower_components/angular/angular.js')
+    script(type='text/javascript', src='./bower_components/marked/lib/marked.js')
     script(type='text/javascript', src='./dist/matrixui.js')
     script(type='text/javascript', src='./index.js')
 
@@ -16,3 +17,8 @@ html
       code mu-button
     .contnet
       mu-button 测试按钮
+
+    h2.header 2. mu-markdown
+    p 用法
+      code mu-markdown
+      mu-markdown(content='# 这是h1\n## 这是h2 \n```function() {alert(123);}\n```\n')
