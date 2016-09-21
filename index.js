@@ -18,52 +18,48 @@ angular
 
 function testCtrl($scope, $http) {
 
-  /* 初始化$scope变量 */
+  function getDocsFilenames() {
+    let docs = [
+      'button',
+      'card',
+      'checkbox',
+      'codeeditor',
+      'datatable',
+      'dialog',
+      'markdown',
+      'mdeditor',
+      'panel',
+      'radio',
+      'select',
+      'spinner',
+      'tab'
+    ];
 
-  function initScopeVariable() {
-    $scope.buttonDocs = null;
-
-    $scope.markdown = null;
-    $scope.testMarkdown = null;
+    return docs;
   }
 
-  /* 取得mu-button的文档 */
-
-  function getButtonDocs() {
-    $http({
-      method: 'GET',
-      url: '/docs/button.md'
-    }).then(function(res) {
-      let { data } = res;
-      $scope.buttonDocs = data;
-    }, function() {
-      alert('数据访问错误');
+  function getDocs() {
+    let docs = getDocsFilenames();
+    docs.forEach((item)=> {
+      $http({
+        method: 'GET',
+        url: `/docs/${item}.md`
+      }).then(function(res) {
+        let { data } = res;
+        $scope[`${item}Docs`] = data;
+      }, function(res) {
+        alert('数据访问错误');
+      });
     });
   }
 
-  /* 取得mu-markdown文档 */
-
-  function getMarkdownDocs() {
+  function getMarkdownData() {
     $http({
       method: 'GET',
-      url: '/docs/markdown.md'
+      url: `/data/markdown.md`
     }).then(function(res) {
       let { data } = res;
-      $scope.markdownDocs = data;
-    }, function() {
-      alert('数据访问错误');
-    });
-  }
-
-  /* 取得mu-markdown测试数据 */
-
-  function getMarkdownTxt() {
-    $http({
-      method: 'GET',
-      url: '/data/markdown.md'
-    }).then(function(res) {
-      let { data } = res;
-      $scope.markdown = data;
+      $scope['markdown'] = data;
     }, function(res) {
       alert('数据访问错误');
     });
@@ -72,10 +68,8 @@ function testCtrl($scope, $http) {
   /* 按照顺序执行定义的函数 */
 
   function initTestCtrl() {
-    initScopeVariable();
-    getButtonDocs();
-    getMarkdownDocs();
-    getMarkdownTxt();
+    getDocs();
+    getMarkdownData();
   }
 
   /* Controller入口函数 */

@@ -7,13 +7,6 @@ html
     script(type='text/javascript', src='./bower_components/angular/angular.js')
     script(type='text/javascript', src='./bower_components/marked/lib/marked.js')
     script(type='text/javascript', src='./bower_components/highlightjs/highlight.pack.min.js')
-    //- script(type='text/x-mathjax-config').
-    //-   MathJax.Hub.Config({
-    //-     showProcessingMessages: false,
-    //-     tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
-    //-     TeX: { equationNumbers: {autoNumber: "AMS"} }
-    //-   });
-    //- script(type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js")
     script(type='text/javascript', src='./dist/matrixui.js')
     script(type='text/javascript', src='./index.js')
 
@@ -26,7 +19,7 @@ html
       .docs-title MatrixUI
         a.docs-sub-title(href='https://github.com/VMatrixTeam') @VMatrixTeam
 
-      .docs-wraper
+      .docs-wrapper
         .docs-container
           .docs-header mu-button
           .docs-content-title 使用文档
@@ -36,12 +29,112 @@ html
           .docs-content
             mu-button 测试按钮
 
-      .docs-wraper
+      .docs-wrapper
         .docs-container
           .docs-header mu-markdown
           .docs-content-title 使用文档
           .docs-content
             mu-markdown(ng-model='markdownDocs' content='加载中...')
-          .docs-content-title(ng-click='testMathJax($event)') 示例
+          .docs-content-title 示例
           .docs-content
             mu-markdown(ng-model='markdown' content='加载中...')
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-mdeditor
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='mdeditorDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-mdeditor
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-codeeditor
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='codeeditorDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-codeeditor
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-datatable
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='datatableDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-datatable
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-dialog
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='dialogDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-dialog
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-mdeditor
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='mdeditorDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-mdeditor
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-panel
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='panelDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-panel
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-radio
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='radioDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-radio
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-select
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='selectDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-select
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-spinner
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='spinnerDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-spinner
+
+      .docs-wrapper
+        .docs-container
+          .docs-header mu-tab
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='tabDocs' content='加载中...')
+          .docs-content-title 示例
+          .docs-content
+            mu-tab

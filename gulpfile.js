@@ -97,7 +97,7 @@ gulp.task('browser-reload:babel', ['babel'], function() {
  *
  */
 
-gulp.task('watch', gulpsync.sync(['server', 'browser-sync']), function () {
+gulp.task('watch', gulpsync.sync(['sass', 'babel', 'server', 'browser-sync']), function () {
   gulp.watch(['./src/**/*.scss', './src/**/*.js', './index.jade', './index.js', './index.css', './server.js'], function(event) {
     if (event.path.endsWith('server.js')) {
       gulp.start('server:restart');

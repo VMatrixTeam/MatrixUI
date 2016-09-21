@@ -7,9 +7,9 @@
 
 angular
   .module('matrixui.components.button', [])
-  .directive('muButton', MuButtonDirective);
+  .directive('muButton', muButtonDirective);
 
-function MuButtonDirective($timeout) {
+function muButtonDirective($timeout) {
 
   return {
     restrict: 'E',

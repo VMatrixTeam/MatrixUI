@@ -7,7 +7,7 @@
  *
  */
 
-angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.markdown']);
+angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
 'use strict';
 
 angular.module('matrixui', ['matrixui.components']);
@@ -20,9 +20,9 @@ angular.module('matrixui', ['matrixui.components']);
  *
  */
 
-angular.module('matrixui.components.button', []).directive('muButton', MuButtonDirective);
+angular.module('matrixui.components.button', []).directive('muButton', muButtonDirective);
 
-function MuButtonDirective($timeout) {
+function muButtonDirective($timeout) {
 
   return {
     restrict: 'E',
@@ -80,6 +80,215 @@ function MuButtonDirective($timeout) {
       });
     }
   }
+}
+'use strict';
+
+/**
+ *
+ * @description codeeditor组件，代码编辑器
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.codeeditor', []).directive('muCodeeditor', muCodeeditorDirective);
+
+function muCodeeditorDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-codeeditor组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description datatable组件，数据表格
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.datatable', []).directive('muDatatable', muDatatableDirective);
+
+function muDatatableDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-datable组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description checkbox组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
+
+function muCheckboxDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-checkbox组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
+
+function muCardDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>Card组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description dialog组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.dialog', []).directive('muDialog', muDialogDirective);
+
+function muDialogDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-dialog组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description radio组件，单选框
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.radio', []).directive('muRadio', muRadioDirective);
+
+function muRadioDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-radio组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description mdeditor组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.mdeditor', []).directive('muMdeditor', muMdeditorDirective);
+
+function muMdeditorDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-mdeditor组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description select组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.select', []).directive('muSelect', muSelectDirective);
+
+function muSelectDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-select组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description tab组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.tab', []).directive('muTab', muTabDirective);
+
+function muTabDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-tab组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description panel组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.panel', []).directive('muPanel', muPanelDirective);
+
+function muPanelDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-panel组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description spinner组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.spinner', []).directive('muSpinner', muSpinnerDirective);
+
+function muSpinnerDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-spinner组件</h2>'
+  };
 }
 'use strict';
 
@@ -146,6 +355,9 @@ function muMarkdowndDirective() {
         if (!content) {
           content = scope.content;
         }
+
+        /* 如果MathJax存在，则开始渲染，否则直到MathJax加载完毕才开始渲染 */
+
         if (window.MathJax) {
           MathJax.Hub.Queue([insertHTML, content], ["Typeset", MathJax.Hub, element[0]], ["resetEquationNumbers", MathJax.InputJax.TeX]);
         } else {
@@ -258,4 +470,3 @@ function muMarkdowndDirective() {
     document.body.appendChild(mathJaxScript);
   }
 };
-"use strict";

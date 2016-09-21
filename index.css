@@ -4,6 +4,7 @@ html, body {
   width: 100%;
   height: 100%;
   font: 1em 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
 }
 
 .github-ribbon {
@@ -58,7 +59,7 @@ html, body {
   color: #B93A38;
 }
 
-.docs-wraper {
+.docs-wrapper {
 
 }
 

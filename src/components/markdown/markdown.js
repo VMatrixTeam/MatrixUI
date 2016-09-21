@@ -163,7 +163,7 @@ function muMarkdowndDirective() {
             try {
               func();
             } catch(e) {}
-          }
+          };
         })(), 0);
       }
     };

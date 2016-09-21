@@ -9,6 +9,14 @@
 @charset "UTF-8";
 /**
  *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
@@ -35,6 +43,38 @@
     transition: all 0.2s; }
   .mu-button:focus {
     outline: 0; }
+
+@charset "UTF-8";
+/**
+ *
+ * @description checkbox组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description codeeditor组件，代码编辑器
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description dataTable组件，数据表格
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description dialog组件
+ * @author yourname <youremail>
+ *
+ */
 
 @charset "UTF-8";
 /*
@@ -691,3 +731,51 @@ Based on Solarized Style from http://ethanschoonover.com/solarized
 
 .markdown-body hr {
   border-bottom-color: #eee; }
+
+@charset "UTF-8";
+/**
+ *
+ * @description mdeditor组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description panel组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description radio组件，单选框
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description select组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description spinner组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description tab组件
+ * @author yourname <youremail>
+ *
+ */
