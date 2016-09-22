@@ -7,3 +7,4 @@ dist
 .nvmrc
 tmp/
 .editorconfig
+dist
