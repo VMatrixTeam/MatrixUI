@@ -37,7 +37,7 @@ function muMarkdowndDirective() {
 
   function muMarkdownLink(scope, element, attrs) {
 
-    insertMathJaxScript(scope);
+    insertMathJaxScript();
 
     /* 指令绑定的ng-model属性 */
 
@@ -70,23 +70,18 @@ function muMarkdowndDirective() {
 
         /* 如果MathJax存在，则开始渲染，否则直到MathJax加载完毕才开始渲染 */
 
-        if (window.MathJax) {
+        function initMarkdown() {
           MathJax.Hub.Queue(
             [insertHTML, content],
             ["Typeset", MathJax.Hub, element[0]],
             ["resetEquationNumbers", MathJax.InputJax.TeX]
           );
+        }
+
+        if (window.MathJax) {
+          initMarkdown();
         } else {
-          function callback() {
-            return function() {
-              MathJax.Hub.Queue(
-                [insertHTML, content],
-                ["Typeset", MathJax.Hub, element[0]],
-                ["resetEquationNumbers", MathJax.InputJax.TeX]
-              );
-            };
-          }
-          window._mathJaxCallback[scope.$id] = callback();
+          window.MatrixUI.markdown.mathJaxCallbacks[scope.$id] = initMarkdown;
         }
       });
     }
@@ -126,15 +121,18 @@ function muMarkdowndDirective() {
    *
    */
 
-  function insertMathJaxScript(scope) {
+  function insertMathJaxScript() {
+
+    window.MatrixUI = window.MatrixUI || {};
+    window.MatrixUI.markdown = window.MatrixUI.markdown || {};
 
     /* 记录添加过MathJax脚本，防止多次添加 */
 
-    if (window._addingMathJax) {
+    if (window.MatrixUI.markdown.addedMathJax) {
       return;
     } else {
-      window._addingMathJax = true;
-      window._mathJaxCallback = {};
+      window.MatrixUI.markdown.addedMathJax = true;
+      window.MatrixUI.markdown.mathJaxCallbacks = window.MatrixUI.markdown.mathJaxCallbacks || {};
     }
 
     /* 添加config脚本 */
@@ -156,12 +154,13 @@ function muMarkdowndDirective() {
     mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
     mathJaxScript.type = 'text/javascript';
     mathJaxScript.onload = function() {
-      for (let key of Object.keys(window._mathJaxCallback)) {
-        let func = window._mathJaxCallback[key];
+      for (let key of Object.keys(window.MatrixUI.markdown.mathJaxCallbacks)) {
+        let func = window.MatrixUI.markdown.mathJaxCallbacks[key];
         setTimeout((function() {
           return function() {
             try {
               func();
+              delete window.MatrixUI.markdown.mathJaxCallbacks[key];
             } catch(e) {}
           };
         })(), 0);

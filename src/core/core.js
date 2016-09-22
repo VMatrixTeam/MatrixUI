@@ -1,4 +1,5 @@
 angular
   .module('matrixui', [
-    'matrixui.components'
+    'matrixui.components',
+    'matrixui.specials'
   ]);

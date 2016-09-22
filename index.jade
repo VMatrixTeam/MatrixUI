@@ -47,7 +47,8 @@ html
             mu-markdown(ng-model='mdeditorDocs' content='加载中...')
           .docs-content-title 示例
           .docs-content
-            mu-mdeditor
+            mu-mdeditor(type="simple" id='simpleMDE')
+            mu-mdeditor(type="full" id='fullMDE')
 
       .docs-wrapper
         .docs-container
@@ -78,16 +79,6 @@ html
           .docs-content-title 示例
           .docs-content
             mu-dialog
-
-      .docs-wrapper
-        .docs-container
-          .docs-header mu-mdeditor
-          .docs-content-title 使用文档
-          .docs-content
-            mu-markdown(ng-model='mdeditorDocs' content='加载中...')
-          .docs-content-title 示例
-          .docs-content
-            mu-mdeditor
 
       .docs-wrapper
         .docs-container
