@@ -1,5 +1,15 @@
 'use strict';
 
+/**
+ *
+ * @description button组件
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
+angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
+'use strict';
+
 angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
@@ -11,16 +21,6 @@ angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
  */
 
 angular.module('matrixui.specials', []);
-'use strict';
-
-/**
- *
- * @description button组件
- * @author 吴家荣 <jiarongwu.se@foxmail.com>
- *
- */
-
-angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
 'use strict';
 
 /**
@@ -95,25 +95,6 @@ function muButtonDirective($timeout) {
 
 /**
  *
- * @description card组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
-
-function muCardDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>Card组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description checkbox组件
  * @author yourname <youremail>
  *
@@ -127,6 +108,25 @@ function muCheckboxDirective() {
     replace: true,
     transclude: true,
     template: '<h2>mu-checkbox组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
+
+function muCardDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>Card组件</h2>'
   };
 }
 'use strict';

@@ -4,7 +4,7 @@
   "description": "Matrix components library based on Angular 1.x",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "pm2 startOrRestart deploy/ecosystem.json"
   },
   "repository": {
     "type": "git",
