@@ -21,3 +21,11 @@ let simpleMDE = document.querySelectorAll('#simpleMDE');
 simpleMDEScope = angular.element(simpleMDE).scope();
 let markdownText = simpleMDEScope.mde.value();
 ```
+
+设置值：
+
+```js
+let simpleMDE = document.querySelectorAll('#simpleMDE');
+simpleMDEScope = angular.element(simpleMDE).scope();
+simpleMDEScope.mde.value('your content');
+```

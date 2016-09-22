@@ -1,15 +1,5 @@
 'use strict';
 
-/**
- *
- * @description button组件
- * @author 吴家荣 <jiarongwu.se@foxmail.com>
- *
- */
-
-angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
-'use strict';
-
 angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
@@ -21,6 +11,16 @@ angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
  */
 
 angular.module('matrixui.specials', []);
+'use strict';
+
+/**
+ *
+ * @description button组件
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
+angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
 'use strict';
 
 /**
@@ -95,44 +95,6 @@ function muButtonDirective($timeout) {
 
 /**
  *
- * @description codeeditor组件，代码编辑器
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.codeeditor', []).directive('muCodeeditor', muCodeeditorDirective);
-
-function muCodeeditorDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-codeeditor组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
- * @description datatable组件，数据表格
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.datatable', []).directive('muDatatable', muDatatableDirective);
-
-function muDatatableDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-datable组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description card组件
  * @author yourname <youremail>
  *
@@ -171,6 +133,44 @@ function muCheckboxDirective() {
 
 /**
  *
+ * @description codeeditor组件，代码编辑器
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.codeeditor', []).directive('muCodeeditor', muCodeeditorDirective);
+
+function muCodeeditorDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-codeeditor组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description datatable组件，数据表格
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.datatable', []).directive('muDatatable', muDatatableDirective);
+
+function muDatatableDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-datable组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
  * @description dialog组件
  * @author yourname <youremail>
  *
@@ -186,6 +186,188 @@ function muDialogDirective() {
     template: '<h2>mu-dialog组件</h2>'
   };
 }
+'use strict';
+
+/**
+ *
+ * @description markdown组件
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ * @usage <mu-markdown ng-model='your scope property' content='your markdown content'></mu-markdown>
+ * ng-model: 可以动态改变markdown文本
+ * content: 静态内容，如果ng-model的值有效，则会显示ng-model的值得内容
+ */
+
+angular.module('matrixui.components.markdown', []).directive('muMarkdown', muMarkdowndDirective);
+
+function muMarkdowndDirective() {
+
+  return {
+    restrict: 'E',
+    template: '\n      <div class=\'markdown-body\'>\n        <div ng-transclude></div>\n      </div>\n    ',
+    transclude: true,
+    scope: true,
+    link: muMarkdownLink
+  };
+
+  /**
+   *
+   * @description muMarkdown指令的Link函数
+   * @params {object} scope 指令的$scope对象
+   * @params {object} element 指令对应的jqlite元素对象
+   * @params {object} attrs 能拿到用户赋予指令的所有属性的值
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   */
+
+  function muMarkdownLink(scope, element, attrs) {
+
+    insertMathJaxScript();
+
+    /* 指令绑定的ng-model属性 */
+
+    scope.name = attrs.ngModel;
+
+    /* 提取要显示的content的值，ng-model的重要性高于content */
+
+    var content = attrs.content;
+    if (!content) {
+      content = '';
+    }
+    if (scope.$parent[scope.name]) {
+      content = scope.$parent[scope.name];
+    }
+    scope.content = content;
+
+    /* 把渲染出来的html插入页面 */
+
+    element.find('div').html(markdownToHTML(scope.content));
+
+    /* scope.name用来判断ng-model属性是否存在，如果ng-model属性存在，当ng-model属性改变的时候，动态渲染markdown文本 */
+
+    if (scope.name) {
+      scope.$parent.$watch(scope.name, function () {
+        var content = scope.$parent[scope.name];
+
+        if (!content) {
+          content = scope.content;
+        }
+
+        /* 如果MathJax存在，则开始渲染，否则直到MathJax加载完毕才开始渲染 */
+
+        function initMarkdown() {
+          MathJax.Hub.Queue([insertHTML, content], ["Typeset", MathJax.Hub, element[0]], ["resetEquationNumbers", MathJax.InputJax.TeX]);
+        }
+
+        if (window.MathJax) {
+          initMarkdown();
+        } else {
+          window.MatrixUI.markdown.mathJaxCallbacks[scope.$id] = initMarkdown;
+        }
+      });
+    }
+
+    function insertHTML(content) {
+      element.find('div').html(markdownToHTML(content));
+    }
+  }
+
+  /**
+   *
+   * @description 将markdown文本渲染成html字符串
+   * @params {string} content 需要渲染的markdown文本
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  function markdownToHTML(content) {
+    if (window.marked) {
+      if (hljs) {
+        marked.setOptions({
+          highlight: function highlight(code) {
+            return hljs.highlightAuto(code).value;
+          }
+        });
+      }
+      return marked(content);
+    } else {
+      throw Error('marked is not defined');
+    }
+  }
+
+  /**
+   *
+   * @description 添加MathJax的脚本和设置config
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  function insertMathJaxScript() {
+
+    window.MatrixUI = window.MatrixUI || {};
+    window.MatrixUI.markdown = window.MatrixUI.markdown || {};
+
+    /* 记录添加过MathJax脚本，防止多次添加 */
+
+    if (window.MatrixUI.markdown.addedMathJax) {
+      return;
+    } else {
+      window.MatrixUI.markdown.addedMathJax = true;
+      window.MatrixUI.markdown.mathJaxCallbacks = window.MatrixUI.markdown.mathJaxCallbacks || {};
+    }
+
+    /* 添加config脚本 */
+
+    var configScript = document.createElement('script');
+    configScript.type = 'text/x-mathjax-config';
+    configScript.text = '\n      MathJax.Hub.Config({\n        showProcessingMessages: false,\n        tex2jax: { inlineMath: [[\'$\',\'$\'],[\'\\(\',\'\\)\']] },\n        TeX: { equationNumbers: {autoNumber: "AMS"} }\n      });\n    ';
+    document.body.appendChild(configScript);
+
+    /* 添加MathJax脚本 */
+
+    var mathJaxScript = document.createElement('script');
+    mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathJaxScript.type = 'text/javascript';
+    mathJaxScript.onload = function () {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var key = _step.value;
+
+          var func = window.MatrixUI.markdown.mathJaxCallbacks[key];
+          setTimeout(function () {
+            return function () {
+              try {
+                func();
+                delete window.MatrixUI.markdown.mathJaxCallbacks[key];
+              } catch (e) {}
+            };
+          }(), 0);
+        };
+
+        for (var _iterator = Object.keys(window.MatrixUI.markdown.mathJaxCallbacks)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    };
+    document.body.appendChild(mathJaxScript);
+  }
+};
 'use strict';
 
 /**
@@ -463,25 +645,6 @@ function muSelectDirective() {
 
 /**
  *
- * @description tab组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.tab', []).directive('muTab', muTabDirective);
-
-function muTabDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-tab组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description spinner组件
  * @author yourname <youremail>
  *
@@ -501,181 +664,18 @@ function muSpinnerDirective() {
 
 /**
  *
- * @description markdown组件
- * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ * @description tab组件
+ * @author yourname <youremail>
  *
- * @usage <mu-markdown ng-model='your scope property' content='your markdown content'></mu-markdown>
- * ng-model: 可以动态改变markdown文本
- * content: 静态内容，如果ng-model的值有效，则会显示ng-model的值得内容
  */
 
-angular.module('matrixui.components.markdown', []).directive('muMarkdown', muMarkdowndDirective);
+angular.module('matrixui.components.tab', []).directive('muTab', muTabDirective);
 
-function muMarkdowndDirective() {
-
+function muTabDirective() {
   return {
     restrict: 'E',
-    template: '\n      <div class=\'markdown-body\'>\n        <div ng-transclude></div>\n      </div>\n    ',
+    replace: true,
     transclude: true,
-    scope: true,
-    link: muMarkdownLink
+    template: '<h2>mu-tab组件</h2>'
   };
-
-  /**
-   *
-   * @description muMarkdown指令的Link函数
-   * @params {object} scope 指令的$scope对象
-   * @params {object} element 指令对应的jqlite元素对象
-   * @params {object} attrs 能拿到用户赋予指令的所有属性的值
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   */
-
-  function muMarkdownLink(scope, element, attrs) {
-
-    insertMathJaxScript();
-
-    /* 指令绑定的ng-model属性 */
-
-    scope.name = attrs.ngModel;
-
-    /* 提取要显示的content的值，ng-model的重要性高于content */
-
-    var content = attrs.content;
-    if (!content) {
-      content = '';
-    }
-    if (scope.$parent[scope.name]) {
-      content = scope.$parent[scope.name];
-    }
-    scope.content = content;
-
-    /* 把渲染出来的html插入页面 */
-
-    element.find('div').html(markdownToHTML(scope.content));
-
-    /* scope.name用来判断ng-model属性是否存在，如果ng-model属性存在，当ng-model属性改变的时候，动态渲染markdown文本 */
-
-    if (scope.name) {
-      scope.$parent.$watch(scope.name, function () {
-        var content = scope.$parent[scope.name];
-
-        if (!content) {
-          content = scope.content;
-        }
-
-        /* 如果MathJax存在，则开始渲染，否则直到MathJax加载完毕才开始渲染 */
-
-        function initMarkdown() {
-          MathJax.Hub.Queue([insertHTML, content], ["Typeset", MathJax.Hub, element[0]], ["resetEquationNumbers", MathJax.InputJax.TeX]);
-        }
-
-        if (window.MathJax) {
-          initMarkdown();
-        } else {
-          window.MatrixUI.markdown.mathJaxCallbacks[scope.$id] = initMarkdown;
-        }
-      });
-    }
-
-    function insertHTML(content) {
-      element.find('div').html(markdownToHTML(content));
-    }
-  }
-
-  /**
-   *
-   * @description 将markdown文本渲染成html字符串
-   * @params {string} content 需要渲染的markdown文本
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function markdownToHTML(content) {
-    if (window.marked) {
-      if (hljs) {
-        marked.setOptions({
-          highlight: function highlight(code) {
-            return hljs.highlightAuto(code).value;
-          }
-        });
-      }
-      return marked(content);
-    } else {
-      throw Error('marked is not defined');
-    }
-  }
-
-  /**
-   *
-   * @description 添加MathJax的脚本和设置config
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertMathJaxScript() {
-
-    window.MatrixUI = window.MatrixUI || {};
-    window.MatrixUI.markdown = window.MatrixUI.markdown || {};
-
-    /* 记录添加过MathJax脚本，防止多次添加 */
-
-    if (window.MatrixUI.markdown.addedMathJax) {
-      return;
-    } else {
-      window.MatrixUI.markdown.addedMathJax = true;
-      window.MatrixUI.markdown.mathJaxCallbacks = window.MatrixUI.markdown.mathJaxCallbacks || {};
-    }
-
-    /* 添加config脚本 */
-
-    var configScript = document.createElement('script');
-    configScript.type = 'text/x-mathjax-config';
-    configScript.text = '\n      MathJax.Hub.Config({\n        showProcessingMessages: false,\n        tex2jax: { inlineMath: [[\'$\',\'$\'],[\'\\(\',\'\\)\']] },\n        TeX: { equationNumbers: {autoNumber: "AMS"} }\n      });\n    ';
-    document.body.appendChild(configScript);
-
-    /* 添加MathJax脚本 */
-
-    var mathJaxScript = document.createElement('script');
-    mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathJaxScript.type = 'text/javascript';
-    mathJaxScript.onload = function () {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        var _loop = function _loop() {
-          var key = _step.value;
-
-          var func = window.MatrixUI.markdown.mathJaxCallbacks[key];
-          setTimeout(function () {
-            return function () {
-              try {
-                func();
-                delete window.MatrixUI.markdown.mathJaxCallbacks[key];
-              } catch (e) {}
-            };
-          }(), 0);
-        };
-
-        for (var _iterator = Object.keys(window.MatrixUI.markdown.mathJaxCallbacks)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          _loop();
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    };
-    document.body.appendChild(mathJaxScript);
-  }
-};
+}
