@@ -1,5 +1,8 @@
 'use strict';
 
+angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
+'use strict';
+
 /**
  *
  * @description button组件
@@ -8,9 +11,6 @@
  */
 
 angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
-'use strict';
-
-angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
 /**
@@ -95,25 +95,6 @@ function muButtonDirective($timeout) {
 
 /**
  *
- * @description checkbox组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
-
-function muCheckboxDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-checkbox组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description card组件
  * @author yourname <youremail>
  *
@@ -127,6 +108,25 @@ function muCardDirective() {
     replace: true,
     transclude: true,
     template: '<h2>Card组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description checkbox组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
+
+function muCheckboxDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-checkbox组件</h2>'
   };
 }
 'use strict';

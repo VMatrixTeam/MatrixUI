@@ -68,7 +68,7 @@ gulp.task('server:restart', function() {
 
 gulp.task('browser-sync', function() {
   browserSync.init({
-      proxy: "http://localhost:8080"
+      proxy: "http://localhost:8099"
   });
 });
 
