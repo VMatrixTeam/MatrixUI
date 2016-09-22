@@ -18,6 +18,15 @@ angular
 
 function testCtrl($scope, $http) {
 
+  $scope.config = {'grading': {'compile check': true, 'static check': true,
+  'random tests': true, 'memory check': true, 'google tests': true,
+  'standard tests':true }};
+  $scope.report = 'aaa';
+
+  $scope.changeReport = function() {
+    $scope.report = 'bbb';
+  }
+
   function getDocsFilenames() {
     let docs = [
       'button',
@@ -30,6 +39,7 @@ function testCtrl($scope, $http) {
       'mdeditor',
       'panel',
       'radio',
+      'report',
       'select',
       'spinner',
       'tab'
@@ -75,4 +85,5 @@ function testCtrl($scope, $http) {
   /* Controller入口函数 */
 
   initTestCtrl();
+
 };

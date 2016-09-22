@@ -102,6 +102,17 @@ html
 
       .docs-wrapper
         .docs-container
+          .docs-header mu-report
+          .docs-content-title 使用文档
+          .docs-content
+            mu-markdown(ng-model='reportDocs' content='加载中...')
+          .docs-content-title(ng-click='changeReport($event)') 示例
+          .docs-content
+            mu-report(config='config' report='report' content='report加载中')
+
+
+      .docs-wrapper
+        .docs-container
           .docs-header mu-select
           .docs-content-title 使用文档
           .docs-content

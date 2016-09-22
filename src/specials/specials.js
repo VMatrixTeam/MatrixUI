@@ -6,4 +6,6 @@
  */
 
 angular
-  .module('matrixui.specials', []);
+  .module('matrixui.specials', [
+    'matrixui.specials.report'
+  ]);
