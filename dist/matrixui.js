@@ -1,15 +1,5 @@
 'use strict';
 
-/**
- *
- * @description button组件
- * @author 吴家荣 <jiarongwu.se@foxmail.com>
- *
- */
-
-angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
-'use strict';
-
 angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
@@ -21,6 +11,364 @@ angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
  */
 
 angular.module('matrixui.specials', ['matrixui.specials.report']);
+'use strict';
+
+/**
+ *
+ * @description button组件
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
+angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
+'use strict';
+
+/**
+ *
+ * @description report组件过滤器
+ * @author 王镇佳 <wzjfloor@163.com>
+ *
+ */
+
+angular.module('matrixui.specials').filter('formatReportScore', function () {
+
+  var formatReportScore = void 0;
+  formatReportScore = function formatReportScore(data) {
+
+    if (data === -1 || data === null) {
+
+      return '正在评测并计算总分，请等候...';
+    } else {
+
+      return data;
+    }
+  };
+  return formatReportScore;
+});
+
+angular.module('matrixui.specials').filter('formatReportGrade', function () {
+
+  var formatReportGrade = void 0;
+  formatReportGrade = function formatReportGrade(data) {
+
+    if (data === undefined || data === null) {
+
+      return '0';
+    } else {
+
+      return data;
+    }
+  };
+  return formatReportGrade;
+});
+angular.module('matrixui.specials').filter('formatReportOutput', function () {
+
+  var formatReportOutput = void 0;
+  formatReportOutput = function formatReportOutput(data) {
+
+    if (data === undefined || data === null || data === '') {
+
+      return 'No output.';
+    } else {
+
+      return data;
+    }
+  };
+  return formatReportOutput;
+});
+angular.module('matrixui.specials').filter('formatCheckMessage', function () {
+
+  var formatCheckMessage = void 0;
+  formatCheckMessage = function formatCheckMessage(data) {
+
+    if (data === null || data === undefined) {
+
+      return 'Pass.';
+    } else {
+
+      return data;
+    }
+  };
+  return formatCheckMessage;
+});
+angular.module('matrixui.specials').filter('formatSubmissionsGrade', function () {
+
+  var formatSubmissionsGrade = void 0;
+  formatSubmissionsGrade = function formatSubmissionsGrade(data) {
+
+    if (data === null) {
+
+      return '等待评测中';
+    } else if (data === '-1' || data === -1) {
+
+      return '正在评测';
+    } else {
+
+      return data;
+    }
+  };
+  return formatSubmissionsGrade;
+});
+angular.module('matrixui.specials').filter('formatReportResult', function () {
+
+  var formatReportResult = void 0;
+  formatReportResult = function formatReportResult(data) {
+
+    if (data === 'WA') {
+
+      return 'Wrong Answer';
+    } else if (data === 'TL') {
+
+      return 'Time Limit';
+    } else if (data === 'CR') {
+
+      return 'Correct';
+    } else if (data === 'ML') {
+
+      return 'Memory Limit';
+    } else if (data === 'RE') {
+
+      return 'Runtime Error';
+    } else if (data === 'IE') {
+
+      return 'Internal Error';
+    } else if (data === 'OL') {
+
+      return 'Output Limit';
+    } else {
+
+      return data;
+    }
+  };
+  return formatReportResult;
+});
+
+angular.module('matrixui.specials').filter('deleteSpace', function () {
+
+  var deleteSpace = void 0;
+  deleteSpace = function deleteSpace(data) {
+
+    var result = void 0;
+    if (data[0] == '/') {
+      result = data.slice(5);
+    } else {
+      result = data;
+    }
+    var i = 0;
+    while (result[i] == ' ') {
+      i++;
+    }
+    return result.slice(i);
+  };
+
+  return deleteSpace;
+});
+
+angular.module('matrixui.specials').filter('showWrongTests', function () {
+
+  var showWrongTests = void 0;
+  showWrongTests = function showWrongTests(array) {
+
+    var results = void 0;
+    if (array) {
+
+      results = [];
+      array.forEach(function (item) {
+
+        if (item.result !== 'CR') {
+
+          results.push(item);
+        }
+      });
+      return results;
+    }
+  };
+  return showWrongTests;
+});
+'use strict';
+
+/**
+ *
+ * @description report组件
+ * @author 王镇佳 <wzjfloor@163.com>
+ *
+ */
+
+angular.module('matrixui.specials.report', []).directive('muReport', muReportDirective);
+
+function muReportDirective() {
+  return {
+
+    restrict: 'E',
+    transclude: true,
+    templateUrl: '/src/specials/report/report.html',
+    scope: true,
+    link: muReportLink
+
+  };
+
+  /**
+   *
+   * @description muReport指令的Link函数
+   * @params {object} scope 指令的$scope对象
+   * @params {object} element 指令对应的jqlite元素对象
+   * @params {object} attrs 能拿到用户赋予指令的所有属性的值
+   * @author 王镇佳 <wzjfloor@163.com>
+   */
+
+  function muReportLink(scope, element, attrs) {
+
+    /* 指令绑定的config 和 report属性 */
+    scope.congigName = attrs.config;
+    scope.reportName = attrs.report;
+
+    var configContent = scope.$parent[scope.congigName];
+    var reportContent = scope.$parent[scope.reportName];
+
+    /* ng-model的重要性高于content */
+    // 如果父级作用域已经加载出report
+    if (reportContent && configContent) {
+
+      //提取report和config
+      scope.report = reportContent;
+      scope.config = configContent;
+      simplifyReport();
+      fixReportLastWrap();
+      extractGoogleTest();
+    } else {
+      //显示加载中...
+      //但是显示方法待定
+      scope.compileCheck = scope.staticCheck = scope.standardTests = scope.randomTests = scope.memoryCheck = scope.googleTest = null;
+    }
+
+    /* scope.name用来判断ng-model属性是否存在，如果ng-model属性存在，当ng-model属性改变的时候，动态渲染markdown文本 */
+    if (scope.reportName) {
+
+      scope.$parent.$watch(scope.reportName, function () {
+
+        //获取report
+        scope.report = scope.$parent[scope.reportName];
+        simplifyReport();
+        fixReportLastWrap();
+        extractGoogleTest();
+      });
+    }
+
+    if (scope.congigName) {
+
+      scope.$parent.$watch(scope.congigName, function () {
+
+        //获取config
+        scope.config = scope.$parent[scope.congigName];
+        simplifyReport();
+        fixReportLastWrap();
+        extractGoogleTest();
+      });
+    }
+
+    //简化report
+    function simplifyReport() {
+
+      if (scope.report) {
+
+        //简化report
+        scope.compileCheck = scope.report['compile check'];
+        scope.staticCheck = scope.report['static check'];
+        scope.standardTests = scope.report['standard tests'];
+        scope.randomTests = scope.report['random tests'];
+        scope.memoryCheck = scope.report['memory check'];
+        scope.googleTest = scope.report['google tests'];
+
+        //提取report的googleTest信息
+        scope.gtestFailedList = [];
+        scope.gtestAllList = [];
+      }
+    }
+
+    //处理换行问题
+    function fixReportLastWrap() {
+
+      // -------------------------------------
+      // 处理standard input/output中的尾换行 START
+      // -------------------------------------
+      if (scope.standardTests) {
+
+        var STAND_TESTS = scope.standardTests['standard tests'];
+
+        for (var i = 0; i < STAND_TESTS.length; i++) {
+
+          if (STAND_TESTS[i].stdin && STAND_TESTS[i].stdin[STAND_TESTS[i].stdin.length - 1] == '\n') {
+            STAND_TESTS[i].stdin += '\n';
+          }
+          if (STAND_TESTS[i].standard_stdout && STAND_TESTS[i].standard_stdout[STAND_TESTS[i].standard_stdout.length - 1] == '\n') {
+            STAND_TESTS[i].standard_stdout += '\n';
+          }
+          if (STAND_TESTS[i].stdout && STAND_TESTS[i].stdout[STAND_TESTS[i].stdout.length - 1] == '\n') {
+            STAND_TESTS[i].stdout += '\n';
+          }
+        }
+        scope.standardTests['standard tests'] = STAND_TESTS;
+      }
+      if (scope.randomTests) {
+
+        var RANDOM_TESTS = scope.randomTests['random tests'];
+
+        for (var _i = 0; _i < RANDOM_TESTS.length; _i++) {
+
+          if (RANDOM_TESTS[_i].stdin && RANDOM_TESTS[_i].stdin[RANDOM_TESTS[_i].stdin.length - 1] == '\n') {
+            RANDOM_TESTS[_i].stdin += '\n';
+          }
+          if (RANDOM_TESTS[_i].standard_stdout && RANDOM_TESTS[_i].standard_stdout[RANDOM_TESTS[_i].standard_stdout.length - 1] == '\n') {
+            RANDOM_TESTS[_i].standard_stdout += '\n';
+          }
+          if (RANDOM_TESTS[_i].stdout && RANDOM_TESTS[_i].stdout[RANDOM_TESTS[_i].stdout.length - 1] == '\n') {
+            RANDOM_TESTS[_i].stdout += '\n';
+          }
+        }
+        scope.randomTests['random tests'] = RANDOM_TESTS;
+      }
+      // -------------------------------------
+      // 处理standard input/output中的尾换行 END
+      // -------------------------------------
+    }
+
+    //提取googleTest中的信息
+    function extractGoogleTest() {
+
+      if (scope.googleTest && scope.googleTest['google tests'][0].gtest.info) {
+        scope.gtestAllList = Object.getOwnPropertyNames(scope.googleTest['google tests'][0].gtest.info);
+        if (scope.googleTest['google tests'][0].gtest.failure != null) {
+          //抽出failure数组的每个对象的属性名
+          var obj = scope.googleTest['google tests'][0].gtest.failure;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = obj[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var subobj = _step.value;
+
+              scope.gtestFailedList.push(Object.getOwnPropertyNames(subobj)[0]);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 'use strict';
 
 /**
@@ -95,66 +443,38 @@ function muButtonDirective($timeout) {
 
 /**
  *
-<<<<<<< HEAD
  * @description card组件
-=======
- * @description checkbox组件
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
  * @author yourname <youremail>
  *
  */
 
-<<<<<<< HEAD
 angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
 
 function muCardDirective() {
-=======
-angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
-
-function muCheckboxDirective() {
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
-<<<<<<< HEAD
     template: '<h2>Card组件</h2>'
-=======
-    template: '<h2>mu-checkbox组件</h2>'
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   };
 }
 'use strict';
 
 /**
  *
-<<<<<<< HEAD
  * @description checkbox组件
-=======
- * @description card组件
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
  * @author yourname <youremail>
  *
  */
 
-<<<<<<< HEAD
 angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
 
 function muCheckboxDirective() {
-=======
-angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
-
-function muCardDirective() {
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
-<<<<<<< HEAD
     template: '<h2>mu-checkbox组件</h2>'
-=======
-    template: '<h2>Card组件</h2>'
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   };
 }
 'use strict';
@@ -674,7 +994,6 @@ function muSelectDirective() {
 /**
  *
  * @description spinner组件
-<<<<<<< HEAD
  * @author yourname <youremail>
  *
  */
@@ -694,8 +1013,6 @@ function muSpinnerDirective() {
 /**
  *
  * @description tab组件
-=======
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
  * @author yourname <youremail>
  *
  */
@@ -709,369 +1026,4 @@ function muTabDirective() {
     transclude: true,
     template: '<h2>mu-tab组件</h2>'
   };
-}
-'use strict';
-
-/**
- *
-<<<<<<< HEAD
- * @description report组件过滤器
- * @author 王镇佳 <wzjfloor@163.com>
- *
- */
-
-angular.module('matrixui.specials').filter('formatReportScore', function () {
-
-  var formatReportScore = void 0;
-  formatReportScore = function formatReportScore(data) {
-
-    if (data === -1 || data === null) {
-
-      return '正在评测并计算总分，请等候...';
-    } else {
-
-      return data;
-    }
-  };
-  return formatReportScore;
-});
-
-angular.module('matrixui.specials').filter('formatReportGrade', function () {
-
-  var formatReportGrade = void 0;
-  formatReportGrade = function formatReportGrade(data) {
-
-    if (data === undefined || data === null) {
-
-      return '0';
-    } else {
-
-      return data;
-    }
-  };
-  return formatReportGrade;
-});
-angular.module('matrixui.specials').filter('formatReportOutput', function () {
-
-  var formatReportOutput = void 0;
-  formatReportOutput = function formatReportOutput(data) {
-
-    if (data === undefined || data === null || data === '') {
-
-      return 'No output.';
-    } else {
-
-      return data;
-    }
-  };
-  return formatReportOutput;
-});
-angular.module('matrixui.specials').filter('formatCheckMessage', function () {
-
-  var formatCheckMessage = void 0;
-  formatCheckMessage = function formatCheckMessage(data) {
-
-    if (data === null || data === undefined) {
-
-      return 'Pass.';
-    } else {
-
-      return data;
-    }
-  };
-  return formatCheckMessage;
-});
-angular.module('matrixui.specials').filter('formatSubmissionsGrade', function () {
-
-  var formatSubmissionsGrade = void 0;
-  formatSubmissionsGrade = function formatSubmissionsGrade(data) {
-
-    if (data === null) {
-
-      return '等待评测中';
-    } else if (data === '-1' || data === -1) {
-
-      return '正在评测';
-    } else {
-
-      return data;
-    }
-  };
-  return formatSubmissionsGrade;
-});
-angular.module('matrixui.specials').filter('formatReportResult', function () {
-
-  var formatReportResult = void 0;
-  formatReportResult = function formatReportResult(data) {
-
-    if (data === 'WA') {
-
-      return 'Wrong Answer';
-    } else if (data === 'TL') {
-
-      return 'Time Limit';
-    } else if (data === 'CR') {
-
-      return 'Correct';
-    } else if (data === 'ML') {
-
-      return 'Memory Limit';
-    } else if (data === 'RE') {
-
-      return 'Runtime Error';
-    } else if (data === 'IE') {
-
-      return 'Internal Error';
-    } else if (data === 'OL') {
-
-      return 'Output Limit';
-    } else {
-
-      return data;
-    }
-  };
-  return formatReportResult;
-});
-
-angular.module('matrixui.specials').filter('deleteSpace', function () {
-
-  var deleteSpace = void 0;
-  deleteSpace = function deleteSpace(data) {
-
-    var result = void 0;
-    if (data[0] == '/') {
-      result = data.slice(5);
-    } else {
-      result = data;
-    }
-    var i = 0;
-    while (result[i] == ' ') {
-      i++;
-    }
-    return result.slice(i);
-  };
-
-  return deleteSpace;
-});
-
-angular.module('matrixui.specials').filter('showWrongTests', function () {
-
-  var showWrongTests = void 0;
-  showWrongTests = function showWrongTests(array) {
-
-    var results = void 0;
-    if (array) {
-
-      results = [];
-      array.forEach(function (item) {
-
-        if (item.result !== 'CR') {
-
-          results.push(item);
-        }
-      });
-      return results;
-    }
-  };
-  return showWrongTests;
-});
-'use strict';
-
-/**
- *
- * @description report组件
- * @author 王镇佳 <wzjfloor@163.com>
- *
- */
-
-angular.module('matrixui.specials.report', []).directive('muReport', muReportDirective);
-
-function muReportDirective() {
-  return {
-
-    restrict: 'E',
-    transclude: true,
-    templateUrl: '/src/specials/report/report.html',
-    scope: true,
-    link: muReportLink
-
-  };
-
-  /**
-   *
-   * @description muReport指令的Link函数
-   * @params {object} scope 指令的$scope对象
-   * @params {object} element 指令对应的jqlite元素对象
-   * @params {object} attrs 能拿到用户赋予指令的所有属性的值
-   * @author 王镇佳 <wzjfloor@163.com>
-   */
-
-  function muReportLink(scope, element, attrs) {
-
-    /* 指令绑定的config 和 report属性 */
-    scope.congigName = attrs.config;
-    scope.reportName = attrs.report;
-
-    var configContent = scope.$parent[scope.congigName];
-    var reportContent = scope.$parent[scope.reportName];
-
-    /* ng-model的重要性高于content */
-    // 如果父级作用域已经加载出report
-    if (reportContent && configContent) {
-
-      //提取report和config
-      scope.report = reportContent;
-      scope.config = configContent;
-      simplifyReport();
-      fixReportLastWrap();
-      extractGoogleTest();
-    } else {
-      //显示加载中...
-      //但是显示方法待定
-      scope.compileCheck = scope.staticCheck = scope.standardTests = scope.randomTests = scope.memoryCheck = scope.googleTest = null;
-    }
-
-    /* scope.name用来判断ng-model属性是否存在，如果ng-model属性存在，当ng-model属性改变的时候，动态渲染markdown文本 */
-    if (scope.reportName) {
-
-      scope.$parent.$watch(scope.reportName, function () {
-
-        //获取report
-        scope.report = scope.$parent[scope.reportName];
-        simplifyReport();
-        fixReportLastWrap();
-        extractGoogleTest();
-      });
-    }
-
-    if (scope.congigName) {
-
-      scope.$parent.$watch(scope.congigName, function () {
-
-        //获取config
-        scope.config = scope.$parent[scope.congigName];
-        simplifyReport();
-        fixReportLastWrap();
-        extractGoogleTest();
-      });
-    }
-
-    //简化report
-    function simplifyReport() {
-
-      if (scope.report) {
-
-        //简化report
-        scope.compileCheck = scope.report['compile check'];
-        scope.staticCheck = scope.report['static check'];
-        scope.standardTests = scope.report['standard tests'];
-        scope.randomTests = scope.report['random tests'];
-        scope.memoryCheck = scope.report['memory check'];
-        scope.googleTest = scope.report['google tests'];
-
-        //提取report的googleTest信息
-        scope.gtestFailedList = [];
-        scope.gtestAllList = [];
-      }
-    }
-
-    //处理换行问题
-    function fixReportLastWrap() {
-
-      // -------------------------------------
-      // 处理standard input/output中的尾换行 START
-      // -------------------------------------
-      if (scope.standardTests) {
-
-        var STAND_TESTS = scope.standardTests['standard tests'];
-
-        for (var i = 0; i < STAND_TESTS.length; i++) {
-
-          if (STAND_TESTS[i].stdin && STAND_TESTS[i].stdin[STAND_TESTS[i].stdin.length - 1] == '\n') {
-            STAND_TESTS[i].stdin += '\n';
-          }
-          if (STAND_TESTS[i].standard_stdout && STAND_TESTS[i].standard_stdout[STAND_TESTS[i].standard_stdout.length - 1] == '\n') {
-            STAND_TESTS[i].standard_stdout += '\n';
-          }
-          if (STAND_TESTS[i].stdout && STAND_TESTS[i].stdout[STAND_TESTS[i].stdout.length - 1] == '\n') {
-            STAND_TESTS[i].stdout += '\n';
-          }
-        }
-        scope.standardTests['standard tests'] = STAND_TESTS;
-      }
-      if (scope.randomTests) {
-
-        var RANDOM_TESTS = scope.randomTests['random tests'];
-
-        for (var _i = 0; _i < RANDOM_TESTS.length; _i++) {
-
-          if (RANDOM_TESTS[_i].stdin && RANDOM_TESTS[_i].stdin[RANDOM_TESTS[_i].stdin.length - 1] == '\n') {
-            RANDOM_TESTS[_i].stdin += '\n';
-          }
-          if (RANDOM_TESTS[_i].standard_stdout && RANDOM_TESTS[_i].standard_stdout[RANDOM_TESTS[_i].standard_stdout.length - 1] == '\n') {
-            RANDOM_TESTS[_i].standard_stdout += '\n';
-          }
-          if (RANDOM_TESTS[_i].stdout && RANDOM_TESTS[_i].stdout[RANDOM_TESTS[_i].stdout.length - 1] == '\n') {
-            RANDOM_TESTS[_i].stdout += '\n';
-          }
-        }
-        scope.randomTests['random tests'] = RANDOM_TESTS;
-      }
-      // -------------------------------------
-      // 处理standard input/output中的尾换行 END
-      // -------------------------------------
-    }
-
-    //提取googleTest中的信息
-    function extractGoogleTest() {
-
-      if (scope.googleTest && scope.googleTest['google tests'][0].gtest.info) {
-        scope.gtestAllList = Object.getOwnPropertyNames(scope.googleTest['google tests'][0].gtest.info);
-        if (scope.googleTest['google tests'][0].gtest.failure != null) {
-          //抽出failure数组的每个对象的属性名
-          var obj = scope.googleTest['google tests'][0].gtest.failure;
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
-
-          try {
-            for (var _iterator = obj[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var subobj = _step.value;
-
-              scope.gtestFailedList.push(Object.getOwnPropertyNames(subobj)[0]);
-            }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator.return) {
-                _iterator.return();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-=======
- * @description tab组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.tab', []).directive('muTab', muTabDirective);
-
-function muTabDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-tab组件</h2>'
-  };
->>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
 }
