@@ -1,0 +1,24 @@
+{
+  "apps" : [{
+    "name"      : "MatrixUI",
+    "script"    : "./server.js",
+    "instances" : "1",
+    "exec_mode" : "cluster",
+    "env": {
+      "COMMON_VARIABLE": "true"
+    },
+    "error_file"      : "../matrixui-logs/matrixui-error.log",
+    "out_file"        : "../matrixui-logs/matrixui-output.log",
+    "merge_logs"      : true,
+    "log_date_format" : "YYYY-MM-DD HH:mm Z",
+    "watch"           : true,
+    "max_memory_restart": "2G",
+    "ignore_watch"    : ["node_modules", "bower_components"],
+    "env"             : {
+      "NODE_ENV": "production"
+    },
+    "env_test" : {
+      "NODE_ENV": "production"
+    }
+  }]
+}

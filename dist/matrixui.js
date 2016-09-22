@@ -95,38 +95,66 @@ function muButtonDirective($timeout) {
 
 /**
  *
+<<<<<<< HEAD
  * @description card组件
+=======
+ * @description checkbox组件
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
  * @author yourname <youremail>
  *
  */
 
+<<<<<<< HEAD
 angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
 
 function muCardDirective() {
+=======
+angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
+
+function muCheckboxDirective() {
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
+<<<<<<< HEAD
     template: '<h2>Card组件</h2>'
+=======
+    template: '<h2>mu-checkbox组件</h2>'
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   };
 }
 'use strict';
 
 /**
  *
+<<<<<<< HEAD
  * @description checkbox组件
+=======
+ * @description card组件
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
  * @author yourname <youremail>
  *
  */
 
+<<<<<<< HEAD
 angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
 
 function muCheckboxDirective() {
+=======
+angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
+
+function muCardDirective() {
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   return {
     restrict: 'E',
     replace: true,
     transclude: true,
+<<<<<<< HEAD
     template: '<h2>mu-checkbox组件</h2>'
+=======
+    template: '<h2>Card组件</h2>'
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
   };
 }
 'use strict';
@@ -646,6 +674,7 @@ function muSelectDirective() {
 /**
  *
  * @description spinner组件
+<<<<<<< HEAD
  * @author yourname <youremail>
  *
  */
@@ -665,6 +694,8 @@ function muSpinnerDirective() {
 /**
  *
  * @description tab组件
+=======
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
  * @author yourname <youremail>
  *
  */
@@ -683,6 +714,7 @@ function muTabDirective() {
 
 /**
  *
+<<<<<<< HEAD
  * @description report组件过滤器
  * @author 王镇佳 <wzjfloor@163.com>
  *
@@ -1026,4 +1058,20 @@ function muReportDirective() {
       }
     }
   }
+=======
+ * @description tab组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.tab', []).directive('muTab', muTabDirective);
+
+function muTabDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-tab组件</h2>'
+  };
+>>>>>>> 830eeba5dabb5ed020bbf27087b2ea4a548071f4
 }
