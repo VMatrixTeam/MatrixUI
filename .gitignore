@@ -2,9 +2,8 @@
 .DS_Store
 node_modules
 bower_components
-dist
+
 /.idea/
 .nvmrc
 tmp/
 .editorconfig
-dist
