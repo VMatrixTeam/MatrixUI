@@ -30,6 +30,13 @@ gulp.task('sass', function () {
  */
 
 gulp.task('babel', function() {
+  gulp.src('./index.es6.js')
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(concat('index.js'))
+    .pipe(gulp.dest('./dist'));
+
   return gulp.src('./src/**/*.js')
     .pipe(babel({
       presets: ['es2015']
