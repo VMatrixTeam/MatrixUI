@@ -175,8 +175,5 @@ function muReportDirective() {
         }
       }
     }
-
-
-
   }
 }
