@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.card', [])
   .directive('muCard', muCardDirective);
 
+muCardDirective.$inject = [];
+
 function muCardDirective() {
   return {
     restrict: 'E',

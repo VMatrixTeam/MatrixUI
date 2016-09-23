@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.checkbox', [])
   .directive('muCheckbox', muCheckboxDirective);
 
+muCheckboxDirective.$inject = [];
+
 function muCheckboxDirective() {
   return {
     restrict: 'E',

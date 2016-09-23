@@ -9,6 +9,14 @@
 @charset "UTF-8";
 /**
  *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
@@ -35,14 +43,6 @@
     transition: all 0.2s; }
   .mu-button:focus {
     outline: 0; }
-
-@charset "UTF-8";
-/**
- *
- * @description card组件
- * @author yourname <youremail>
- *
- */
 
 @charset "UTF-8";
 /**

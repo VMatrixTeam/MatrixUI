@@ -12,6 +12,8 @@ angular
   .module('matrixui.components.markdown', [])
   .directive('muMarkdown', muMarkdowndDirective);
 
+muMarkdowndDirective.$inject = [];
+
 function muMarkdowndDirective() {
 
   return {

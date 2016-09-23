@@ -7,11 +7,11 @@ html
     script(type='text/javascript', src='./bower_components/angular/angular.js')
     script(type='text/javascript', src='./bower_components/marked/lib/marked.js')
     script(type='text/javascript', src='./bower_components/highlightjs/highlight.pack.min.js')
-    script(type='text/javascript', src='./dist/matrixui.js')
+    script(type='text/javascript', src='./dist/matrixui.min.js')
     script(type='text/javascript', src='./dist/index.js')
 
     link(rel='stylesheet', type='text/css', href='./index.css')
-    link(rel='stylesheet', type='text/css', href='./dist/matrixui.css')
+    link(rel='stylesheet', type='text/css', href='./dist/matrixui.min.css')
 
   body(ng-app='testMatrixUIApp')
     a(href="https://github.com/VMatrixTeam/MatrixUI" class="github-ribbon") Fork me on GitHub
@@ -37,7 +37,7 @@ html
             mu-markdown(ng-model='markdownDocs' content='加载中...')
           .docs-content-title 示例
           .docs-content
-            mu-markdown(ng-model='markdown' content='加载中...')
+            mu-markdown(ng-model='markdownData' content='加载中...')
 
       .docs-wrapper
         .docs-container

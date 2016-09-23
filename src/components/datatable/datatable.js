@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.datatable', [])
   .directive('muDatatable', muDatatableDirective);
 
+muDatatableDirective.$inject = [];
+
 function muDatatableDirective() {
   return {
     restrict: 'E',

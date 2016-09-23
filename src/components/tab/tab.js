@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.tab', [])
   .directive('muTab', muTabDirective);
 
+muTabDirective.$inject = [];
+
 function muTabDirective() {
   return {
     restrict: 'E',

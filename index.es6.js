@@ -50,7 +50,7 @@ function testCtrl($scope, $http) {
 
   function getDocs() {
     let docs = getDocsFilenames();
-    docs.forEach((item)=> {
+    docs.forEach((item) => {
       $http({
         method: 'GET',
         url: `/docs/${item}.md`
@@ -63,15 +63,27 @@ function testCtrl($scope, $http) {
     });
   }
 
-  function getMarkdownData() {
-    $http({
-      method: 'GET',
-      url: `/data/markdown.md`
-    }).then(function(res) {
-      let { data } = res;
-      $scope['markdown'] = data;
-    }, function(res) {
-      alert('数据访问错误');
+  function getDataFilenames() {
+    let datas = [
+      'markdown'
+    ];
+
+    return datas;
+  }
+
+  function getDatas() {
+    let datas = getDataFilenames();
+
+    datas.forEach((item) => {
+      $http({
+        method: 'GET',
+        url: `/data/${item}.md`
+      }).then(function(res) {
+        let { data } = res;
+        $scope[`${item}Data`] = data;
+      }, function(res) {
+        alert('数据访问错误');
+      });
     });
   }
 
@@ -79,7 +91,7 @@ function testCtrl($scope, $http) {
 
   function initTestCtrl() {
     getDocs();
-    getMarkdownData();
+    getDatas();
   }
 
   /* Controller入口函数 */

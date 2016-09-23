@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.radio', [])
   .directive('muRadio', muRadioDirective);
 
+muRadioDirective.$inject = [];
+
 function muRadioDirective() {
   return {
     restrict: 'E',

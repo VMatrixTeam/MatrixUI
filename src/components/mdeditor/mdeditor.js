@@ -9,6 +9,7 @@ angular
   .module('matrixui.components.mdeditor', [])
   .directive('muMdeditor', muMdeditorDirective);
 
+muMdeditorDirective.$inject = [];
 
 function muMdeditorDirective() {
 
