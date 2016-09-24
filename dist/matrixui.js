@@ -25,6 +25,27 @@ angular.module('matrixui.specials', ['matrixui.specials.report']);
 
 /**
  *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
+
+muCardDirective.$inject = [];
+
+function muCardDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>Card组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
  * @description button组件
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
@@ -92,27 +113,6 @@ function muButtonDirective($timeout) {
       });
     }
   }
-}
-'use strict';
-
-/**
- *
- * @description card组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
-
-muCardDirective.$inject = [];
-
-function muCardDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>Card组件</h2>'
-  };
 }
 'use strict';
 
@@ -249,7 +249,6 @@ function muMarkdowndDirective() {
       content = scope.$parent[scope.name];
     } else {
       scope.$parent[scope.name] = '';
-      // throw Error(`mu-markdown error: ${scope.name} 变量没有在父级scope中定义`);
     }
     scope.content = content;
 
@@ -339,10 +338,34 @@ function muMdeditorDirective() {
 
   function muMdeditorLink(scope, element, attrs) {
 
-    /* 插入需要的脚本代码 */
+    /* 指令绑定的ng-model属性 */
 
-    // insertSimpleMDEScript();
-    // insertMathJaxScript();
+    scope.name = attrs.ngModel;
+
+    var content = attrs.content;
+    if (!content) {
+      content = '';
+    }
+    if (scope.$parent[scope.name]) {
+      content = scope.$parent[scope.name];
+    } else {
+      scope.$parent[scope.name] = '';
+    }
+    scope.content = content;
+
+    if (scope.name) {
+      scope.$parent.$watch(scope.name, function () {
+        if (scope.mde) {
+          scope.mde.value(scope.$parent[scope.name]);
+        }
+      });
+    }
+
+    if (window.SimpleMDE) {
+      initMDE();
+    } else {
+      throw Error('mu-mdeditor error: SimpleMDE没有加载');
+    }
 
     /**
      *
@@ -390,12 +413,12 @@ function muMdeditorDirective() {
         previewRender: previewRender,
         tabSize: 2
       });
-    }
 
-    if (window.SimpleMDE) {
-      initMDE();
-    } else {
-      window.MatrixUI.mdeditor.simpleMDECallbacks[scope.$id] = initMDE;
+      /* 如果提供了content，则把编辑器的值设置为content的值 */
+
+      if (attrs.content) {
+        scope.mde.value(attrs.content);
+      }
     }
   }
 
@@ -459,97 +482,6 @@ function muMdeditorDirective() {
     } else {
       throw Error('marked is not defined');
     }
-  }
-
-  /**
-   *
-   * @description 插入SimpleMDE对应的js脚本
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertSimpleMDEScript() {
-
-    window.MatrixUI = window.MatrixUI || {};
-    window.MatrixUI.mdeditor = window.MatrixUI.mdeditor || {};
-
-    if (window.MatrixUI.mdeditor.addedSimpleMDE) {
-      return;
-    } else {
-      window.MatrixUI.mdeditor.addedSimpleMDE = true;
-      window.MatrixUI.mdeditor.simpleMDECallbacks = window.MatrixUI.mdeditor.simpleMDECallbacks || {};
-    }
-
-    /* 添加simpleMDE脚本 */
-
-    var simpleMDEScript = document.createElement('script');
-    simpleMDEScript.src = 'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js';
-    simpleMDEScript.type = 'text/javascript';
-    simpleMDEScript.onload = function () {
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
-
-      try {
-        var _loop = function _loop() {
-          var key = _step.value;
-
-          var func = window.MatrixUI.mdeditor.simpleMDECallbacks[key];
-          setTimeout(function () {
-            return function () {
-              try {
-                func();
-                delete window.MatrixUI.mdeditor.simpleMDECallbacks[key];
-              } catch (e) {}
-            };
-          }(), 0);
-        };
-
-        for (var _iterator = Object.keys(window.MatrixUI.mdeditor.simpleMDECallbacks)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          _loop();
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    };
-    document.body.appendChild(simpleMDEScript);
-  }
-
-  /**
-   *
-   * @description 插入MathJax对应的js脚本
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertMathJaxScript() {
-
-    if (window.MathJax) return;
-
-    /* 添加config脚本 */
-
-    var configScript = document.createElement('script');
-    configScript.type = 'text/x-mathjax-config';
-    configScript.text = '\n      MathJax.Hub.Config({\n        showProcessingMessages: false,\n        tex2jax: { inlineMath: [[\'$\',\'$\'],[\'\\(\',\'\\)\']] },\n        TeX: { equationNumbers: {autoNumber: "AMS"} }\n      });\n    ';
-    document.body.appendChild(configScript);
-
-    /* 添加MathJax脚本 */
-
-    var mathJaxScript = document.createElement('script');
-    mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathJaxScript.type = 'text/javascript';
-    document.body.appendChild(mathJaxScript);
   }
 }
 'use strict';

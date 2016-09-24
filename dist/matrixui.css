@@ -63,6 +63,14 @@
 @charset "UTF-8";
 /**
  *
+ * @description dialog组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
  * @description dataTable组件，数据表格
  * @author yourname <youremail>
  *
@@ -724,14 +732,6 @@ Based on Solarized Style from http://ethanschoonover.com/solarized
 
 .markdown-body hr {
   border-bottom-color: #eee; }
-
-@charset "UTF-8";
-/**
- *
- * @description dialog组件
- * @author yourname <youremail>
- *
- */
 
 @charset "UTF-8";
 /**
