@@ -23,6 +23,35 @@ function muMdeditorDirective() {
 
   function muMdeditorLink(scope, element, attrs) {
 
+    /* 指令绑定的ng-model属性 */
+
+    scope.name = attrs.ngModel;
+
+    let content = attrs.content;
+    if (!content) {
+      content = '';
+    }
+    if (scope.$parent[scope.name]) {
+      content = scope.$parent[scope.name];
+    } else {
+      scope.$parent[scope.name] = '';
+    }
+    scope.content = content;
+
+    if (scope.name) {
+      scope.$parent.$watch(scope.name, function() {
+        if (scope.mde) {
+          scope.mde.value(scope.$parent[scope.name]);
+        }
+      });
+    }
+
+    if (window.SimpleMDE) {
+      initMDE();
+    } else {
+      throw Error('mu-mdeditor error: SimpleMDE没有加载');
+    }
+
     /**
      *
      * @description SimpleMDE的渲染函数
@@ -75,12 +104,6 @@ function muMdeditorDirective() {
       if (attrs.content) {
         scope.mde.value(attrs.content);
       }
-    }
-
-    if (window.SimpleMDE) {
-      initMDE();
-    } else {
-      window.MatrixUI.mdeditor.simpleMDECallbacks[scope.$id] = initMDE;
     }
   }
 

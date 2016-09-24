@@ -53,7 +53,6 @@ function muMarkdowndDirective() {
       content = scope.$parent[scope.name];
     } else {
       scope.$parent[scope.name] = '';
-      // throw Error(`mu-markdown error: ${scope.name} 变量没有在父级scope中定义`);
     }
     scope.content = content;
 
