@@ -69,14 +69,6 @@
  */
 
 @charset "UTF-8";
-/**
- *
- * @description dialog组件
- * @author yourname <youremail>
- *
- */
-
-@charset "UTF-8";
 /*
     Paraíso (dark)
     Created by Jan T. Sott (http://github.com/idleberg)
@@ -732,6 +724,14 @@ Based on Solarized Style from http://ethanschoonover.com/solarized
 
 .markdown-body hr {
   border-bottom-color: #eee; }
+
+@charset "UTF-8";
+/**
+ *
+ * @description dialog组件
+ * @author yourname <youremail>
+ *
+ */
 
 @charset "UTF-8";
 /**

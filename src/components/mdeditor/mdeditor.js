@@ -25,34 +25,23 @@ function muMdeditorDirective() {
 
     /* 插入需要的脚本代码 */
 
-    insertSimpleMDEScript();
-    insertMathJaxScript();
+    // insertSimpleMDEScript();
+    // insertMathJaxScript();
 
     /**
      *
      * @description SimpleMDE的渲染函数
-     * @params {string} plainText 编辑器里面的markdown文本
-     * @params {object} preview 预览区域的dom对象
+     * @param {string} plainText 编辑器里面的markdown文本
+     * @param {object} preview 预览区域的dom对象
      * @author 吴家荣 <jiarongwu.se@foxmail.com>
      *
      */
 
     function previewRender(plainText, preview) {
-      if (!angular.element(preview).hasClass('markdown-body'))
-        angular.element(preview).addClass('markdown-body');
+      angular.element(preview).addClass('markdown-body');
 
-      /* 由于科学公式渲染速度较慢，因此通过timeout来减少渲染次数 */
-
-      if (!scope.timeout) {
-        scope.timeout = setTimeout(function() {
-          MathJax.Hub.Queue(
-            [insertHTML, plainText, preview],
-            ["Typeset", MathJax.Hub, preview],
-            ["resetEquationNumbers", MathJax.InputJax.TeX]
-          );
-          scope.timeout = null;
-        }, 200);
-      }
+      insertHTML(plainText, preview);
+      MathJax.Hub.Typeset(preview);
 
       return preview.innerHTML;
     }
@@ -71,9 +60,9 @@ function muMdeditorDirective() {
       /* 不同的类型，具有不同的toolbar */
 
       if (type === 'full') {
-        toolbar = ['heading-1', 'heading-2', 'heading-3', 'bold', 'italic', '|','quote', 'code', 'link', 'image', '|','unordered-list', 'ordered-list', '|', 'preview', 'side-by-side', 'fullscreen', '|', 'guide'];
+        toolbar = getFullToolbar();
       } else {
-        toolbar = ['heading-1', 'heading-2', 'heading-3', 'bold', 'italic', '|','quote', 'code', 'link', 'image','|','unordered-list', 'ordered-list', '|', 'preview', '|', 'guide'];
+        toolbar = getSimpleToolbar();
       }
 
       /* 创建SimpleMDE实例 */
@@ -96,9 +85,55 @@ function muMdeditorDirective() {
 
   /**
    *
+   * @description 返回full类型顶部工具栏
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  function getFullToolbar() {
+    let toolbar = [
+      'heading-1', 'heading-2', 'heading-3', 'bold', 'italic',
+      '|',
+      'quote', 'code', 'link', 'image',
+      '|',
+      'unordered-list', 'ordered-list',
+      '|',
+      'preview', 'side-by-side', 'fullscreen',
+      '|',
+      'guide'
+    ];
+
+    return toolbar;
+  }
+
+  /**
+   *
+   * @description 返回simple类型顶部工具栏
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  function getSimpleToolbar() {
+    let toolbar = [
+      'heading-1', 'heading-2', 'heading-3', 'bold', 'italic',
+      '|',
+      'quote', 'code', 'link', 'image',
+      '|',
+      'unordered-list', 'ordered-list',
+      '|',
+      'preview',
+      '|',
+      'guide'
+    ];
+
+    return toolbar;
+  }
+
+  /**
+   *
    * @description 渲染markdown文本成HTML，并插入到指定的dom中
-   * @params {string} content markdown文本
-   * @params {object} dom 对应的dom对象
+   * @param {string} content markdown文本
+   * @param {object} dom 对应的dom对象
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    *
    */
@@ -110,7 +145,7 @@ function muMdeditorDirective() {
   /**
    *
    * @description 渲染markdown文本
-   * @params {string} content markdown文本
+   * @param {string} content markdown文本
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    *
    */

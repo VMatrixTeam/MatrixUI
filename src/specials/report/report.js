@@ -25,9 +25,9 @@ function muReportDirective() {
   /**
    *
    * @description muReport指令的Link函数
-   * @params {object} scope 指令的$scope对象
-   * @params {object} element 指令对应的jqlite元素对象
-   * @params {object} attrs 能拿到用户赋予指令的所有属性的值
+   * @param {object} scope 指令的$scope对象
+   * @param {object} element 指令对应的jqlite元素对象
+   * @param {object} attrs 能拿到用户赋予指令的所有属性的值
    * @author 王镇佳 <wzjfloor@163.com>
    */
 

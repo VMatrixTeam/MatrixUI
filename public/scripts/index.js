@@ -18,35 +18,34 @@ angular
 
 function testCtrl($scope, $http) {
 
-  $scope.config = {'grading': {'compile check': true, 'static check': true,
-  'random tests': true, 'memory check': true, 'google tests': true,
-  'standard tests':true }};
-  $scope.report = 'aaa';
-
-  $scope.changeReport = function() {
-    $scope.report = 'bbb';
-  }
-
+  /**
+   *
+   * @description 取得文档文件名
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
   function getDocsFilenames() {
     let docs = [
-      'button',
-      'card',
-      'checkbox',
-      'codeeditor',
-      'datatable',
-      'dialog',
-      'markdown',
-      'mdeditor',
-      'panel',
-      'radio',
-      'report',
-      'select',
-      'spinner',
-      'tab'
+      'components/button',
+      'components/card',
+      'components/checkbox',
+      'components/codeeditor',
+      'components/datatable',
+      'components/dialog',
+      'components/markdown',
+      'components/mdeditor',
+      'components/panel',
+      'components/radio',
+      'components/select',
+      'components/spinner',
+      'components/tab',
+
+      'specials/report',
     ];
 
     return docs;
   }
+
 
   function getDocs() {
     let docs = getDocsFilenames();
@@ -56,16 +55,17 @@ function testCtrl($scope, $http) {
         url: `/docs/${item}.md`
       }).then(function(res) {
         let { data } = res;
-        $scope[`${item}Docs`] = data;
+        let name = item.split('/')[1];
+        $scope[`${name}Docs`] = data;
       }, function(res) {
-        alert('数据访问错误');
+        throw Error('数据访问错误');
       });
     });
   }
 
   function getDataFilenames() {
     let datas = [
-      'markdown'
+      'markdown.md'
     ];
 
     return datas;
@@ -77,10 +77,11 @@ function testCtrl($scope, $http) {
     datas.forEach((item) => {
       $http({
         method: 'GET',
-        url: `/data/${item}.md`
+        url: `/test/${item}`
       }).then(function(res) {
         let { data } = res;
-        $scope[`${item}Data`] = data;
+        let name = item.split('.')[0];
+        $scope[`${name}Data`] = data;
       }, function(res) {
         alert('数据访问错误');
       });

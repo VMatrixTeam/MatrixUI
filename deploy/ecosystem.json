@@ -1,3 +1,10 @@
+/**
+ *
+ * @description PM2部署配置文件
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
 {
   "apps" : [{
     "name"      : "MatrixUI",

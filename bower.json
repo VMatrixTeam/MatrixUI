@@ -19,11 +19,6 @@
     "tests"
   ],
   "devDependencies": {
-    "angular": "^1.5.8",
-    "marked": "^0.3.6",
-    "highlightjs": "^9.6.0"
-  },
-  "dependencies": {
-    "github-markdown-css": "^2.4.0"
+    "angular": "^1.5.8"
   }
 }

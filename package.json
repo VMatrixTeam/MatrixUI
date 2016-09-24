@@ -33,6 +33,7 @@
     "gulp-uglify": "^2.0.0"
   },
   "dependencies": {
+    "compression": "^1.6.2",
     "jade": "^1.11.0"
   }
 }
