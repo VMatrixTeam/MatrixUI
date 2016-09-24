@@ -58,6 +58,7 @@ html, body {
   -webkit-margin-end: 0px;
   font-weight: bold;
   color: #B93A38;
+  text-decoration: none;
 }
 
 .docs-wrapper {
@@ -84,4 +85,37 @@ html, body {
   padding: 20px;
   border: 1px solid #f7f7f7;
   border-radius: 8px;
+}
+
+.side-menu-wrapper {
+  position: fixed;
+  top: 100px;
+  right: 50px;
+  height: 75%;
+  width: 120px;
+  text-align: right;
+  overflow: auto;
+}
+
+.group-header {
+  color: #353535;
+  font-weight: bold;
+  font-size: 18px;
+  padding-right: 10px;
+}
+
+.group-item {
+  font-family: "Open Sans";
+  color: #555;
+  padding-right: 5px;
+  font-size: 14px;
+  text-decoration: none;
+  display: block;
+  font-weight: bold;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.choose {
+  color: #259dff;
 }

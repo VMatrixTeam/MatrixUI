@@ -89,6 +89,11 @@ function testCtrl($scope, $http) {
     });
   }
 
+  $scope.chooseHash = function(event) {
+    angular.element(document.querySelectorAll('.group-item')).removeClass('choose');
+    angular.element(event.target).addClass('choose');
+  };
+
   /* 按照顺序执行定义的函数 */
 
   function initTestCtrl() {
