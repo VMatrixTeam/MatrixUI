@@ -28,8 +28,6 @@ if (env === 'development') {
   data = { pro: true };
 }
 
-console.log(data);
-
 app.get('/', function(req, res) {
   res.render('index', data);
 });

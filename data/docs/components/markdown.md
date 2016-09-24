@@ -2,9 +2,25 @@
 
 ### Dependencies
 
-```js
-marked.js
-highlight.js
+首先需要安装MathJax
+
+```bash
+bower install MathJax
+```
+
+然后在HTML文件中添加脚本
+
+```html
+<script type="text/javascript" src="${your path}/MatrixUI/deps/marked.min.js"></script>
+<script type="text/javascript" src="${your path}/MatrixUI/deps/highlight.pack.min.js"></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    showProcessingMessages: false,
+    tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
+    TeX: { equationNumbers: {autoNumber: "AMS"} }
+  });
+</script>
+<script type="text/javascript" src="${your path}/MatrixUI/bower_components/MathJax/MathJax.js"></script>
 ```
 
 ### Usage

@@ -23,11 +23,6 @@ function muMdeditorDirective() {
 
   function muMdeditorLink(scope, element, attrs) {
 
-    /* 插入需要的脚本代码 */
-
-    // insertSimpleMDEScript();
-    // insertMathJaxScript();
-
     /**
      *
      * @description SimpleMDE的渲染函数
@@ -74,6 +69,12 @@ function muMdeditorDirective() {
         previewRender,
         tabSize: 2,
       });
+
+      /* 如果提供了content，则把编辑器的值设置为content的值 */
+
+      if (attrs.content) {
+        scope.mde.value(attrs.content);
+      }
     }
 
     if (window.SimpleMDE) {
@@ -165,75 +166,4 @@ function muMdeditorDirective() {
     }
   }
 
-  /**
-   *
-   * @description 插入SimpleMDE对应的js脚本
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertSimpleMDEScript() {
-
-    window.MatrixUI = window.MatrixUI || {};
-    window.MatrixUI.mdeditor = window.MatrixUI.mdeditor || {};
-
-    if (window.MatrixUI.mdeditor.addedSimpleMDE) {
-      return;
-    } else {
-      window.MatrixUI.mdeditor.addedSimpleMDE = true;
-      window.MatrixUI.mdeditor.simpleMDECallbacks = window.MatrixUI.mdeditor.simpleMDECallbacks || {};
-    }
-
-    /* 添加simpleMDE脚本 */
-
-    let simpleMDEScript = document.createElement('script');
-    simpleMDEScript.src = 'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js';
-    simpleMDEScript.type = 'text/javascript';
-    simpleMDEScript.onload = function() {
-      for (let key of Object.keys(window.MatrixUI.mdeditor.simpleMDECallbacks)) {
-        let func = window.MatrixUI.mdeditor.simpleMDECallbacks[key];
-        setTimeout((function() {
-          return function() {
-            try {
-              func();
-              delete window.MatrixUI.mdeditor.simpleMDECallbacks[key];
-            } catch(e) {}
-          };
-        })(), 0);
-      }
-    };
-    document.body.appendChild(simpleMDEScript);
-  }
-
-  /**
-   *
-   * @description 插入MathJax对应的js脚本
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertMathJaxScript() {
-
-    if (window.MathJax) return;
-
-    /* 添加config脚本 */
-
-    let configScript = document.createElement('script');
-    configScript.type = 'text/x-mathjax-config';
-    configScript.text = `
-      MathJax.Hub.Config({
-        showProcessingMessages: false,
-        tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
-        TeX: { equationNumbers: {autoNumber: "AMS"} }
-      });
-    `;
-    document.body.appendChild(configScript);
-
-    /* 添加MathJax脚本 */
-
-    let mathJaxScript = document.createElement('script');
-    mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathJaxScript.type = 'text/javascript';
-    document.body.appendChild(mathJaxScript);
-  }
 }
