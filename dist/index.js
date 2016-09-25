@@ -48,7 +48,7 @@ function testCtrl($scope, $http) {
   }
 
   function getDataFilenames() {
-    var datas = ['markdown.md', 'mdeditor.md'];
+    var datas = ['markdown.md', 'mdeditor.md', 'select.json'];
 
     return datas;
   }
@@ -65,11 +65,17 @@ function testCtrl($scope, $http) {
 
         var name = item.split('.')[0];
         $scope[name + 'Data'] = data;
+        console.log(data);
       }, function (res) {
         alert('数据访问错误');
       });
     });
   }
+
+  $scope.chooseHash = function (event) {
+    angular.element(document.querySelectorAll('.group-item')).removeClass('choose');
+    angular.element(event.target).addClass('choose');
+  };
 
   /* 按照顺序执行定义的函数 */
 
