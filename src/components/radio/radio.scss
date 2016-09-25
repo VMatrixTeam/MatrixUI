@@ -1,6 +1,68 @@
 /**
  *
  * @description radio组件，单选框
- * @author yourname <youremail>
+ * @author williamking <williamjwking@gmail.com>
  *
  */
+
+$matrix-radio-outer-color: #ffffff;
+$matrix-radio-border-color: #4ca0a4;
+
+$matrix-radio-checked-outer-color: #ffffff;
+$matrix-radio-checked-inner-color: #479ea2;
+$matrix-radio-checked-border-color: #4ca0a4;
+
+.radio {
+  display: inline-block;
+  position: relative;
+  input {
+    display: none;
+  }
+  .regular-radio + label {
+    background-color: $matrix-radio-outer-color;
+    border: 1px solid $matrix-radio-border-color;
+    padding: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    position: relative;
+  }
+
+  .regular-radio:checked + label:after {
+    content: ' ';
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    position: absolute;
+    top: 3px;
+    background: $matrix-radio-checked-inner-color;
+    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+    left: 3px;
+    font-size: 32px;
+  }
+
+  .regular-radio:checked + label {
+    background-color: $matrix-radio-checked-outer-color;
+    color: $matrix-radio-checked-inner-color;
+    border: 1px solid $matrix-radio-checked-border-color;
+    display: inline-block;
+  }
+
+  .regular-radio + label.big {
+    padding: 16px;
+  }
+
+  .regular-radio:checked + label.big:after {
+    width: 24px;
+    height: 24px;
+    top: 4px;
+    left: 4px;
+  }
+
+  .regular-radio:checked + label.big {
+    background-color: $matrix-radio-checked-outer-color;
+    color: $matrix-radio-checked-inner-color;
+    border: 1px solid $matrix-radio-checked-border-color;
+    display: inline-block;
+  }
+}
