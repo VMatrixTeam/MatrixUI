@@ -95,6 +95,7 @@ html, body {
   width: 120px;
   text-align: right;
   overflow: auto;
+  z-index: 10;
 }
 
 .group-header {

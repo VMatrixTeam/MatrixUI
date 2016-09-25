@@ -19,6 +19,7 @@
     "tests"
   ],
   "devDependencies": {
-    "angular": "^1.5.8"
+    "angular": "^1.5.8",
+    "MathJax": "^2.6.1"
   }
 }
