@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.dialog', [])
   .directive('muDialog', muDialogDirective);
 
+muDialogDirective.$inject = [];
+
 function muDialogDirective() {
   return {
     restrict: 'E',

@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.button', [])
   .directive('muButton', muButtonDirective);
 
+muButtonDirective.$inject = ['$timeout'];
+
 function muButtonDirective($timeout) {
 
   return {

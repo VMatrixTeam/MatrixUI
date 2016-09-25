@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.spinner', [])
   .directive('muSpinner', muSpinnerDirective);
 
+muSpinnerDirective.$inject = [];
+
 function muSpinnerDirective() {
   return {
     restrict: 'E',

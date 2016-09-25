@@ -9,6 +9,7 @@ angular
   .module('matrixui.components.mdeditor', [])
   .directive('muMdeditor', muMdeditorDirective);
 
+muMdeditorDirective.$inject = [];
 
 function muMdeditorDirective() {
 
@@ -22,36 +23,49 @@ function muMdeditorDirective() {
 
   function muMdeditorLink(scope, element, attrs) {
 
-    /* 插入需要的脚本代码 */
+    /* 指令绑定的ng-model属性 */
 
-    insertSimpleMDEScript();
-    insertMathJaxScript();
+    scope.name = attrs.ngModel;
+
+    let content = attrs.content;
+    if (!content) {
+      content = '';
+    }
+    if (scope.$parent[scope.name]) {
+      content = scope.$parent[scope.name];
+    } else {
+      scope.$parent[scope.name] = '';
+    }
+    scope.content = content;
+
+    if (scope.name) {
+      scope.$parent.$watch(scope.name, function() {
+        if (scope.mde) {
+          scope.mde.value(scope.$parent[scope.name]);
+        }
+      });
+    }
+
+    if (window.SimpleMDE) {
+      initMDE();
+    } else {
+      throw Error('mu-mdeditor error: SimpleMDE没有加载');
+    }
 
     /**
      *
      * @description SimpleMDE的渲染函数
-     * @params {string} plainText 编辑器里面的markdown文本
-     * @params {object} preview 预览区域的dom对象
+     * @param {string} plainText 编辑器里面的markdown文本
+     * @param {object} preview 预览区域的dom对象
      * @author 吴家荣 <jiarongwu.se@foxmail.com>
      *
      */
 
     function previewRender(plainText, preview) {
-      if (!angular.element(preview).hasClass('markdown-body'))
-        angular.element(preview).addClass('markdown-body');
+      angular.element(preview).addClass('markdown-body');
 
-      /* 由于科学公式渲染速度较慢，因此通过timeout来减少渲染次数 */
-
-      if (!scope.timeout) {
-        scope.timeout = setTimeout(function() {
-          MathJax.Hub.Queue(
-            [insertHTML, plainText, preview],
-            ["Typeset", MathJax.Hub, preview],
-            ["resetEquationNumbers", MathJax.InputJax.TeX]
-          );
-          scope.timeout = null;
-        }, 200);
-      }
+      insertHTML(plainText, preview);
+      MathJax.Hub.Typeset(preview);
 
       return preview.innerHTML;
     }
@@ -70,9 +84,9 @@ function muMdeditorDirective() {
       /* 不同的类型，具有不同的toolbar */
 
       if (type === 'full') {
-        toolbar = ['heading-1', 'heading-2', 'heading-3', 'bold', 'italic', '|','quote', 'code', 'link', 'image', '|','unordered-list', 'ordered-list', '|', 'preview', 'side-by-side', 'fullscreen', '|', 'guide'];
+        toolbar = getFullToolbar();
       } else {
-        toolbar = ['heading-1', 'heading-2', 'heading-3', 'bold', 'italic', '|','quote', 'code', 'link', 'image','|','unordered-list', 'ordered-list', '|', 'preview', '|', 'guide'];
+        toolbar = getSimpleToolbar();
       }
 
       /* 创建SimpleMDE实例 */
@@ -84,20 +98,66 @@ function muMdeditorDirective() {
         previewRender,
         tabSize: 2,
       });
-    }
 
-    if (window.SimpleMDE) {
-      initMDE();
-    } else {
-      window.MatrixUI.mdeditor.simpleMDECallbacks[scope.$id] = initMDE;
+      /* 如果提供了content，则把编辑器的值设置为content的值 */
+
+      if (attrs.content) {
+        scope.mde.value(attrs.content);
+      }
     }
   }
 
   /**
    *
+   * @description 返回full类型顶部工具栏
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  function getFullToolbar() {
+    let toolbar = [
+      'heading-1', 'heading-2', 'heading-3', 'bold', 'italic',
+      '|',
+      'quote', 'code', 'link', 'image',
+      '|',
+      'unordered-list', 'ordered-list',
+      '|',
+      'preview', 'side-by-side', 'fullscreen',
+      '|',
+      'guide'
+    ];
+
+    return toolbar;
+  }
+
+  /**
+   *
+   * @description 返回simple类型顶部工具栏
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  function getSimpleToolbar() {
+    let toolbar = [
+      'heading-1', 'heading-2', 'heading-3', 'bold', 'italic',
+      '|',
+      'quote', 'code', 'link', 'image',
+      '|',
+      'unordered-list', 'ordered-list',
+      '|',
+      'preview',
+      '|',
+      'guide'
+    ];
+
+    return toolbar;
+  }
+
+  /**
+   *
    * @description 渲染markdown文本成HTML，并插入到指定的dom中
-   * @params {string} content markdown文本
-   * @params {object} dom 对应的dom对象
+   * @param {string} content markdown文本
+   * @param {object} dom 对应的dom对象
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    *
    */
@@ -109,7 +169,7 @@ function muMdeditorDirective() {
   /**
    *
    * @description 渲染markdown文本
-   * @params {string} content markdown文本
+   * @param {string} content markdown文本
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    *
    */
@@ -129,75 +189,4 @@ function muMdeditorDirective() {
     }
   }
 
-  /**
-   *
-   * @description 插入SimpleMDE对应的js脚本
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertSimpleMDEScript() {
-
-    window.MatrixUI = window.MatrixUI || {};
-    window.MatrixUI.mdeditor = window.MatrixUI.mdeditor || {};
-
-    if (window.MatrixUI.mdeditor.addedSimpleMDE) {
-      return;
-    } else {
-      window.MatrixUI.mdeditor.addedSimpleMDE = true;
-      window.MatrixUI.mdeditor.simpleMDECallbacks = window.MatrixUI.mdeditor.simpleMDECallbacks || {};
-    }
-
-    /* 添加simpleMDE脚本 */
-
-    let simpleMDEScript = document.createElement('script');
-    simpleMDEScript.src = 'https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js';
-    simpleMDEScript.type = 'text/javascript';
-    simpleMDEScript.onload = function() {
-      for (let key of Object.keys(window.MatrixUI.mdeditor.simpleMDECallbacks)) {
-        let func = window.MatrixUI.mdeditor.simpleMDECallbacks[key];
-        setTimeout((function() {
-          return function() {
-            try {
-              func();
-              delete window.MatrixUI.mdeditor.simpleMDECallbacks[key];
-            } catch(e) {}
-          };
-        })(), 0);
-      }
-    };
-    document.body.appendChild(simpleMDEScript);
-  }
-
-  /**
-   *
-   * @description 插入MathJax对应的js脚本
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertMathJaxScript() {
-
-    if (window.MathJax) return;
-
-    /* 添加config脚本 */
-
-    let configScript = document.createElement('script');
-    configScript.type = 'text/x-mathjax-config';
-    configScript.text = `
-      MathJax.Hub.Config({
-        showProcessingMessages: false,
-        tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
-        TeX: { equationNumbers: {autoNumber: "AMS"} }
-      });
-    `;
-    document.body.appendChild(configScript);
-
-    /* 添加MathJax脚本 */
-
-    let mathJaxScript = document.createElement('script');
-    mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathJaxScript.type = 'text/javascript';
-    document.body.appendChild(mathJaxScript);
-  }
 }

@@ -12,6 +12,8 @@ angular
   .module('matrixui.components.markdown', [])
   .directive('muMarkdown', muMarkdowndDirective);
 
+muMarkdowndDirective.$inject = [];
+
 function muMarkdowndDirective() {
 
   return {
@@ -29,15 +31,13 @@ function muMarkdowndDirective() {
   /**
    *
    * @description muMarkdown指令的Link函数
-   * @params {object} scope 指令的$scope对象
-   * @params {object} element 指令对应的jqlite元素对象
-   * @params {object} attrs 能拿到用户赋予指令的所有属性的值
+   * @param {object} scope 指令的$scope对象
+   * @param {object} element 指令对应的jqlite元素对象
+   * @param {object} attrs 能拿到用户赋予指令的所有属性的值
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    */
 
   function muMarkdownLink(scope, element, attrs) {
-
-    insertMathJaxScript();
 
     /* 指令绑定的ng-model属性 */
 
@@ -50,7 +50,9 @@ function muMarkdowndDirective() {
       content = '';
     }
     if (scope.$parent[scope.name]) {
-      content = scope.$parent[scope.name]
+      content = scope.$parent[scope.name];
+    } else {
+      scope.$parent[scope.name] = '';
     }
     scope.content = content;
 
@@ -71,17 +73,18 @@ function muMarkdowndDirective() {
         /* 如果MathJax存在，则开始渲染，否则直到MathJax加载完毕才开始渲染 */
 
         function initMarkdown() {
-          MathJax.Hub.Queue(
-            [insertHTML, content],
-            ["Typeset", MathJax.Hub, element[0]],
-            ["resetEquationNumbers", MathJax.InputJax.TeX]
-          );
+          insertHTML(content);
+          MathJax.Hub.Typeset(element[0]);
         }
 
         if (window.MathJax) {
-          initMarkdown();
+          try {
+            initMarkdown();
+          } catch(e) {
+            console.warn('markdown warn: 给定的数据暂时无法渲染，等待数据更新...');
+          }
         } else {
-          window.MatrixUI.markdown.mathJaxCallbacks[scope.$id] = initMarkdown;
+          throw Error('MathJax没有加载');
         }
       });
     }
@@ -94,7 +97,7 @@ function muMarkdowndDirective() {
   /**
    *
    * @description 将markdown文本渲染成html字符串
-   * @params {string} content 需要渲染的markdown文本
+   * @param {string} content 需要渲染的markdown文本
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    *
    */
@@ -112,60 +115,5 @@ function muMarkdowndDirective() {
     } else {
       throw Error('marked is not defined');
     }
-  }
-
-  /**
-   *
-   * @description 添加MathJax的脚本和设置config
-   * @author 吴家荣 <jiarongwu.se@foxmail.com>
-   *
-   */
-
-  function insertMathJaxScript() {
-
-    window.MatrixUI = window.MatrixUI || {};
-    window.MatrixUI.markdown = window.MatrixUI.markdown || {};
-
-    /* 记录添加过MathJax脚本，防止多次添加 */
-
-    if (window.MatrixUI.markdown.addedMathJax) {
-      return;
-    } else {
-      window.MatrixUI.markdown.addedMathJax = true;
-      window.MatrixUI.markdown.mathJaxCallbacks = window.MatrixUI.markdown.mathJaxCallbacks || {};
-    }
-
-    /* 添加config脚本 */
-
-    let configScript = document.createElement('script');
-    configScript.type = 'text/x-mathjax-config';
-    configScript.text = `
-      MathJax.Hub.Config({
-        showProcessingMessages: false,
-        tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
-        TeX: { equationNumbers: {autoNumber: "AMS"} }
-      });
-    `;
-    document.body.appendChild(configScript);
-
-    /* 添加MathJax脚本 */
-
-    let mathJaxScript = document.createElement('script');
-    mathJaxScript.src = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
-    mathJaxScript.type = 'text/javascript';
-    mathJaxScript.onload = function() {
-      for (let key of Object.keys(window.MatrixUI.markdown.mathJaxCallbacks)) {
-        let func = window.MatrixUI.markdown.mathJaxCallbacks[key];
-        setTimeout((function() {
-          return function() {
-            try {
-              func();
-              delete window.MatrixUI.markdown.mathJaxCallbacks[key];
-            } catch(e) {}
-          };
-        })(), 0);
-      }
-    };
-    document.body.appendChild(mathJaxScript);
   }
 };

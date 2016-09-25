@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.select', [])
   .directive('muSelect', muSelectDirective);
 
+muSelectDirective.$inject = [];
+
 function muSelectDirective() {
   return {
     restrict: 'E',

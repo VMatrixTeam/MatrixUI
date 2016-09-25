@@ -1,0 +1,60 @@
+//-
+//- @description 测试、发布主页面
+//- @author 吴家荣 <jiarongwu.se@foxmail.com>
+//-
+
+doctype html
+
+html
+  head
+    title Docs for MatrixUI
+    meta(charset='utf-8')
+    link(rel="shortcut icon" href="/images/favicon.ico")
+    link(rel='stylesheet' type='text/css' href='./styles/index.css')
+    script(type='text/javascript' src='/angular/angular.min.js')
+    script(type='text/javascript' src='/marked.min.js')
+    script(type='text/javascript' src='/highlight.pack.min.js')
+    script(type='text/javascript' src='/simplemde.min.js')
+    script(type='text/x-mathjax-config').
+      MathJax.Hub.Config({
+        showProcessingMessages: false,
+        tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
+        TeX: { equationNumbers: {autoNumber: "AMS"} }
+      });
+    script(type='text/javascript' src='/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+
+    if dev
+      script(type='text/javascript' src='./temp/index.js')
+      script(type='text/javascript' src='./temp/matrixui.js')
+      link(rel='stylesheet' type='text/css' href='./temp/matrixui.css')
+    else
+      script(type='text/javascript' src='./index.js')
+      script(type='text/javascript' src='./matrixui.min.js')
+      link(rel='stylesheet' type='text/css' href='./matrixui.min.css')
+
+  body(ng-app='testMatrixUIApp')
+    a(href="https://github.com/VMatrixTeam/MatrixUI" class="github-ribbon") Fork me on GitHub
+    div(ng-controller='testCtrl')
+      .docs-title MatrixUI
+        a.docs-sub-title(href='https://github.com/VMatrixTeam') @VMatrixTeam
+
+      //- sidemenu
+      include sidemenu.jade
+
+      //- components
+
+      include components/button.jade
+      include components/markdown.jade
+      include components/mdeditor.jade
+      include components/codeeditor.jade
+      include components/datatable.jade
+      include components/dialog.jade
+      include components/radio.jade
+      include components/select.jade
+      include components/tab.jade
+      include components/panel.jade
+      include components/spinner.jade
+
+      //- specials
+
+      include specials/report.jade

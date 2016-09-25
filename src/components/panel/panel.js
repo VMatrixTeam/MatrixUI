@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.panel', [])
   .directive('muPanel', muPanelDirective);
 
+muPanelDirective.$inject = [];
+
 function muPanelDirective() {
   return {
     restrict: 'E',

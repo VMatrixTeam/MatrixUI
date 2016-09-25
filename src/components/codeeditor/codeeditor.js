@@ -9,6 +9,8 @@ angular
   .module('matrixui.components.codeeditor', [])
   .directive('muCodeeditor', muCodeeditorDirective);
 
+muCodeeditorDirective.$inject = [];
+
 function muCodeeditorDirective() {
   return {
     restrict: 'E',

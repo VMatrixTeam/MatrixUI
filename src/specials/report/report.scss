@@ -1,0 +1,105 @@
+
+#matrixui-programming-report .report-section {
+  margin-top: 24px;
+  border-radius: 8px;
+  background-color: #fff;
+  padding: 36px;
+  box-shadow: 0px 3px 10px #ccc;
+  width: auto;
+}
+
+#matrixui-programming-report .report-section .score {
+  padding-bottom: 24px;
+  margin-bottom: 5px;
+  font-size: 24px;
+  line-height: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #479ea2;
+}
+
+#matrixui-programming-report .report-section .static-check-score a.link, #matrixui-programming-report .report-section .memory-check-score a.link {
+  float: right;
+  font-size: 16px;
+}
+
+#matrixui-programming-report .report-section .test-content {
+  max-height: 500px;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail {
+  max-height: 500px;
+  overflow: hidden;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.memory-check-summary {
+  margin-top: 35px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail div.tests-check-summary pre {
+  margin-left: 5px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 17px !important;
+  font-weight: bold;
+  background-color: white;
+  padding: 0;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.full-score {
+  color: #2b9161;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.not-executing-check, #matrixui-programming-report .report-section .test-content .report-detail div.message pre.error-content {
+  color: #e0343c;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.under-checking {
+  color: #FF9900;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.label {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.red-color {
+  color: #df3636;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail .error-detail {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 12px;
+  overflow: auto;
+  max-height: 420px;
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.error-content {
+  letter-spacing: 0.02em;
+  max-width: 99%;
+  max-height: 500px;
+  word-wrap: normal;
+  overflow: auto;
+  overflow-x: hidden;
+  white-space: pre;
+  line-height: 1.5em;
+  white-space: -moz-pre-wrap;
+  /* Mozilla, supported since 1999 */
+  white-space: -pre-wrap;
+  /* Opera */
+  white-space: -o-pre-wrap;
+  /* Opera */
+  white-space: pre-wrap;
+  /* CSS3 - Text module (Candidate Recommendation) http://www.w3.org/TR/css3-text/#white-space */
+  word-wrap: break-word;
+  /* IE 5.5+ */
+}
+
+#matrixui-programming-report .report-section .test-content .report-detail pre.inout-tests, #matrixui-programming-report .report-section .test-content .report-detail .memory-check {
+  padding: 5px;
+  border: 1px solid #CCCCCC;
+  border-radius: 2px;
+  background-color: #F5F5F5;
+}
