@@ -66,7 +66,8 @@ function testCtrl($scope, $http) {
   function getDataFilenames() {
     let datas = [
       'markdown.md',
-      'mdeditor.md'
+      'mdeditor.md',
+      'select.json'
     ];
 
     return datas;
@@ -83,6 +84,7 @@ function testCtrl($scope, $http) {
         let { data } = res;
         let name = item.split('.')[0];
         $scope[`${name}Data`] = data;
+        console.log(data);
       }, function(res) {
         alert('数据访问错误');
       });
