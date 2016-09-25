@@ -10,6 +10,8 @@
 
 ### Docs
 
+参数：
+
 ```js
 warn: 警告效果
 danger: 危险效果
