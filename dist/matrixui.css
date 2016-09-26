@@ -9,6 +9,14 @@
 @charset "UTF-8";
 /**
  *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
@@ -19,22 +27,39 @@
  *
  */
 .mu-button {
-  background-color: rgba(71, 158, 162, 0.5);
   border: 0px;
   display: inline-block;
   color: white;
-  transition: all 0.2s;
-  border-radius: 8px;
+  transition: background-color 0.2s, border 0.2s;
+  border-radius: 5px;
   height: 36px;
   line-height: 36px;
+  padding: 0px;
   padding-left: 30px;
-  padding-right: 30px; }
+  padding-right: 30px;
+  vertical-align: middle; }
   .mu-button:hover {
     cursor: pointer;
-    background-color: #479EA2;
-    transition: all 0.2s; }
+    transition: background-color 0.2s, border 0.2s; }
   .mu-button:focus {
     outline: 0; }
+
+.mu-button-default {
+  background-color: transparent;
+  border: 1px solid #e2dfdf;
+  color: black; }
+  .mu-button-default:hover {
+    border: 1px solid #a2a2a2; }
+
+.mu-button-primary {
+  background-color: rgba(71, 158, 162, 0.5); }
+  .mu-button-primary:hover {
+    background-color: #479EA2; }
+
+.mu-button-info {
+  background-color: rgba(28, 208, 136, 0.5); }
+  .mu-button-info:hover {
+    background-color: #1cd088; }
 
 .mu-button-warn {
   background-color: rgba(251, 170, 49, 0.5); }
@@ -49,8 +74,8 @@
 @charset "UTF-8";
 /**
  *
- * @description card组件
- * @author yourname <youremail>
+ * @description codeeditor组件，代码编辑器
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
 
@@ -59,14 +84,6 @@
  *
  * @description checkbox组件
  * @author yourname <youremail>
- *
- */
-
-@charset "UTF-8";
-/**
- *
- * @description codeeditor组件，代码编辑器
- * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
 
