@@ -44,6 +44,9 @@ function muButtonDirective($timeout) {
       });
     }
 
+    if (attr.warn || attr.warn === '') element.addClass('mu-button-warn');
+    if (attr.danger || attr.danger === '') element.addClass('mu-button-danger');
+
     // disabling click event when disabled is true
     element.on('click', function(e){
       if (attr.disabled === true) {

@@ -3,9 +3,9 @@
 ### Usage
 
 ```html
-<mu-button info=true>your content</mu-button>
-<mu-button warn=true>your content</mu-button>
-<mu-button danger=true>your content</mu-button>
+<mu-button info>your content</mu-button>
+<mu-button warn>your content</mu-button>
+<mu-button danger>your content</mu-button>
 ```
 
 ### Docs

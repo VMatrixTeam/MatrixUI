@@ -120,3 +120,7 @@ html, body {
 .choose {
   color: #259dff;
 }
+
+.mu-button {
+  margin-right: 30px;
+}

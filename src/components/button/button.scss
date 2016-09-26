@@ -7,7 +7,7 @@
 @import '../../commons/color';
 
 .mu-button {
-  background-color: $lightGreen;
+  background-color: $lightCyan;
   border: 0px;
   display: inline-block;
   color: white;
@@ -20,7 +20,7 @@
 
   &:hover {
     cursor: pointer;
-    background-color: $green;
+    background-color: $cyan;
     transition: all 0.2s;
   }
   &:focus {
@@ -40,9 +40,17 @@
 }
 
 .mu-button-warn {
+  background-color: $lightYellow;
 
+  &:hover {
+    background-color: $yellow;
+  }
 }
 
 .mu-button-danger {
+  background-color: $lightRed;
 
+  &:hover {
+    background-color: $red;
+  }
 }
