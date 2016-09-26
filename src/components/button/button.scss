@@ -7,21 +7,21 @@
 @import '../../commons/color';
 
 .mu-button {
-  background-color: $lightCyan;
   border: 0px;
   display: inline-block;
   color: white;
-  transition: all 0.2s;
-  border-radius: 8px;
+  transition: background-color 0.2s, border 0.2s;
+  border-radius: 5px;
   height: 36px;
   line-height: 36px;
+  padding: 0px;
   padding-left: 30px;
   padding-right: 30px;
+  vertical-align: middle;
 
   &:hover {
     cursor: pointer;
-    background-color: $cyan;
-    transition: all 0.2s;
+    transition: background-color 0.2s, border 0.2s;
   }
   &:focus {
     outline: 0;
@@ -37,6 +37,33 @@
 }
 
 .mu-button-small {
+
+}
+
+.mu-button-default {
+  background-color: transparent;
+  border: 1px solid $borderLight;
+  color: black;
+
+  &:hover {
+    border: 1px solid $border;
+  }
+}
+
+.mu-button-primary {
+  background-color: $lightCyan;
+
+  &:hover {
+    background-color: $cyan;
+  }
+}
+
+.mu-button-info {
+  background-color: $greenLight;
+
+  &:hover {
+    background-color: $green;
+  }
 }
 
 .mu-button-warn {
