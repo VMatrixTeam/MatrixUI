@@ -67,6 +67,9 @@ function muButtonDirective($timeout) {
       });
     }
 
+    if (attr.warn || attr.warn === '') element.addClass('mu-button-warn');
+    if (attr.danger || attr.danger === '') element.addClass('mu-button-danger');
+
     // disabling click event when disabled is true
     element.on('click', function (e) {
       if (attr.disabled === true) {
@@ -140,7 +143,7 @@ function muCheckboxDirective() {
 /**
  *
  * @description codeeditor组件，代码编辑器
- * @author yourname <youremail>
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
 

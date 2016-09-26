@@ -65,7 +65,6 @@ function testCtrl($scope, $http) {
 
         var name = item.split('.')[0];
         $scope[name + 'Data'] = data;
-        console.log(data);
       }, function (res) {
         alert('数据访问错误');
       });

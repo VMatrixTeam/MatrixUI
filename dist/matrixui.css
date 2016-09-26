@@ -9,14 +9,6 @@
 @charset "UTF-8";
 /**
  *
- * @description card组件
- * @author yourname <youremail>
- *
- */
-
-@charset "UTF-8";
-/**
- *
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
@@ -39,10 +31,28 @@
   padding-right: 30px; }
   .mu-button:hover {
     cursor: pointer;
-    background-color: #479ea2;
+    background-color: #479EA2;
     transition: all 0.2s; }
   .mu-button:focus {
     outline: 0; }
+
+.mu-button-warn {
+  background-color: rgba(251, 170, 49, 0.5); }
+  .mu-button-warn:hover {
+    background-color: #fbaa31; }
+
+.mu-button-danger {
+  background-color: rgba(242, 60, 84, 0.5); }
+  .mu-button-danger:hover {
+    background-color: #f23c54; }
+
+@charset "UTF-8";
+/**
+ *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
 
 @charset "UTF-8";
 /**
@@ -56,6 +66,14 @@
 /**
  *
  * @description codeeditor组件，代码编辑器
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description dialog组件
  * @author yourname <youremail>
  *
  */
@@ -64,14 +82,6 @@
 /**
  *
  * @description dataTable组件，数据表格
- * @author yourname <youremail>
- *
- */
-
-@charset "UTF-8";
-/**
- *
- * @description dialog组件
  * @author yourname <youremail>
  *
  */
