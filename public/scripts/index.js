@@ -66,7 +66,8 @@ function testCtrl($scope, $http) {
   function getDataFilenames() {
     let datas = [
       'markdown.md',
-      'mdeditor.md'
+      'mdeditor.md',
+      'select.json'
     ];
 
     return datas;

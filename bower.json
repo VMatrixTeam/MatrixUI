@@ -21,5 +21,8 @@
   "devDependencies": {
     "angular": "^1.5.8",
     "MathJax": "^2.6.1"
+  },
+  "resolutions": {
+    "angular": "^1.5.8"
   }
 }

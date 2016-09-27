@@ -1,7 +1,7 @@
 /**
  *
  * @description codeeditor组件，代码编辑器
- * @author yourname <youremail>
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
 
