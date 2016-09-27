@@ -12,6 +12,16 @@ $matrix-radio-checked-outer-color: #ffffff;
 $matrix-radio-checked-inner-color: #479ea2;
 $matrix-radio-checked-border-color: #4ca0a4;
 
+.radio.big {
+  width: 34px;
+  height: 34px;
+}
+
+.radio.small {
+  width: 16px;
+  height: 16px;
+}
+
 .radio {
   display: inline-block;
   position: relative;
@@ -22,6 +32,7 @@ $matrix-radio-checked-border-color: #4ca0a4;
     background-color: $matrix-radio-outer-color;
     border: 1px solid $matrix-radio-border-color;
     padding: 7px;
+    cursor: pointer;
     border-radius: 50%;
     display: inline-block;
     box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
@@ -30,8 +41,8 @@ $matrix-radio-checked-border-color: #4ca0a4;
 
   .regular-radio:checked + label:after {
     content: ' ';
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     position: absolute;
     top: 3px;
@@ -66,3 +77,4 @@ $matrix-radio-checked-border-color: #4ca0a4;
     display: inline-block;
   }
 }
+

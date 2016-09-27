@@ -27,6 +27,7 @@ function muRadioDirective() {
     let target = angular.element(element);
     let label = target.find('label')[0];
     label.classList.add(size);
+    element[0].classList.add(size);
   }
 
   function initEvent(element) {
