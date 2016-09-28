@@ -117,6 +117,11 @@ function testCtrl($scope, $http) {
     angular.element(event.target).addClass('choose');
   };
 
+  $scope.radioData = {
+    sex: 'male',
+    color: 'blue'
+  };
+
   /* 按照顺序执行定义的函数 */
 
   function initTestCtrl() {

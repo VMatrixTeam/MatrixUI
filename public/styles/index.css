@@ -129,3 +129,8 @@ html, body {
   width: 200px;
   margin-bottom: 20px;
 }
+
+.radio-value {
+  color: #00b0e8;
+  font-weight: bold;
+}

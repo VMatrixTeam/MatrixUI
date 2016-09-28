@@ -6,7 +6,15 @@
       mu-markdown(ng-model='radioDocs' content='加载中...')
     .docs-content-title 示例
     .docs-content
-      mu-radio(value='male' id='male' name='sex' size='small' checked)
-      label(for='male') male
-      mu-radio(value='female' id='female' name='sex' size='small')
-      label(for='female') female
+
+      p sex is&nbsp
+        span.radio-value {{ radioData.sex }}
+      mu-radio-group(name='sex', ng-model='radioData.sex')
+        mu-radio(value='male', size='small') male
+        mu-radio(value='female', size='small') female
+      br
+      p color is&nbsp
+        span.radio-value {{ radioData.color }}
+      mu-radio-group(name='color', ng-model='radioData.color')
+        mu-radio(value='red', size='big') red
+        mu-radio(value='blue', size='big') blue
