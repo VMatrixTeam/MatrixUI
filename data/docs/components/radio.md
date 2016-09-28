@@ -3,7 +3,13 @@
 ### Usage
 
 ```html
-<mu-radio value="male" name="sex" size="small"></mu-radio>
+<mu-radio-group name="sex" ng-model="selected">
+  <mu-radio value="male" size="small"></mu-radio>
+</mu-radio-group>
+<mu-radio-group name="color" >
+  <mu-radio value="blue" size="small"></mu-radio>
+  <mu-radio value="red" size="small" checked></mu-radio>
+</mu-radio-group>
 ```
 
 ### Docs
@@ -18,3 +24,9 @@
 * 设置radio的大小
 * **small** 小
 * **big** 大
+
+参数: ng-model
+* 与angular数据的双向绑定
+
+参数: checked
+* 使得该radio初始被选中，但在ng-model被设置时无效

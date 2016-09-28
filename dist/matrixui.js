@@ -10,9 +10,6 @@
 angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab']);
 'use strict';
 
-angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
-'use strict';
-
 /**
  *
  * @description button组件
@@ -21,6 +18,9 @@ angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
  */
 
 angular.module('matrixui.specials', ['matrixui.specials.report']);
+'use strict';
+
+angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
 /**
@@ -516,7 +516,7 @@ function muPanelDirective() {
 /**
  *
  * @description radio组件，单选框
- * @author yourname <youremail>
+ * @author yourname <williamjwking@gmail.com>
  *
  */
 
@@ -540,6 +540,7 @@ function muRadioDirective() {
     var target = angular.element(element);
     var label = target.find('label')[0];
     label.classList.add(size);
+    element[0].classList.add(size);
   }
 
   function initEvent(element) {
