@@ -23,6 +23,7 @@ html
       });
     script(type='text/javascript' src='/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
 
+    script(type='text/javascript' src='/codemirror.min.js')
     if dev
       script(type='text/javascript' src='./temp/index.js')
       script(type='text/javascript' src='./temp/matrixui.js')
@@ -32,6 +33,9 @@ html
       script(type='text/javascript' src='./matrixui.min.js')
       link(rel='stylesheet' type='text/css' href='./matrixui.min.css')
 
+    script(type='text/javascript' src='/CodeMirror/mode/javascript/javascript.js')
+    //- script(type='text/javascript' src='/ui-codemirror/src/ui-codemirror.js')
+
   body(ng-app='testMatrixUIApp')
     a(href="https://github.com/VMatrixTeam/MatrixUI" class="github-ribbon") Fork me on GitHub
     div(ng-controller='testCtrl')
@@ -39,6 +43,7 @@ html
         a.docs-sub-title(href='https://github.com/VMatrixTeam') @VMatrixTeam
 
       //- sidemenu
+
       include sidemenu.jade
 
       //- components
