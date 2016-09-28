@@ -6,4 +6,6 @@
       mu-markdown(ng-model='codeeditorDocs' content='加载中...')
     .docs-content-title 示例
     .docs-content
-      mu-codeeditor(ui-codemirror-opts="editorOptions")
+      .language
+        mu-select(model="languageData.choose" options="languageData.languages" value-attr="value" )
+      mu-codeeditor(ui-codemirror-opts="editorOptions" ng-model="testcppData" change='languageChange()')

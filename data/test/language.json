@@ -1,0 +1,13 @@
+{
+  "choose": "CPP",
+  "languages": [
+    { "value": "CPP", "label": "C++" },
+    { "value": "C", "label": "C" },
+    { "value": "Java", "label": "Java" },
+    { "value": "PHP", "label": "PHP" }
+  ],
+  "CPP": "text/x-c++src",
+  "C": "text/x-csrc",
+  "Java": "text/x-java",
+  "PHP": "text/x-php"
+}

@@ -124,3 +124,8 @@ html, body {
 .mu-button {
   margin-right: 30px;
 }
+
+.language {
+  width: 200px;
+  margin-bottom: 20px;
+}

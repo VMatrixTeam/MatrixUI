@@ -22,13 +22,19 @@ function testCtrl($scope, $http) {
 
   $scope.editorOptions = {
     lineNumbers: true,
-    mode: "javascript",
+    mode: "text/x-java",
     keyMap: "sublime",
     autoCloseBrackets: true,
     matchBrackets: true,
     showCursorWhenSelecting: true,
     theme: "monokai",
-    tabSize: 2
+    tabSize: 2,
+    onLoad: function(_cm) {
+      $scope.$watch('languageData.choose', function() {
+        if (!$scope.languageData) return;
+        _cm.setOption('mode', $scope.languageData[$scope.languageData.choose]);
+      });
+    }
   };
 
   /**
@@ -37,6 +43,7 @@ function testCtrl($scope, $http) {
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    *
    */
+
   function getDocsFilenames() {
     let docs = [
       'components/button',
@@ -80,7 +87,9 @@ function testCtrl($scope, $http) {
     let datas = [
       'markdown.md',
       'mdeditor.md',
-      'select.json'
+      'select.json',
+      'language.json',
+      'testcpp.cpp'
     ];
 
     return datas;
