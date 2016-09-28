@@ -9,6 +9,22 @@
 @charset "UTF-8";
 /**
  *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
+ * @description checkbox组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
@@ -62,22 +78,6 @@
   background-color: rgba(242, 60, 84, 0.5); }
   .mu-button-danger:hover {
     background-color: #f23c54; }
-
-@charset "UTF-8";
-/**
- *
- * @description card组件
- * @author yourname <youremail>
- *
- */
-
-@charset "UTF-8";
-/**
- *
- * @description checkbox组件
- * @author yourname <youremail>
- *
- */
 
 @charset "UTF-8";
 /**
