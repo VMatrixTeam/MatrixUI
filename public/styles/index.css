@@ -125,6 +125,11 @@ html, body {
   margin-right: 30px;
 }
 
+.language {
+  width: 200px;
+  margin-bottom: 20px;
+}
+
 .radio-value {
   color: #00b0e8;
   font-weight: bold;

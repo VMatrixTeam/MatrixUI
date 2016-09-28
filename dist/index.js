@@ -16,7 +16,26 @@ angular.module('testMatrixUIApp', ['matrixui']).controller('testCtrl', testCtrl)
  *
  */
 
+testCtrl.$inject = ['$scope', '$http'];
+
 function testCtrl($scope, $http) {
+
+  $scope.editorOptions = {
+    lineNumbers: true,
+    mode: "text/x-java",
+    keyMap: "sublime",
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    showCursorWhenSelecting: true,
+    theme: "monokai",
+    tabSize: 2,
+    onLoad: function onLoad(_cm) {
+      $scope.$watch('languageData.choose', function () {
+        if (!$scope.languageData) return;
+        _cm.setOption('mode', $scope.languageData[$scope.languageData.choose]);
+      });
+    }
+  };
 
   /**
    *
@@ -24,6 +43,7 @@ function testCtrl($scope, $http) {
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    *
    */
+
   function getDocsFilenames() {
     var docs = ['components/button', 'components/card', 'components/checkbox', 'components/codeeditor', 'components/datatable', 'components/dialog', 'components/markdown', 'components/mdeditor', 'components/panel', 'components/radio', 'components/select', 'components/spinner', 'components/tab', 'specials/report'];
 
@@ -48,7 +68,7 @@ function testCtrl($scope, $http) {
   }
 
   function getDataFilenames() {
-    var datas = ['markdown.md', 'mdeditor.md', 'select.json'];
+    var datas = ['markdown.md', 'mdeditor.md', 'select.json', 'language.json', 'testcpp.cpp'];
 
     return datas;
   }
@@ -74,6 +94,11 @@ function testCtrl($scope, $http) {
   $scope.chooseHash = function (event) {
     angular.element(document.querySelectorAll('.group-item')).removeClass('choose');
     angular.element(event.target).addClass('choose');
+  };
+
+  $scope.radioData = {
+    sex: 'male',
+    color: 'blue'
   };
 
   /* 按照顺序执行定义的函数 */
