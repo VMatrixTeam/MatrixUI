@@ -16,7 +16,20 @@ angular.module('testMatrixUIApp', ['matrixui']).controller('testCtrl', testCtrl)
  *
  */
 
+testCtrl.$inject = ['$scope', '$http'];
+
 function testCtrl($scope, $http) {
+
+  $scope.editorOptions = {
+    lineNumbers: true,
+    mode: "javascript",
+    keyMap: "sublime",
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    showCursorWhenSelecting: true,
+    theme: "monokai",
+    tabSize: 2
+  };
 
   /**
    *
