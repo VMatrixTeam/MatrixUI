@@ -103,7 +103,8 @@ function muRadioDirective() {
     }
 
     function initEvent() {
-      element.on('click', (e) => {
+      let label = angular.element(element.children()[1]);
+      label.on('click', (e) => {
         rgCtrl.setValue(attrs.value, e && e.type);
       });
     }
