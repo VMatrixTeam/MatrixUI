@@ -7,7 +7,7 @@
  *
  */
 
-angular.module('testMatrixUIApp', ['matrixui', 'ngProgress']).controller('testCtrl', testCtrl);
+angular.module('testMatrixUIApp', ['matrixui']).controller('testCtrl', testCtrl);
 
 /**
  *
