@@ -7,7 +7,7 @@
  *
  */
 
-angular.module('testMatrixUIApp', ['matrixui']).controller('testCtrl', testCtrl);
+angular.module('testMatrixUIApp', ['matrixui', 'ngProgress']).controller('testCtrl', testCtrl);
 
 /**
  *
@@ -16,9 +16,33 @@ angular.module('testMatrixUIApp', ['matrixui']).controller('testCtrl', testCtrl)
  *
  */
 
-testCtrl.$inject = ['$scope', '$http'];
+testCtrl.$inject = ['$scope', '$http', 'muProgressFactory', '$timeout'];
 
-function testCtrl($scope, $http) {
+function testCtrl($scope, $http, muProgressFactory, $timeout) {
+
+  /**
+   *
+   * @description 创建进度条和关闭进度条
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
+
+  $scope.progressbar = muProgressFactory.createInstance();
+
+  $scope.startProgress = function () {
+    $scope.progressbar.start();
+  };
+
+  $scope.completeProgress = function () {
+    $scope.progressbar.complete();
+  };
+
+  /**
+   *
+   * @description mu-codeeditor配置选项
+   * @author 吴家荣 <jiarongwu.se@foxmail.com>
+   *
+   */
 
   $scope.editorOptions = {
     lineNumbers: true,
@@ -29,6 +53,7 @@ function testCtrl($scope, $http) {
     showCursorWhenSelecting: true,
     theme: "monokai",
     tabSize: 2,
+    readOnly: true,
     onLoad: function onLoad(_cm) {
       $scope.$watch('languageData.choose', function () {
         if (!$scope.languageData) return;
@@ -45,10 +70,12 @@ function testCtrl($scope, $http) {
    */
 
   function getDocsFilenames() {
-    var docs = ['components/button', 'components/card', 'components/checkbox', 'components/codeeditor', 'components/datatable', 'components/dialog', 'components/markdown', 'components/mdeditor', 'components/panel', 'components/radio', 'components/select', 'components/spinner', 'components/tab', 'specials/report'];
+    var docs = ['components/button', 'components/card', 'components/checkbox', 'components/codeeditor', 'components/datatable', 'components/dialog', 'components/markdown', 'components/mdeditor', 'components/panel', 'components/radio', 'components/select', 'components/spinner', 'components/tab', 'components/progress', 'specials/report'];
 
     return docs;
   }
+
+  /*----------  获取文档  ----------*/
 
   function getDocs() {
     var docs = getDocsFilenames();
@@ -67,11 +94,15 @@ function testCtrl($scope, $http) {
     });
   }
 
+  /*----------  测试数据文件名  ----------*/
+
   function getDataFilenames() {
-    var datas = ['markdown.md', 'mdeditor.md', 'select.json', 'language.json', 'testcpp.cpp'];
+    var datas = ['markdown.md', 'mdeditor.md', 'select.json', 'language.json', 'testcpp.cpp', 'radio.json'];
 
     return datas;
   }
+
+  /*----------  获取测试数据  ----------*/
 
   function getDatas() {
     var datas = getDataFilenames();
@@ -91,14 +122,11 @@ function testCtrl($scope, $http) {
     });
   }
 
+  /*----------  设置侧边栏选中状态  ----------*/
+
   $scope.chooseHash = function (event) {
     angular.element(document.querySelectorAll('.group-item')).removeClass('choose');
     angular.element(event.target).addClass('choose');
-  };
-
-  $scope.radioData = {
-    sex: 'male',
-    color: 'blue'
   };
 
   /* 按照顺序执行定义的函数 */
