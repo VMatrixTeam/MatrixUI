@@ -19,5 +19,6 @@ angular
     'matrixui.components.radio',
     'matrixui.components.select',
     'matrixui.components.spinner',
-    'matrixui.components.tab'
+    'matrixui.components.tab',
+    'matrixui.components.process'
   ]);

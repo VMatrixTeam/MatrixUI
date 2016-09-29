@@ -2,7 +2,7 @@
 
 ### Dependencies
 
-首先需要安装MathJax
+首先需要安装MathJax，其次是fontawesome
 
 ```bash
 bower install MathJax
@@ -11,6 +11,7 @@ bower install MathJax
 然后在HTML文件中添加脚本
 
 ```html
+<link rel="stylesheet" type="text/css" href="/fontawesome.min.css">
 <script type="text/javascript" src="${your path}/MatrixUI/deps/marked.min.js"></script>
 <script type="text/javascript" src="${your path}/MatrixUI/deps/highlight.pack.min.js"></script>
 <script type="text/x-mathjax-config">

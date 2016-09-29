@@ -1,0 +1,10 @@
+.docs-wrapper
+  .docs-container
+    a.docs-header(href='/#/#mu-progress') mu-progress
+    .docs-content-title 使用文档
+    .docs-content
+      mu-markdown(ng-model='progressDocs' content='加载中...')
+    .docs-content-title 示例
+    .docs-content
+      mu-button(ng-click='startProgress($event)' warn) 启动进度条
+      mu-button(ng-click='completeProgress($event)' info) 完成进度条

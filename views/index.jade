@@ -9,12 +9,18 @@ html
   head
     title Docs for MatrixUI
     meta(charset='utf-8')
+
     link(rel="shortcut icon" href="/images/favicon.ico")
     link(rel='stylesheet' type='text/css' href='./styles/index.css')
+    link(rel='stylesheet' type='text/css' href='/font-awesome/css/font-awesome.min.css')
+
     script(type='text/javascript' src='/angular/angular.min.js')
     script(type='text/javascript' src='/marked.min.js')
     script(type='text/javascript' src='/highlight.pack.min.js')
+    script(type='text/javascript' src='/codemirror.min.js')
     script(type='text/javascript' src='/simplemde.min.js')
+    script(type='text/javascript' src='/ngprogress/build/ngprogress.js')
+
     script(type='text/x-mathjax-config').
       MathJax.Hub.Config({
         showProcessingMessages: false,
@@ -23,7 +29,6 @@ html
       });
     script(type='text/javascript' src='/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
 
-    script(type='text/javascript' src='/codemirror.min.js')
     if dev
       script(type='text/javascript' src='./temp/index.js')
       script(type='text/javascript' src='./temp/matrixui.js')
@@ -32,6 +37,8 @@ html
       script(type='text/javascript' src='./index.js')
       script(type='text/javascript' src='./matrixui.min.js')
       link(rel='stylesheet' type='text/css' href='./matrixui.min.css')
+
+
 
   body(ng-app='testMatrixUIApp')
     a(href="https://github.com/VMatrixTeam/MatrixUI" class="github-ribbon") Fork me on GitHub
@@ -56,6 +63,7 @@ html
       include components/tab.jade
       include components/panel.jade
       include components/spinner.jade
+      include components/progress.jade
 
       //- specials
 
