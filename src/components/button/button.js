@@ -44,11 +44,11 @@ function muButtonDirective($timeout) {
       });
     }
 
-    if (attr.default || attr.default === '') element.addClass('mu-button-default');
     if (attr.primary || attr.primary === '') element.addClass('mu-button-primary');
-    if (attr.info || attr.info === '') element.addClass('mu-button-info');
-    if (attr.warn || attr.warn === '') element.addClass('mu-button-warn');
-    if (attr.danger || attr.danger === '') element.addClass('mu-button-danger');
+    else if (attr.info || attr.info === '') element.addClass('mu-button-info');
+    else if (attr.warn || attr.warn === '') element.addClass('mu-button-warn');
+    else if (attr.danger || attr.danger === '') element.addClass('mu-button-danger');
+    else element.addClass('mu-button-default');
 
     // disabling click event when disabled is true
     element.on('click', function(e){
