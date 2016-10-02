@@ -7,8 +7,8 @@
 
 angular.module('matrixui.components.process', [])
   .directive('muProgress', muProgressDirective)
-  .service('muProgressService', muProgressService)
-  .factory('muProgressFactory', muProgressFactory);
+  .service('$muProgressService', muProgressService)
+  .factory('$muProgressFactory', muProgressFactory);
 
 /**
  *
@@ -243,13 +243,13 @@ function muProgressService() {
  *
  */
 
-muProgressFactory.$inject = ['$injector', 'muProgressService'];
+muProgressFactory.$inject = ['$injector', '$muProgressService'];
 
-function muProgressFactory($injector, muProgressService) {
+function muProgressFactory($injector, $muProgressService) {
 
   return {
     createInstance: function () {
-      return $injector.instantiate(muProgressService);
+      return $injector.instantiate($muProgressService);
     }
   };
 
