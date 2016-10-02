@@ -1,5 +1,8 @@
 'use strict';
 
+angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
+'use strict';
+
 /**
  *
  * @description button组件
@@ -8,9 +11,6 @@
  */
 
 angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab', 'matrixui.components.process']);
-'use strict';
-
-angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
 /**
@@ -4571,7 +4571,7 @@ function muPanelDirective() {
  *
  */
 
-angular.module('matrixui.components.process', []).directive('muProgress', muProgressDirective).service('$muProgressService', muProgressService).factory('$muProgressFactory', muProgressFactory);
+angular.module('matrixui.components.process', []).directive('muProgress', muProgressDirective).service('$muProgressService', muProgressService).factory('$muProgress', muProgressFactory);
 
 /**
  *
@@ -4816,105 +4816,6 @@ function muProgressFactory($injector, $muProgressService) {
       return $injector.instantiate($muProgressService);
     }
   };
-}
-'use strict';
-
-/**
- *
- * @description radio组件，单选框
- * @author yourname <williamjwking@gmail.com>
- *
- */
-
-angular.module('matrixui.components.radio', []).directive('muRadioGroup', muRadioGroupDirective).directive('muRadio', muRadioDirective);
-
-muRadioGroupDirective.$inject = [];
-
-function muRadioGroupDirective() {
-
-  RadioGroupController.prototype = {
-    getName: function getName() {
-      return this._name;
-    },
-    getValue: function getValue() {
-      if (!this._ngModelCtrl) return null;
-      return this._ngModelCtrl.$viewValue;
-    },
-    setValue: function setValue(value, eventType) {
-      if (!this._ngModelCtrl) return;
-      this._ngModelCtrl.$setViewValue(value, eventType);
-    }
-  };
-
-  return {
-    restrict: 'E',
-    controller: ['$scope', RadioGroupController],
-    scope: true,
-    require: ['muRadioGroup', '?ngModel'],
-    link: { pre: linkRadioGroup }
-  };
-
-  function linkRadioGroup(scope, element, attrs, ctrls) {
-    ctrls[0]._name = attrs.name;
-    ctrls[0]._ngModelCtrl = ctrls[1];
-    ctrls[0]._value = attrs.value;
-  }
-
-  function RadioGroupController($scope) {}
-}
-
-muRadioDirective.$inject = [];
-
-function muRadioDirective() {
-
-  return {
-    restrict: 'EA',
-    replace: true,
-    transclude: true,
-    require: '^muRadioGroup',
-    template: '<div class="radio-container">' + '<div class="radio">' + '<input type="radio" class="regular-radio"></input>' + '<label class="mu-radio"></label>' + '</div>' + '<label ng-transclude class="mu-label"></label>' + '</div>',
-    link: link
-  };
-
-  function link(scope, element, attrs, rgCtrl) {
-    initAttrs(), initEvent();
-
-    function initAttrs() {
-      var name = rgCtrl.getName();
-      var id = name + '-' + attrs.value;
-      var label = element.find('label');
-      var input = element.find('input');
-
-      label.attr('for', id);
-      input.attr('id', id);
-      input.attr('name', name);
-      input.attr('value', attrs.value);
-      setSize(element, attrs.size);
-
-      scope.$watch(rgCtrl._ngModelCtrl, function () {
-        var viewValue = rgCtrl.getValue();
-        if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
-          input.attr('checked', true);
-        }
-        if (viewValue == attrs.value) {
-          input.attr('checked', true);
-        }
-      });
-    }
-
-    function setSize(element, size) {
-      var label = angular.element(element.children()[0]);
-      label.find('label').addClass(size);
-      element.addClass(size);
-    }
-
-    function initEvent() {
-      var label = angular.element(element.children()[1]);
-      label.on('click', function (e) {
-        rgCtrl.setValue(attrs.value, e && e.type);
-      });
-    }
-  }
 }
 'use strict';
 
@@ -5484,6 +5385,105 @@ Selector = function () {
 
   return Selector;
 }();
+'use strict';
+
+/**
+ *
+ * @description radio组件，单选框
+ * @author yourname <williamjwking@gmail.com>
+ *
+ */
+
+angular.module('matrixui.components.radio', []).directive('muRadioGroup', muRadioGroupDirective).directive('muRadio', muRadioDirective);
+
+muRadioGroupDirective.$inject = [];
+
+function muRadioGroupDirective() {
+
+  RadioGroupController.prototype = {
+    getName: function getName() {
+      return this._name;
+    },
+    getValue: function getValue() {
+      if (!this._ngModelCtrl) return null;
+      return this._ngModelCtrl.$viewValue;
+    },
+    setValue: function setValue(value, eventType) {
+      if (!this._ngModelCtrl) return;
+      this._ngModelCtrl.$setViewValue(value, eventType);
+    }
+  };
+
+  return {
+    restrict: 'E',
+    controller: ['$scope', RadioGroupController],
+    scope: true,
+    require: ['muRadioGroup', '?ngModel'],
+    link: { pre: linkRadioGroup }
+  };
+
+  function linkRadioGroup(scope, element, attrs, ctrls) {
+    ctrls[0]._name = attrs.name;
+    ctrls[0]._ngModelCtrl = ctrls[1];
+    ctrls[0]._value = attrs.value;
+  }
+
+  function RadioGroupController($scope) {}
+}
+
+muRadioDirective.$inject = [];
+
+function muRadioDirective() {
+
+  return {
+    restrict: 'EA',
+    replace: true,
+    transclude: true,
+    require: '^muRadioGroup',
+    template: '<div class="radio-container">' + '<div class="radio">' + '<input type="radio" class="regular-radio"></input>' + '<label class="mu-radio"></label>' + '</div>' + '<label ng-transclude class="mu-label"></label>' + '</div>',
+    link: link
+  };
+
+  function link(scope, element, attrs, rgCtrl) {
+    initAttrs(), initEvent();
+
+    function initAttrs() {
+      var name = rgCtrl.getName();
+      var id = name + '-' + attrs.value;
+      var label = element.find('label');
+      var input = element.find('input');
+
+      label.attr('for', id);
+      input.attr('id', id);
+      input.attr('name', name);
+      input.attr('value', attrs.value);
+      setSize(element, attrs.size);
+
+      scope.$watch(rgCtrl._ngModelCtrl, function () {
+        var viewValue = rgCtrl.getValue();
+        if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
+          input.attr('checked', true);
+        }
+        if (viewValue == attrs.value) {
+          input.attr('checked', true);
+        }
+      });
+    }
+
+    function setSize(element, size) {
+      var label = angular.element(element.children()[0]);
+      label.find('label').addClass(size);
+      element.addClass(size);
+    }
+
+    function initEvent() {
+      var label = angular.element(element.children()[1]);
+      label.on('click', function (e) {
+        rgCtrl.setValue(attrs.value, e && e.type);
+      });
+    }
+  }
+}
 'use strict';
 
 /**
