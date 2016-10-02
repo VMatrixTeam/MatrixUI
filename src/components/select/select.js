@@ -482,7 +482,7 @@ Selector = (function () {
       };
       scope.filterOptions = function () {
         scope.filteredOptions = filter(scope.options || [], scope.search);
-        if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
+        // if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
         if (scope.multiple)
           scope.filteredOptions = scope.filteredOptions.filter(function (option) {
             return !scope.inOptions(scope.selectedValues, option);
