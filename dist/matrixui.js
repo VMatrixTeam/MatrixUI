@@ -99,27 +99,6 @@ function muButtonDirective($timeout) {
 
 /**
  *
- * @description card组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
-
-muCardDirective.$inject = [];
-
-function muCardDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>Card组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description checkbox组件
  * @author yourname <youremail>
  *
@@ -135,6 +114,27 @@ function muCheckboxDirective() {
     replace: true,
     transclude: true,
     template: '<h2>mu-checkbox组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
+
+muCardDirective.$inject = [];
+
+function muCardDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>Card组件</h2>'
   };
 }
 "use strict";
@@ -5344,7 +5344,7 @@ Selector = function () {
       };
       scope.filterOptions = function () {
         scope.filteredOptions = filter(scope.options || [], scope.search);
-        if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
+        // if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
         if (scope.multiple) scope.filteredOptions = scope.filteredOptions.filter(function (option) {
           return !scope.inOptions(scope.selectedValues, option);
         });else {
