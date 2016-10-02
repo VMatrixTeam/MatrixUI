@@ -1,8 +1,5 @@
 'use strict';
 
-angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
-'use strict';
-
 /**
  *
  * @description button组件
@@ -11,6 +8,9 @@ angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
  */
 
 angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab', 'matrixui.components.process']);
+'use strict';
+
+angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
 /**
@@ -99,27 +99,6 @@ function muButtonDirective($timeout) {
 
 /**
  *
- * @description checkbox组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
-
-muCheckboxDirective.$inject = [];
-
-function muCheckboxDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-checkbox组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description card组件
  * @author yourname <youremail>
  *
@@ -135,6 +114,27 @@ function muCardDirective() {
     replace: true,
     transclude: true,
     template: '<h2>Card组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description checkbox组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.checkbox', []).directive('muCheckbox', muCheckboxDirective);
+
+muCheckboxDirective.$inject = [];
+
+function muCheckboxDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-checkbox组件</h2>'
   };
 }
 "use strict";
@@ -4631,11 +4631,7 @@ muProgressService.$inject = [];
 
 function muProgressService() {
 
-  return service;
-
-  service.$inject = ['$document', '$window', '$compile', '$rootScope', '$timeout'];
-
-  function service($document, $window, $compile, $rootScope, $timeout) {
+  return ['$document', '$window', '$compile', '$rootScope', '$timeout', function ($document, $window, $compile, $rootScope, $timeout) {
 
     this.autoStyle = true;
     this.count = 0;
@@ -4801,7 +4797,7 @@ function muProgressService() {
     this.setAbsolute = function () {
       this.progressbarEl.css('position', 'absolute');
     };
-  }
+  }];
 }
 
 /**
