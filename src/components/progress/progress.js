@@ -8,7 +8,7 @@
 angular.module('matrixui.components.process', [])
   .directive('muProgress', muProgressDirective)
   .service('$muProgressService', muProgressService)
-  .factory('$muProgressFactory', muProgressFactory);
+  .factory('$muProgress', muProgressFactory);
 
 /**
  *
