@@ -9,14 +9,6 @@
 @charset "UTF-8";
 /**
  *
- * @description card组件
- * @author yourname <youremail>
- *
- */
-
-@charset "UTF-8";
-/**
- *
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
@@ -70,6 +62,14 @@
   background-color: rgba(242, 60, 84, 0.5); }
   .mu-button-danger:hover {
     background-color: #f23c54; }
+
+@charset "UTF-8";
+/**
+ *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
 
 @charset "UTF-8";
 /**
@@ -646,7 +646,7 @@ span.CodeMirror-selectedtext {
 @charset "UTF-8";
 /**
  *
- * @description dialog组件
+ * @description dataTable组件，数据表格
  * @author yourname <youremail>
  *
  */
@@ -654,7 +654,7 @@ span.CodeMirror-selectedtext {
 @charset "UTF-8";
 /**
  *
- * @description dataTable组件，数据表格
+ * @description dialog组件
  * @author yourname <youremail>
  *
  */
@@ -1319,6 +1319,14 @@ Based on Solarized Style from http://ethanschoonover.com/solarized
 @charset "UTF-8";
 /**
  *
+ * @description panel组件
+ * @author yourname <youremail>
+ *
+ */
+
+@charset "UTF-8";
+/**
+ *
  * @description mdeditor组件
  * @author yourname <youremail>
  *
@@ -1950,14 +1958,6 @@ span.CodeMirror-selectedtext {
 
 .CodeMirror .CodeMirror-placeholder {
   opacity: .5; }
-
-@charset "UTF-8";
-/**
- *
- * @description panel组件
- * @author yourname <youremail>
- *
- */
 
 /* Styling for the ngProgress itself */
 #muProgress {

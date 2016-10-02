@@ -1,5 +1,8 @@
 'use strict';
 
+angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
+'use strict';
+
 /**
  *
  * @description button组件
@@ -8,9 +11,6 @@
  */
 
 angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab', 'matrixui.components.process']);
-'use strict';
-
-angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
 /**
@@ -4571,7 +4571,7 @@ function muPanelDirective() {
  *
  */
 
-angular.module('matrixui.components.process', []).directive('muProgress', muProgressDirective).service('muProgress', muProgressService).factory('muProgressFactory', muProgressFactory);
+angular.module('matrixui.components.process', []).directive('muProgress', muProgressDirective).service('muProgressService', muProgressService).factory('muProgressFactory', muProgressFactory);
 
 /**
  *
@@ -4811,13 +4811,13 @@ function muProgressService() {
  *
  */
 
-muProgressFactory.$inject = ['$injector', 'muProgress'];
+muProgressFactory.$inject = ['$injector', 'muProgressService'];
 
-function muProgressFactory($injector, muProgress) {
+function muProgressFactory($injector, muProgressService) {
 
   return {
     createInstance: function createInstance() {
-      return $injector.instantiate(muProgress);
+      return $injector.instantiate(muProgressService);
     }
   };
 }
