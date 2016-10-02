@@ -16,9 +16,9 @@ angular.module('testMatrixUIApp', ['matrixui']).controller('testCtrl', testCtrl)
  *
  */
 
-testCtrl.$inject = ['$scope', '$http', 'muProgressFactory', '$timeout'];
+testCtrl.$inject = ['$scope', '$http', '$muProgressFactory', '$timeout'];
 
-function testCtrl($scope, $http, muProgressFactory, $timeout) {
+function testCtrl($scope, $http, $muProgressFactory, $timeout) {
 
   /**
    *
@@ -27,7 +27,7 @@ function testCtrl($scope, $http, muProgressFactory, $timeout) {
    *
    */
 
-  $scope.progressbar = muProgressFactory.createInstance();
+  $scope.progressbar = $muProgressFactory.createInstance();
 
   $scope.startProgress = function () {
     $scope.progressbar.start();
