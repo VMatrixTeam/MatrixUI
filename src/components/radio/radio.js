@@ -16,6 +16,14 @@ muRadioGroupDirective.$inject = [];
 function muRadioGroupDirective() {
 
   RadioGroupController.prototype = {
+    // pushRadio: function(updateFunc) {
+    //   this._radioList.push(updateFunc);
+    // },
+    // update: function () {
+    //   for (let updateFunc of this._radioList) {
+    //     updateFunc();
+    //   }
+    // },
     getName: function() {
       return this._name;
     },
@@ -26,6 +34,7 @@ function muRadioGroupDirective() {
     setValue: function(value, eventType) {
       if (!this._ngModelCtrl) return;
       this._ngModelCtrl.$setViewValue(value, eventType);
+      // this.update();
     }
   };
 
@@ -41,6 +50,7 @@ function muRadioGroupDirective() {
     ctrls[0]._name = attrs.name;
     ctrls[0]._ngModelCtrl = ctrls[1];
     ctrls[0]._value = attrs.value;
+    // ctrls[0]._radioList = [];
   }
 
   function RadioGroupController($scope) {
@@ -84,8 +94,12 @@ function muRadioDirective() {
       input.attr('value', attrs.value);
       setSize(element, attrs.size);
 
+      // rgCtrl.pushRadio(onModelUpdate);
+
       scope.$watch(rgCtrl._ngModelCtrl, () => {
         let viewValue = rgCtrl.getValue();
+        console.log('update');
+        console.log(viewValue);
         if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
           input.attr('checked', true);
         }
@@ -96,6 +110,17 @@ function muRadioDirective() {
 
     }
 
+    function onModelUpdate() {
+      let viewValue = rgCtrl.getValue();
+      let input = element.find('input');
+      if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
+        input.attr('checked', true);
+      }
+      if (viewValue == attrs.value) {
+        input.attr('checked', true);
+      }      
+    }
+
     function setSize(element, size) {
       let label = angular.element(element.children()[0]);
       label.find('label').addClass(size);
@@ -103,8 +128,7 @@ function muRadioDirective() {
     }
 
     function initEvent() {
-      let label = angular.element(element.children()[1]);
-      label.on('click', (e) => {
+      element.on('click', (e) => {
         rgCtrl.setValue(attrs.value, e && e.type);
       });
     }

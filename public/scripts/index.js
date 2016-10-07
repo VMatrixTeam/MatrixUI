@@ -62,6 +62,11 @@ function testCtrl($scope, $http, muProgressFactory, $timeout) {
     }
   };
 
+  $scope.changeSex = function() {
+    console.log('change sex');
+    this.radioData.sex = "male";
+  }
+
   /**
    *
    * @description 取得文档文件名

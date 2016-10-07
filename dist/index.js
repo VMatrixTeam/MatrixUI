@@ -62,6 +62,11 @@ function testCtrl($scope, $http, muProgressFactory, $timeout) {
     }
   };
 
+  $scope.changeColor = function () {
+    console.log('change color');
+    this.radioData.color = "blue";
+  };
+
   /**
    *
    * @description 取得文档文件名
