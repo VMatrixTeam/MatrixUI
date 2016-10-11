@@ -16,6 +16,18 @@ muRadioGroupDirective.$inject = [];
 function muRadioGroupDirective() {
 
   RadioGroupController.prototype = {
+    init: function(ngModelCtrl) {
+      this._ngModelCtrl = ngModelCtrl;
+      this._ngModelCtrl.$render = angular.bind(this, this.render);
+    },
+    push: function(renderFn) {
+      this._radioButtonRenderFns.push(renderFn);
+    },
+    render: function() {
+      for (let render of this._radioButtonRenderFns) {
+        render();
+      }
+    },
     getName: function() {
       return this._name;
     },
@@ -26,13 +38,17 @@ function muRadioGroupDirective() {
     setValue: function(value, eventType) {
       if (!this._ngModelCtrl) return;
       this._ngModelCtrl.$setViewValue(value, eventType);
+      this.render();
     }
   };
 
   return {
     restrict: 'E',
     controller: ['$scope', RadioGroupController],
-    scope: true,
+    // scope: true,
+    // scope: {
+    //   ngModel: '='
+    // },
     require: ['muRadioGroup', '?ngModel'],
     link: { pre: linkRadioGroup }
   }
@@ -44,6 +60,9 @@ function muRadioGroupDirective() {
   }
 
   function RadioGroupController($scope) {
+    this._radioButtonRenderFns = [];
+    // console.log('controller');
+    // console.log(this);
   }
 
 }
@@ -55,7 +74,6 @@ function muRadioDirective() {
 
   return {
     restrict: 'EA',
-    replace: true,
     transclude: true,
     require: '^muRadioGroup',
     template: `<div class="radio-container">` +
@@ -71,28 +89,14 @@ function muRadioDirective() {
   function link(scope, element, attrs, rgCtrl) {
     initAttrs(),
     initEvent();
+    // render();
+    // setTimeout(render, 200);
 
-    function initAttrs(){
-      let name = rgCtrl.getName();
-      let id = `${name}-${attrs.value}`;
-      let label = element.find('label');
-      let input = element.find('input');
+    function initAttrs() {
+      rgCtrl.push(render);
 
-      label.attr('for', id);
-      input.attr('id', id);
-      input.attr('name', name);
-      input.attr('value', attrs.value);
+      attrs.$observe('value', render);
       setSize(element, attrs.size);
-
-      scope.$watch(rgCtrl._ngModelCtrl, () => {
-        let viewValue = rgCtrl.getValue();
-        if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
-          input.attr('checked', true);
-        }
-        if (viewValue == attrs.value) {
-          input.attr('checked', true);
-        }
-      });
 
     }
 
@@ -103,11 +107,37 @@ function muRadioDirective() {
     }
 
     function initEvent() {
-      let label = angular.element(element.children()[1]);
-      label.on('click', (e) => {
-        rgCtrl.setValue(attrs.value, e && e.type);
+      // let label = angular.element(element.children());
+      element.on('click', (e) => {
+        scope.$apply(() => {
+          rgCtrl.setValue(attrs.value, e && e.type);          
+        });
       });
     }
+
+    function render() {
+      let name = rgCtrl.getName();
+      let viewValue = rgCtrl.getValue();
+      let id = `${name}-${attrs.value}`;
+      let label = element.find('label');
+      let input = element.find('input');
+      
+      // console.log('render');
+      // console.log('current value is: ' + rgCtrl.getValue());
+      // console.log('attr value is ' + attrs.value);
+
+      input.attr('name', name);
+      input.attr('id', id);
+      label.attr('for', id);
+      input.attr('value', attrs.value);      
+
+      if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
+        input.attr('checked', true);
+      }
+      if (viewValue == attrs.value) {
+        input.attr('checked', true);
+      }
+    };
   }
 
 }
