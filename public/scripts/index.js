@@ -63,8 +63,10 @@ function testCtrl($scope, $http, muProgressFactory, $timeout) {
   };
 
   $scope.changeSex = function() {
-    console.log('change sex');
-    this.radioData.sex = "male";
+    if (this.radioData.sex == 'female')
+      this.radioData.sex = 'male';
+    else
+      this.radioData.sex = 'female';
   }
 
   /**
