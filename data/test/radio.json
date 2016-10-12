@@ -1,4 +1,6 @@
 {
   "sex": "female",
-  "color": "red"
+  "color": "red",
+  "male": "male",
+  "female": "female"
 }

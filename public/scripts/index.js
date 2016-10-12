@@ -62,6 +62,13 @@ function testCtrl($scope, $http, $muProgress, $timeout) {
     }
   };
 
+  $scope.changeSex = function() {
+    if (this.radioData.sex == 'female')
+      this.radioData.sex = 'male';
+    else
+      this.radioData.sex = 'female';
+  }
+
   /**
    *
    * @description 取得文档文件名
