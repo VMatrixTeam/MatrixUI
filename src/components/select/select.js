@@ -208,6 +208,7 @@ Selector = (function () {
         if (!angular.isDefined(remote))
           throw 'Remote attribute is not defined';
 
+        if (paramName == 'search' && paramValue == '') return;
         scope.loading = true;
         scope.options = [];
         remoteOptions[paramName] = paramValue;
