@@ -4,17 +4,17 @@
 
 ```html
 <mu-radio-group name="sex" ng-model="selected">
-  <mu-radio value="male" size="small"></mu-radio>
+  <mu-radio ng-value="male" size="small"></mu-radio>
 </mu-radio-group>
 <mu-radio-group name="color" >
-  <mu-radio value="blue" size="small"></mu-radio>
-  <mu-radio value="red" size="small" checked></mu-radio>
+  <mu-radio ng-value="blue" size="small"></mu-radio>
+  <mu-radio ng-value="red" size="small" checked></mu-radio>
 </mu-radio-group>
 ```
 
 ### Docs
 
-参数：value
+参数：ng-value
 * 表单radio的固有属性，不解释
 
 参数：name
