@@ -1,6 +1,5 @@
 {
-  "sex": "female",
+  "sex": "male",
   "color": "red",
-  "male": "male",
-  "female": "female"
+  "sexes": ["male", "female"]
 }

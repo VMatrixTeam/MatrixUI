@@ -208,9 +208,10 @@ Selector = (function () {
         if (!angular.isDefined(remote))
           throw 'Remote attribute is not defined';
 
-        if (paramName == 'search' && paramValue == '') return;
         scope.loading = true;
+        if (paramName == 'search' && paramValue == '') return;
         scope.options = [];
+        if (!scope.allOptions) scope.allOptions = [];
         remoteOptions[paramName] = paramValue;
         promise = remote(remoteOptions);
         if (typeof promise.then !== 'function') {
@@ -223,6 +224,7 @@ Selector = (function () {
         promise
           .then(function (data) {
             scope.options = data.data || data;
+            scope.mergeOptions();
             scope.filterOptions();
             scope.loading = false;
             initDeferred.resolve();
@@ -483,7 +485,7 @@ Selector = (function () {
       };
       scope.filterOptions = function () {
         scope.filteredOptions = filter(scope.options || [], scope.search);
-        // if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
+        if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
         if (scope.multiple)
           scope.filteredOptions = scope.filteredOptions.filter(function (option) {
             return !scope.inOptions(scope.selectedValues, option);
@@ -492,6 +494,18 @@ Selector = (function () {
           var index = scope.filteredOptions.indexOf(scope.selectedValues[0]);
           if (index >= 0) scope.highlight(index);
         }
+      };
+      scope.mergeOptions = function() {
+        scope.options.forEach(function(option) {
+          var n = true;
+          for (var i = 0; i < scope.allOptions.length; ++i) {
+            if (option.value == scope.allOptions[i]) {
+              n = false;
+              break;
+            }
+          }
+          if (n) scope.allOptions.push(option);
+        });
       };
 
       // Input width utilities
@@ -552,7 +566,8 @@ Selector = (function () {
         if (!scope.multiple) scope.selectedValues = (scope.options || []).filter(function (option) { return scope.optionEquals(option); }).slice(0, 1);
         else
           scope.selectedValues = (scope.value || []).map(function (value) {
-            return filter(scope.options, function (option) {
+            return filter(scope.allOptions, function (option) {
+              // return true;
               return scope.optionEquals(option, value);
             })[0];
           }).filter(function (value) { return angular.isDefined(value); }).slice(0, scope.limit);
