@@ -10,8 +10,7 @@
       p sex is&nbsp
         span.radio-value.clickable(ng-click="changeSex()" style="cursor: pointer") {{ radioData.sex }}
       mu-radio-group(name='sex', ng-model='radioData.sex')
-        mu-radio(value='male', size='small') male
-        mu-radio(value='female', size='small') female
+        mu-radio(ng-repeat='sex in radioData.sexes' value='{{sex}}', size='small') {{ sex }}
       br
       p color is&nbsp
         span.radio-value {{ radioData.color }}
