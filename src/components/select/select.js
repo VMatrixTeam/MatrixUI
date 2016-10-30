@@ -209,7 +209,10 @@ Selector = (function () {
           throw 'Remote attribute is not defined';
 
         scope.loading = true;
-        if (paramName == 'search' && paramValue == '') return;
+        if (paramName == 'search' && paramValue == '') {
+          scope.loading = false;
+          return;
+        }
         scope.options = [];
         if (!scope.allOptions) scope.allOptions = [];
         remoteOptions[paramName] = paramValue;
