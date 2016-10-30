@@ -16,9 +16,9 @@ angular.module('testMatrixUIApp', ['matrixui']).controller('testCtrl', testCtrl)
  *
  */
 
-testCtrl.$inject = ['$scope', '$http', 'muProgressFactory', '$timeout'];
+testCtrl.$inject = ['$scope', '$http', '$muProgress', '$timeout'];
 
-function testCtrl($scope, $http, muProgressFactory, $timeout) {
+function testCtrl($scope, $http, $muProgress, $timeout) {
 
   /**
    *
@@ -27,7 +27,7 @@ function testCtrl($scope, $http, muProgressFactory, $timeout) {
    *
    */
 
-  $scope.progressbar = muProgressFactory.createInstance();
+  $scope.progressbar = $muProgress.createInstance();
 
   $scope.startProgress = function () {
     $scope.progressbar.start();
@@ -62,9 +62,8 @@ function testCtrl($scope, $http, muProgressFactory, $timeout) {
     }
   };
 
-  $scope.changeColor = function () {
-    console.log('change color');
-    this.radioData.color = "blue";
+  $scope.changeSex = function () {
+    if (this.radioData.sex == 'female') this.radioData.sex = 'male';else this.radioData.sex = 'female';
   };
 
   /**

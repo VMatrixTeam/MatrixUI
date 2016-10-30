@@ -7,8 +7,8 @@
 
 angular.module('matrixui.components.process', [])
   .directive('muProgress', muProgressDirective)
-  .service('muProgressService', muProgressService)
-  .factory('muProgressFactory', muProgressFactory);
+  .service('$muProgressService', muProgressService)
+  .factory('$muProgress', muProgressFactory);
 
 /**
  *
@@ -68,11 +68,7 @@ muProgressService.$inject = [];
 
 function muProgressService() {
 
-  return service;
-
-  service.$inject = ['$document', '$window', '$compile', '$rootScope', '$timeout'];
-
-  function service($document, $window, $compile, $rootScope, $timeout) {
+  return ['$document', '$window', '$compile', '$rootScope', '$timeout', function($document, $window, $compile, $rootScope, $timeout) {
 
     this.autoStyle = true;
     this.count = 0;
@@ -236,7 +232,7 @@ function muProgressService() {
     this.setAbsolute = function() {
       this.progressbarEl.css('position', 'absolute');
     };
-  }
+  }]
 
 }
 
@@ -247,13 +243,13 @@ function muProgressService() {
  *
  */
 
-muProgressFactory.$inject = ['$injector', 'muProgressService'];
+muProgressFactory.$inject = ['$injector', '$muProgressService'];
 
-function muProgressFactory($injector, muProgressService) {
+function muProgressFactory($injector, $muProgressService) {
 
   return {
     createInstance: function () {
-      return $injector.instantiate(muProgressService);
+      return $injector.instantiate($muProgressService);
     }
   };
 

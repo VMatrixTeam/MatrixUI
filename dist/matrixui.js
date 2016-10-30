@@ -4571,7 +4571,7 @@ function muPanelDirective() {
  *
  */
 
-angular.module('matrixui.components.process', []).directive('muProgress', muProgressDirective).service('muProgressService', muProgressService).factory('muProgressFactory', muProgressFactory);
+angular.module('matrixui.components.process', []).directive('muProgress', muProgressDirective).service('$muProgressService', muProgressService).factory('$muProgress', muProgressFactory);
 
 /**
  *
@@ -4631,11 +4631,7 @@ muProgressService.$inject = [];
 
 function muProgressService() {
 
-  return service;
-
-  service.$inject = ['$document', '$window', '$compile', '$rootScope', '$timeout'];
-
-  function service($document, $window, $compile, $rootScope, $timeout) {
+  return ['$document', '$window', '$compile', '$rootScope', '$timeout', function ($document, $window, $compile, $rootScope, $timeout) {
 
     this.autoStyle = true;
     this.count = 0;
@@ -4801,7 +4797,7 @@ function muProgressService() {
     this.setAbsolute = function () {
       this.progressbarEl.css('position', 'absolute');
     };
-  }
+  }];
 }
 
 /**
@@ -4811,13 +4807,13 @@ function muProgressService() {
  *
  */
 
-muProgressFactory.$inject = ['$injector', 'muProgressService'];
+muProgressFactory.$inject = ['$injector', '$muProgressService'];
 
-function muProgressFactory($injector, muProgressService) {
+function muProgressFactory($injector, $muProgressService) {
 
   return {
     createInstance: function createInstance() {
-      return $injector.instantiate(muProgressService);
+      return $injector.instantiate($muProgressService);
     }
   };
 }
@@ -4837,6 +4833,39 @@ muRadioGroupDirective.$inject = [];
 function muRadioGroupDirective() {
 
   RadioGroupController.prototype = {
+    init: function init(ngModelCtrl) {
+      this._ngModelCtrl = ngModelCtrl;
+      this._ngModelCtrl.$render = angular.bind(this, this.render);
+    },
+    push: function push(renderFn) {
+      this._radioButtonRenderFns.push(renderFn);
+    },
+    render: function render() {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this._radioButtonRenderFns[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var render = _step.value;
+
+          render();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    },
     getName: function getName() {
       return this._name;
     },
@@ -4847,13 +4876,17 @@ function muRadioGroupDirective() {
     setValue: function setValue(value, eventType) {
       if (!this._ngModelCtrl) return;
       this._ngModelCtrl.$setViewValue(value, eventType);
+      this.render();
     }
   };
 
   return {
     restrict: 'E',
     controller: ['$scope', RadioGroupController],
-    scope: true,
+    // scope: true,
+    // scope: {
+    //   ngModel: '='
+    // },
     require: ['muRadioGroup', '?ngModel'],
     link: { pre: linkRadioGroup }
   };
@@ -4862,9 +4895,20 @@ function muRadioGroupDirective() {
     ctrls[0]._name = attrs.name;
     ctrls[0]._ngModelCtrl = ctrls[1];
     ctrls[0]._value = attrs.value;
+
+    if (ctrls[1]) {
+      scope.$watch(function () {
+        ctrls[0].render();
+        return ctrls[1];
+      });
+    }
   }
 
-  function RadioGroupController($scope) {}
+  function RadioGroupController($scope) {
+    this._radioButtonRenderFns = [];
+    // console.log('controller');
+    // console.log(this);
+  }
 }
 
 muRadioDirective.$inject = [];
@@ -4873,7 +4917,6 @@ function muRadioDirective() {
 
   return {
     restrict: 'EA',
-    replace: true,
     transclude: true,
     require: '^muRadioGroup',
     template: '<div class="radio-container">' + '<div class="radio">' + '<input type="radio" class="regular-radio"></input>' + '<label class="mu-radio"></label>' + '</div>' + '<label ng-transclude class="mu-label"></label>' + '</div>',
@@ -4882,29 +4925,25 @@ function muRadioDirective() {
 
   function link(scope, element, attrs, rgCtrl) {
     initAttrs(), initEvent();
+    // render();
+    // setTimeout(render, 200);
 
     function initAttrs() {
-      var name = rgCtrl.getName();
-      var id = name + '-' + attrs.value;
-      var label = element.find('label');
-      var input = element.find('input');
+      rgCtrl.push(render);
 
-      label.attr('for', id);
-      input.attr('id', id);
-      input.attr('name', name);
-      input.attr('value', attrs.value);
+      attrs.$observe('value', render);
       setSize(element, attrs.size);
+    }
 
-      scope.$watch(rgCtrl._ngModelCtrl, function () {
-        console.log('update');
-        var viewValue = rgCtrl.getValue();
-        if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
-          input.attr('checked', true);
-        }
-        if (viewValue == attrs.value) {
-          input.attr('checked', true);
-        }
-      });
+    function onModelUpdate() {
+      var viewValue = rgCtrl.getValue();
+      var input = element.find('input');
+      if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
+        input.attr('checked', true);
+      }
+      if (viewValue == attrs.value) {
+        input.attr('checked', true);
+      }
     }
 
     function setSize(element, size) {
@@ -4914,10 +4953,37 @@ function muRadioDirective() {
     }
 
     function initEvent() {
+      // let label = angular.element(element.children());
       element.on('click', function (e) {
-        rgCtrl.setValue(attrs.value, e && e.type);
+        scope.$apply(function () {
+          rgCtrl.setValue(attrs.value, e && e.type);
+        });
       });
     }
+
+    function render() {
+      var name = rgCtrl.getName();
+      var viewValue = rgCtrl.getValue();
+      var id = name + '-' + attrs.value;
+      var label = element.find('label');
+      var input = element.find('input');
+
+      // console.log('render');
+      // console.log('current value is: ' + rgCtrl.getValue());
+      // console.log('attr value is ' + attrs.value);
+
+      input.attr('name', name);
+      input.attr('id', id);
+      label.attr('for', id);
+      input.attr('value', attrs.value);
+
+      if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
+        input.attr('checked', true);
+      }
+      if (viewValue == attrs.value) {
+        input.attr('checked', true);
+      }
+    };
   }
 }
 'use strict';
@@ -5101,7 +5167,9 @@ Selector = function () {
         if (!angular.isDefined(remote)) throw 'Remote attribute is not defined';
 
         scope.loading = true;
+        if (paramName == 'search' && paramValue == '') return;
         scope.options = [];
+        if (!scope.allOptions) scope.allOptions = [];
         remoteOptions[paramName] = paramValue;
         promise = remote(remoteOptions);
         if (typeof promise.then !== 'function') {
@@ -5113,6 +5181,7 @@ Selector = function () {
         }
         promise.then(function (data) {
           scope.options = data.data || data;
+          scope.mergeOptions();
           scope.filterOptions();
           scope.loading = false;
           initDeferred.resolve();
@@ -5344,13 +5413,25 @@ Selector = function () {
       };
       scope.filterOptions = function () {
         scope.filteredOptions = filter(scope.options || [], scope.search);
-        // if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
+        if (!angular.isArray(scope.selectedValues)) scope.selectedValues = [];
         if (scope.multiple) scope.filteredOptions = scope.filteredOptions.filter(function (option) {
           return !scope.inOptions(scope.selectedValues, option);
         });else {
           var index = scope.filteredOptions.indexOf(scope.selectedValues[0]);
           if (index >= 0) scope.highlight(index);
         }
+      };
+      scope.mergeOptions = function () {
+        scope.options.forEach(function (option) {
+          var n = true;
+          for (var i = 0; i < scope.allOptions.length; ++i) {
+            if (option.value == scope.allOptions[i]) {
+              n = false;
+              break;
+            }
+          }
+          if (n) scope.allOptions.push(option);
+        });
       };
 
       // Input width utilities
@@ -5410,7 +5491,8 @@ Selector = function () {
         if (!scope.multiple) scope.selectedValues = (scope.options || []).filter(function (option) {
           return scope.optionEquals(option);
         }).slice(0, 1);else scope.selectedValues = (scope.value || []).map(function (value) {
-          return filter(scope.options, function (option) {
+          return filter(scope.allOptions, function (option) {
+            // return true;
             return scope.optionEquals(option, value);
           })[0];
         }).filter(function (value) {
