@@ -36,13 +36,13 @@ bower install MathJax
 
 参数：type
 
-有两个参数，第一个参数表示toolbar按钮数量多少，第二个参数用来修改输入框高度
+有两个参数，第一个参数表示 toolbar 按钮数量多少，第二个参数用来修改输入框高度
 
-* **'simple'**: toolbar按钮较少，适用于评论框等
-* **'full'**: toolbar按钮较全，适用于描述的填写
+* **'simple'**: toolbar 按钮较少，适用于评论框等
+* **'full'**: toolbar 按钮较全，适用于描述的填写
 * **'simple/full small'**: 输入框高度类型为小
 * **'simple/full median'**: 输入框高度类型为中
-* **'simple/full large'**: 输入框高度类型为中
+* **'simple/full large'**: 输入框高度类型为大
 
 参数：content
 
