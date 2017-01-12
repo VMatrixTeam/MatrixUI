@@ -101,7 +101,7 @@ function muMdeditorDirective() {
 
       /* 设置图片上传插件 */
       if (!window.inlineAttachment) {
-        alert('error inline-attachment');
+        throw Error('InlineAttachment未加载');
       } else {
         var option = {
           uploadUrl: attrs.uploadUrl,
