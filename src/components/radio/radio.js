@@ -13,7 +13,7 @@ angular
 
 muRadioGroupDirective.$inject = [];
 
-function muRadioGroupDirective() {
+function muRadioGroupDirective  () {
 
   RadioGroupController.prototype = {
     init: function(ngModelCtrl) {
@@ -57,7 +57,7 @@ function muRadioGroupDirective() {
     ctrls[0]._name = attrs.name;
     ctrls[0]._ngModelCtrl = ctrls[1];
     ctrls[0]._value = attrs.value;
-    
+
     if (ctrls[1]) {
       scope.$watch(function() {
         ctrls[0].render();
@@ -73,7 +73,7 @@ function muRadioGroupDirective() {
   }
 
 }
- 
+
 
 muRadioDirective.$inject = [];
 
@@ -115,7 +115,7 @@ function muRadioDirective() {
       }
       if (viewValue == attrs.value) {
         input.attr('checked', true);
-      }      
+      }
     }
 
     function setSize(element, size) {
@@ -128,7 +128,7 @@ function muRadioDirective() {
       // let label = angular.element(element.children());
       element.on('click', (e) => {
         scope.$apply(() => {
-          rgCtrl.setValue(attrs.value, e && e.type);          
+          rgCtrl.setValue(attrs.value, e && e.type);
         });
       });
     }
@@ -139,7 +139,7 @@ function muRadioDirective() {
       let id = `${name}-${attrs.value}`;
       let label = element.find('label');
       let input = element.find('input');
-      
+
       // console.log('render');
       // console.log('current value is: ' + rgCtrl.getValue());
       // console.log('attr value is ' + attrs.value);
@@ -147,7 +147,7 @@ function muRadioDirective() {
       input.attr('name', name);
       input.attr('id', id);
       label.attr('for', id);
-      input.attr('value', attrs.value);      
+      input.attr('value', attrs.value);
 
       if (!viewValue && attrs.checked != null && attrs.checked != undefined) {
         input.attr('checked', true);

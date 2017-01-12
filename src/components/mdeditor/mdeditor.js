@@ -42,7 +42,7 @@ function muMdeditorDirective() {
     scope.content = content;
 
     if (scope.name) {
-      scope.$parent.$watch(scope.name, function() {
+      scope.$parent.$watch(scope.name, function () {
         if (scope.mde) {
           scope.mde.value(scope.$parent[scope.name]);
         }
@@ -125,6 +125,18 @@ function muMdeditorDirective() {
         previewRender,
         tabSize: 2,
       });
+
+      /* 设置图片上传插件 */
+      if (!window.inlineAttachment) {
+        throw Error('InlineAttachment未加载');
+      } else {
+        var option = {
+          uploadUrl: attrs.uploadUrl,
+          uploadFieldName: attrs.uploadFieldName,
+          jsonFieldName: attrs.jsonFieldName
+        };
+        inlineAttachment.editors.codemirror4.attach(scope.mde.codemirror, option);
+      }
 
       /* 如果提供了content，则把编辑器的值设置为content的值 */
 

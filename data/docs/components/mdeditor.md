@@ -29,7 +29,7 @@ bower install MathJax
 ```html
 <mu-mdeditor type='simple' id='simpleMDE'></mu-mdeditor>
 <mu-mdeditor type='full' id='fullMDE'></mu-mdeditor>
-<mu-mdeditor type='full' content='default markdown content' ng-model='your scope variable'></mu-mdeditor>
+<mu-mdeditor type='full' content='default markdown content' ng-model='your scope variable' upload-url='/' upload-field-name='image' json-field-name='downloadUrl'></mu-mdeditor>
 ```
 
 ### Docs
@@ -51,6 +51,20 @@ bower install MathJax
 参数：ng-model
 
 父级Scope变量，优先级比content高。如果ng-model有值，会覆盖content的内容。
+
+下面三个参数与图片上传相关，需要根据前后端对接形式进行设置（详情见插件[inline-attachment](http://inlineattachment.readthedocs.io/en/latest/pages/configuration.html))
+
+参数：upload-url
+
+上传图片的接口url
+
+参数：upload-field-name
+
+上传的表单中图片对应的字段名
+
+参数：json-field-name
+
+上传成功后，服务器返回一个json报文，其中下载上传的图片的url对应的字段
 
 取值：利用`angular.element().scope()`取得对应的`scope`，`SimpleMDE`实例就是`scope.mde`。
 
