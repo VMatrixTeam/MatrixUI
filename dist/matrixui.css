@@ -1951,6 +1951,18 @@ span.CodeMirror-selectedtext {
 .CodeMirror .CodeMirror-placeholder {
   opacity: .5; }
 
+.mdeditor-height-small .CodeMirror, .mdeditor-height-small .CodeMirror-scroll {
+  max-height: 150px !important;
+  min-height: 150px !important; }
+
+.mdeditor-height-median .CodeMirror, .mdeditor-height-median .CodeMirror-scroll {
+  max-height: 300px !important;
+  min-height: 300px !important; }
+
+.mdeditor-height-large .CodeMirror, .mdeditor-height-large .CodeMirror-scroll {
+  max-height: 600px !important;
+  min-height: 600px !important; }
+
 @charset "UTF-8";
 /**
  *

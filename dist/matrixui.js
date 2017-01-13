@@ -4398,6 +4398,7 @@ function muMdeditorDirective() {
     /* 指令绑定的ng-model属性 */
 
     scope.name = attrs.ngModel;
+    scope.heightType = attrs.heiType;
 
     var content = attrs.content;
     if (!content) {
@@ -4450,8 +4451,31 @@ function muMdeditorDirective() {
      */
 
     function initMDE() {
-      var type = attrs.type || 'simple';
+      var types = attrs.type || 'simple';
       var toolbar = null;
+
+      var type = types.split(' ')[0];
+      var heightType = types.split(' ')[1];
+
+      if (!heightType) {
+        heightType = 'median';
+      }
+
+      /*根据传进来的类型设置编辑器高度 */
+      switch (heightType) {
+        case 'small':
+          element[0].className += ' mdeditor-height-small';
+          break;
+        case 'median':
+          element[0].className += ' mdeditor-height-median';
+          break;
+        case 'large':
+          element[0].className += ' mdeditor-height-large';
+          break;
+        default:
+          // statements_def
+          break;
+      }
 
       /* 不同的类型，具有不同的toolbar */
 
