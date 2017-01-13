@@ -4471,6 +4471,18 @@ function muMdeditorDirective() {
         tabSize: 2
       });
 
+      /* 设置图片上传插件 */
+      if (!window.inlineAttachment) {
+        throw Error('InlineAttachment未加载');
+      } else {
+        var option = {
+          uploadUrl: attrs.uploadUrl,
+          uploadFieldName: attrs.uploadFieldName,
+          jsonFieldName: attrs.jsonFieldName
+        };
+        inlineAttachment.editors.codemirror4.attach(scope.mde.codemirror, option);
+      }
+
       /* 如果提供了content，则把编辑器的值设置为content的值 */
 
       if (attrs.content) {

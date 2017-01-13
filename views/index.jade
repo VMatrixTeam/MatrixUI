@@ -15,17 +15,19 @@ html
     link(rel='stylesheet' type='text/css' href='/font-awesome/css/font-awesome.min.css')
 
     script(type='text/javascript' src='/angular/angular.min.js')
+    script(type='text/javascript' src='/inline-attachment/src/inline-attachment.js')
+    script(type='text/javascript' src='/inline-attachment/src/codemirror.inline-attachment.js')
     script(type='text/javascript' src='/marked.min.js')
     script(type='text/javascript' src='/highlight.pack.min.js')
     script(type='text/javascript' src='/codemirror.min.js')
     script(type='text/javascript' src='/simplemde.min.js')
-
+    
     script(type='text/x-mathjax-config').
-      MathJax.Hub.Config({
-        showProcessingMessages: false,
-        tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
-        TeX: { equationNumbers: {autoNumber: "AMS"} }
-      });
+        MathJax.Hub.Config({
+            showProcessingMessages: false,
+            tex2jax: { inlineMath: [['$','$'],['\\\(','\\)']] },
+            TeX: { equationNumbers: {autoNumber: "AMS"} }
+        });
     script(type='text/javascript' src='/MathJax/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
 
     if dev

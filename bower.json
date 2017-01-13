@@ -26,6 +26,7 @@
     "angular": "^1.5.8"
   },
   "dependencies": {
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "inline-attachment": "^2.0.3"
   }
 }
