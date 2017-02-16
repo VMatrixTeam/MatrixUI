@@ -14,6 +14,7 @@ muMdeditorDirective.$inject = [];
 function muMdeditorDirective() {
 
   return {
+    require: '?ngModel',
     restrict: 'E',
     transclude: true,
     scope: true,
@@ -21,7 +22,7 @@ function muMdeditorDirective() {
     link: muMdeditorLink
   };
 
-  function muMdeditorLink(scope, element, attrs) {
+  function muMdeditorLink(scope, element, attrs, ngModel) {
 
     /* 指令绑定的ng-model属性 */
 
@@ -40,14 +41,6 @@ function muMdeditorDirective() {
       scope.$parent[scope.name] = '';
     }
     scope.content = content;
-
-    if (scope.name) {
-      scope.$parent.$watch(scope.name, function () {
-        if (scope.mde) {
-          scope.mde.value(scope.$parent[scope.name]);
-        }
-      });
-    }
 
     if (window.SimpleMDE) {
       initMDE();
@@ -126,6 +119,10 @@ function muMdeditorDirective() {
         tabSize: 2,
       });
 
+      if (ngModel) {
+        configNgModel();
+      }
+
       /* 设置图片上传插件 */
       if (!window.inlineAttachment) {
         throw Error('InlineAttachment未加载');
@@ -143,6 +140,54 @@ function muMdeditorDirective() {
       if (attrs.content) {
         scope.mde.value(attrs.content);
       }
+      
+    }
+
+    /**
+     *
+     * @description 配置ngModel的函数
+     * @author 邓廷礼 <mymikotomisaka@gmail.com>
+     *
+     */
+    
+    function configNgModel() {
+      /* 添加watch事件 同步scope和parent的model变量 */
+      scope.$watch(scope.name, function(newVal, oldVal) {
+        scope.$parent[scope.name] = newVal;
+      });
+
+      scope.$parent.$watch(scope.name, function(newVal, oldVal) {
+        scope[scope.name] = newVal;
+      });
+
+      /* 验证model的合法性 */
+      ngModel.$formatters.push(function (modelValue) {
+        if (!modelValue) {
+          return '';
+        }
+        else if (angular.isArray(modelValue) || angular.isObject(modelValue)) {
+          throw Error('an array or an object can not be a model of mdeditor');
+        }
+        return modelValue;
+      });
+
+      /* 渲染视图 */
+      ngModel.$render = function () {
+        let oldValue = scope.mde.codemirror.getValue();
+        if (ngModel.$viewValue !== oldValue) {
+          scope.mde.value(ngModel.$viewValue);
+        }
+      };
+
+      /* 绑定codemirror事件 同步view */
+      scope.mde.codemirror.on('change', function(instance) {
+        let newValue = instance.getValue();
+        if (newValue !== ngModel.$viewValue) {
+          scope.$evalAsync(function () {
+            ngModel.$setViewValue(newValue);
+          });
+        }
+      });
     }
   }
 
