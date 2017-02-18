@@ -9,9 +9,9 @@ angular
   .module('matrixui.components.mdeditor', [])
   .directive('muMdeditor', muMdeditorDirective);
 
-muMdeditorDirective.$inject = [];
+muMdeditorDirective.$inject = ['$parse'];
 
-function muMdeditorDirective() {
+function muMdeditorDirective($parse) {
 
   return {
     require: '?ngModel',
@@ -25,22 +25,21 @@ function muMdeditorDirective() {
   function muMdeditorLink(scope, element, attrs, ngModel) {
 
     /* 指令绑定的ng-model属性 */
-
-    scope.name = attrs.ngModel;
+    let modelName = attrs.ngModel;
     scope.heightType = attrs.heiType;
-
+    let getter = $parse(modelName);
+    let setter = getter.assign;
 
 
     let content = attrs.content;
     if (!content) {
       content = '';
     }
-    if (scope.$parent[scope.name]) {
-      content = scope.$parent[scope.name];
+    if (getter(scope.$parent)) {
+      content = getter(scope.$parent);
     } else {
-      scope.$parent[scope.name] = '';
+      setter(scope.$parent, '');
     }
-    scope.content = content;
 
     if (window.SimpleMDE) {
       initMDE();
@@ -152,12 +151,12 @@ function muMdeditorDirective() {
     
     function configNgModel() {
       /* 添加watch事件 同步scope和parent的model变量 */
-      scope.$watch(scope.name, function(newVal, oldVal) {
-        scope.$parent[scope.name] = newVal;
+      scope.$watch(modelName, function(newVal, oldVal) {
+        setter(scope.$parent, newVal);
       });
 
-      scope.$parent.$watch(scope.name, function(newVal, oldVal) {
-        scope[scope.name] = newVal;
+      scope.$parent.$watch(modelName, function(newVal, oldVal) {
+        setter(scope, newVal);
       });
 
       /* 验证model的合法性 */
