@@ -10,7 +10,11 @@
  */
 
 angular.module('matrixui.components.codeeditor', [])
-  .constant('muCodeeditorConfig', {})
+  .constant('muCodeeditorConfig', {
+    codemirror: {
+      specialChars: /[\u0000-\u0008\u000a-\u001f\u007f\u00ad\u200b-\u200f\u2028\u2029\ufeff]/
+    }
+  })
   .directive('muCodeeditor', muCodeeditorDirective);
 
 muCodeeditorDirective.$inject = ['$timeout', 'muCodeeditorConfig'];
