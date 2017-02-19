@@ -1,8 +1,5 @@
 'use strict';
 
-angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
-'use strict';
-
 /**
  *
  * @description button组件
@@ -11,6 +8,9 @@ angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
  */
 
 angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab', 'matrixui.components.process']);
+'use strict';
+
+angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
 /**
@@ -4381,9 +4381,9 @@ function muMarkdowndDirective() {
 
 angular.module('matrixui.components.mdeditor', []).directive('muMdeditor', muMdeditorDirective);
 
-muMdeditorDirective.$inject = [];
+muMdeditorDirective.$inject = ['$parse'];
 
-function muMdeditorDirective() {
+function muMdeditorDirective($parse) {
 
   return {
     require: '?ngModel',
@@ -4397,20 +4397,20 @@ function muMdeditorDirective() {
   function muMdeditorLink(scope, element, attrs, ngModel) {
 
     /* 指令绑定的ng-model属性 */
-
-    scope.name = attrs.ngModel;
+    var modelName = attrs.ngModel;
     scope.heightType = attrs.heiType;
+    var getter = $parse(modelName);
+    var setter = getter.assign;
 
     var content = attrs.content;
     if (!content) {
       content = '';
     }
-    if (scope.$parent[scope.name]) {
-      content = scope.$parent[scope.name];
+    if (getter(scope.$parent)) {
+      content = getter(scope.$parent);
     } else {
-      scope.$parent[scope.name] = '';
+      setter(scope.$parent, '');
     }
-    scope.content = content;
 
     if (window.SimpleMDE) {
       initMDE();
@@ -4520,12 +4520,12 @@ function muMdeditorDirective() {
 
     function configNgModel() {
       /* 添加watch事件 同步scope和parent的model变量 */
-      scope.$watch(scope.name, function (newVal, oldVal) {
-        scope.$parent[scope.name] = newVal;
+      scope.$watch(modelName, function (newVal, oldVal) {
+        setter(scope.$parent, newVal);
       });
 
-      scope.$parent.$watch(scope.name, function (newVal, oldVal) {
-        scope[scope.name] = newVal;
+      scope.$parent.$watch(modelName, function (newVal, oldVal) {
+        setter(scope, newVal);
       });
 
       /* 验证model的合法性 */
@@ -5656,27 +5656,6 @@ Selector = function () {
 
 /**
  *
- * @description spinner组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.spinner', []).directive('muSpinner', muSpinnerDirective);
-
-muSpinnerDirective.$inject = [];
-
-function muSpinnerDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-spinner组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description tab组件
  * @author yourname <youremail>
  *
@@ -5692,6 +5671,27 @@ function muTabDirective() {
     replace: true,
     transclude: true,
     template: '<h2>mu-tab组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description spinner组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.spinner', []).directive('muSpinner', muSpinnerDirective);
+
+muSpinnerDirective.$inject = [];
+
+function muSpinnerDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-spinner组件</h2>'
   };
 }
 'use strict';
