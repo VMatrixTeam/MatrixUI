@@ -25,6 +25,27 @@ angular.module('matrixui.specials', ['matrixui.specials.report']);
 
 /**
  *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
+
+muCardDirective.$inject = [];
+
+function muCardDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>Card组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
  * @description button组件
  * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
@@ -94,27 +115,6 @@ function muButtonDirective($timeout) {
       });
     }
   }
-}
-'use strict';
-
-/**
- *
- * @description card组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
-
-muCardDirective.$inject = [];
-
-function muCardDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>Card组件</h2>'
-  };
 }
 'use strict';
 
@@ -1137,7 +1137,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  * Binds a CodeMirror widget to a <textarea> element.
  */
 
-angular.module('matrixui.components.codeeditor', []).constant('muCodeeditorConfig', {}).directive('muCodeeditor', muCodeeditorDirective);
+angular.module('matrixui.components.codeeditor', []).constant('muCodeeditorConfig', {
+  codemirror: {
+    specialChars: /[\u0000-\u0008\u000a-\u001f\u007f\u00ad\u200b-\u200f\u2028\u2029\ufeff]/
+  }
+}).directive('muCodeeditor', muCodeeditorDirective);
 
 muCodeeditorDirective.$inject = ['$timeout', 'muCodeeditorConfig'];
 
@@ -4406,10 +4410,12 @@ function muMdeditorDirective($parse) {
     if (!content) {
       content = '';
     }
-    if (getter(scope.$parent)) {
-      content = getter(scope.$parent);
-    } else {
-      setter(scope.$parent, '');
+    if (ngModel) {
+      if (getter(scope.$parent)) {
+        content = getter(scope.$parent);
+      } else {
+        setter(scope.$parent, '');
+      }
     }
 
     if (window.SimpleMDE) {
@@ -5656,27 +5662,6 @@ Selector = function () {
 
 /**
  *
- * @description tab组件
- * @author yourname <youremail>
- *
- */
-
-angular.module('matrixui.components.tab', []).directive('muTab', muTabDirective);
-
-muTabDirective.$inject = [];
-
-function muTabDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>mu-tab组件</h2>'
-  };
-}
-'use strict';
-
-/**
- *
  * @description spinner组件
  * @author yourname <youremail>
  *
@@ -5692,6 +5677,27 @@ function muSpinnerDirective() {
     replace: true,
     transclude: true,
     template: '<h2>mu-spinner组件</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
+ * @description tab组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.tab', []).directive('muTab', muTabDirective);
+
+muTabDirective.$inject = [];
+
+function muTabDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>mu-tab组件</h2>'
   };
 }
 'use strict';
