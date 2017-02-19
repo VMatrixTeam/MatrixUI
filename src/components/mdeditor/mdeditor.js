@@ -35,10 +35,12 @@ function muMdeditorDirective($parse) {
     if (!content) {
       content = '';
     }
-    if (getter(scope.$parent)) {
-      content = getter(scope.$parent);
-    } else {
-      setter(scope.$parent, '');
+    if (ngModel) {
+      if (getter(scope.$parent)) {
+        content = getter(scope.$parent);
+      } else {
+        setter(scope.$parent, '');
+      }
     }
 
     if (window.SimpleMDE) {
