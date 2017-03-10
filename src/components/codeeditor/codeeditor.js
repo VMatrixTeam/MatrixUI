@@ -47,7 +47,7 @@ function muCodeeditorDirective($timeout, $parse, muCodeeditorConfig) {
       //     '<option ng-repeat="(language, mode) in languageOpts track by language">{{language}}</option>' +
       //   '</select>' +
       // '</div>' +
-      '<div class="editor-instance"></div>',
+      '<textarea class="editor-instance"></div>',
     compile: function compile() {
       // Require CodeMirror
       if (angular.isUndefined(window.CodeMirror)) {
@@ -115,6 +115,7 @@ function muCodeeditorDirective($timeout, $parse, muCodeeditorConfig) {
   function newCodemirrorEditor(iElement, codemirrorOptions) {
     var codemirrot;
     var editorEle = angular.element(iElement[0].querySelectorAll('.editor-instance'));
+    if (!editorEle[0]) editorEle = iElement;
 
     if (editorEle[0].tagName === 'TEXTAREA') {
       // Might bug but still ...
