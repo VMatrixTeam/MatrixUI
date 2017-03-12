@@ -11,19 +11,43 @@
 
 angular.module('matrixui.components.codeeditor', [])
   .constant('muCodeeditorConfig', {
+    languageOpts: {
+      "CPP": "text/x-c++src",
+      "C": "text/x-csrc",
+      "Java": "text/x-java",
+      "PHP": "text/x-php"
+    },
     codemirror: {
-      specialChars: /[\u0000-\u0008\u000a-\u001f\u007f\u00ad\u200b-\u200f\u2028\u2029\ufeff]/
+      mode: 'c++',
+      theme: 'monokai',
+      lineNumbers: true,
+      mode: 'text/x-c++src',
+      keyMap: 'sublime',
+      tabSize: 2
     }
   })
   .directive('muCodeeditor', muCodeeditorDirective);
 
-muCodeeditorDirective.$inject = ['$timeout', 'muCodeeditorConfig'];
+muCodeeditorDirective.$inject = ['$timeout', '$parse', 'muCodeeditorConfig'];
 
-function muCodeeditorDirective($timeout, muCodeeditorConfig) {
+function muCodeeditorDirective($timeout, $parse, muCodeeditorConfig) {
 
   return {
     restrict: 'EA',
     require: '?ngModel',
+    transclude: true,
+    scope: {
+      uiCodemirror: '=',
+      uiCodemirrorOpts: '=',
+      contentObj: '='
+    },
+    template: '' +
+      // '<div class="mu-codeeditor-language">' +
+      //   '<select ng-model="language">' +
+      //     '<option ng-repeat="(language, mode) in languageOpts track by language">{{language}}</option>' +
+      //   '</select>' +
+      // '</div>' +
+      '<textarea class="editor-instance"></div>',
     compile: function compile() {
       // Require CodeMirror
       if (angular.isUndefined(window.CodeMirror)) {
@@ -38,8 +62,8 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
     var codemirrorOptions = angular.extend(
       { value: iElement.text() },
       muCodeeditorConfig.codemirror || {},
-      scope.$eval(iAttrs.uiCodemirror),
-      scope.$eval(iAttrs.uiCodemirrorOpts)
+      scope.$eval('uiCodemirror'),
+      scope.$eval('uiCodemirrorOpts')
     );
 
     var codemirror = newCodemirrorEditor(iElement, codemirrorOptions);
@@ -50,10 +74,28 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
       scope
     );
 
-    configNgModelLink(codemirror, ngModel, scope);
+    codemirror.on('beforeChange', function (instance, changeObj) {
+      var from = changeObj.from,
+            to = changeObj.to;
+      var text = changeObj.text;
+      text = text.map(function(line, index, text) {
+        return line.replace(/[\u0009]/g, ' ');
+      });
+      
+      changeObj.update(from, to, text);
+    });
+
+    var modelName = iAttrs.ngModel;
+
+    configNgModelLink(codemirror, ngModel, scope, modelName);
+
+    configConverter(codemirror);
 
     configUiRefreshAttribute(codemirror, iAttrs.uiRefresh, scope);
 
+    //configLanguageOpts(codemirror, scope);
+
+    //configContentBlock(codemirror, scope, modelName);
     // Allow access to the CodeMirror instance through a broadcasted event
     // eg: $broadcast('CodeMirror', function(cm){...});
     scope.$on('CodeMirror', function(event, callback) {
@@ -72,14 +114,16 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
 
   function newCodemirrorEditor(iElement, codemirrorOptions) {
     var codemirrot;
+    var editorEle = angular.element(iElement[0].querySelectorAll('.editor-instance'));
+    if (!editorEle[0]) editorEle = iElement;
 
-    if (iElement[0].tagName === 'TEXTAREA') {
+    if (editorEle[0].tagName === 'TEXTAREA') {
       // Might bug but still ...
-      codemirrot = window.CodeMirror.fromTextArea(iElement[0], codemirrorOptions);
+      codemirrot = window.CodeMirror.fromTextArea(editorEle[0], codemirrorOptions);
     } else {
-      iElement.html('');
+      editorEle.html('');
       codemirrot = new window.CodeMirror(function(cm_el) {
-        iElement.append(cm_el);
+        editorEle.append(cm_el);
       }, codemirrorOptions);
     }
 
@@ -90,7 +134,7 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
     if (!uiCodemirrorAttr) { return; }
 
     var codemirrorDefaultsKeys = Object.keys(window.CodeMirror.defaults);
-    scope.$watch(uiCodemirrorAttr, updateOptions, true);
+    scope.$watch('uiCodemirrorOpts', updateOptions, true);
     function updateOptions(newValues, oldValue) {
       if (!angular.isObject(newValues)) { return; }
       codemirrorDefaultsKeys.forEach(function(key) {
@@ -106,7 +150,7 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
     }
   }
 
-  function configNgModelLink(codemirror, ngModel, scope) {
+  function configNgModelLink(codemirror, ngModel, scope, modelName) {
     if (!ngModel) { return; }
     // CodeMirror expects a string, so make sure it gets one.
     // This does not change the model.
@@ -139,6 +183,18 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
         });
       }
     });
+
+    var getter = $parse(modelName);
+    var setter = getter.assign;
+
+    // 配置父scope的监视
+    scope.$parent.$watch(modelName, function (newVal, oldVal) {
+      setter(scope, newVal);
+    }); 
+
+    scope.$watch(modelName, function (newVal, oldVal) {
+      setter(scope.$parent, newVal);
+    }); 
   }
 
   function configUiRefreshAttribute(codeMirror, uiRefreshAttr, scope) {
@@ -153,5 +209,75 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
       }
     });
   }
+
+  /**
+   * @description 配置tab转换(非法的tab会被转化为合法的tab)
+   * @author 邓廷礼 <mymikotomisaka@gmail.com>
+   * @param {object} codemirror cm实例
+   */
+  function configConverter(codemirror) {
+    codemirror.on('beforeChange', function (instance, changeObj) {
+      var from = changeObj.from,
+            to = changeObj.to;
+      var text = changeObj.text;
+      text = text.map(function(line, index, text) {
+        return line.replace(/[\u0009]/g, ' ');
+      });
+      
+      changeObj.update(from, to, text);
+    });
+  }
+
+  // function configLanguageOpts(codemirror, scope) {
+  //   var languageOpts = scope.languageOpts = muCodeeditorConfig.languageOpts;
+  //   scope.language = 'C';
+
+  //   codemirror.setOption('mode', languageOpts[scope.language]);
+
+  //   scope.$watch('language', function (newVal, oldVal) {
+  //     codemirror.setOption('mode', languageOpts[newVal]);
+  //   });
+  // }
+
+  // function configContentBlock(codemirror, scope, modelName) {
+  //   if (angular.isObject(scope.contentObj)) {
+  //     var keys = Object.key(scope.contentObj);
+  //     if (keys.length === 0) return;
+  //     scope.activeContent = keys[0];
+
+  //     scope.changeContent = function (name) {
+  //       if (angular.isUndefined(scope.contentObj[name])) return;
+
+  //       scope.activeContent = name;
+  //       codemirror.setValue(scope.contentObj[name]);
+  //     }
+
+  //     scope.deleteContent = function (name) {
+  //       if (angular.isUndefined(scope.contentObj[name])) return;
+
+  //       delete scope.contentObj[name];
+  //     }
+
+  //     scope.$watch('contentObj', function (newVal, oldVal) {
+  //       if (newVal[scope.activeContent]) codemirror.setValue(newVal[scope.activeContent]);
+  //       else {
+  //         let names = Object.keys(scope.contentObj);
+  //         if (angular.isUndefined(names[0])) {
+  //           scope.activeContent = '';
+  //           return;
+  //         }
+  //         scope.activeContent = names[0];
+  //         codemirror.setValue(newVal[names[0]]);
+  //       }
+  //     }, true);
+
+  //     scope.$watch(modelName, function (newVal, oldVal) {
+  //       var name = scope.activeContent;
+  //       if (angular.isUndefined(scope.contentObj[name])) return;
+
+  //       scope.contentObj[name] = newVal;
+  //     });
+  //   }
+  // }
 
 }

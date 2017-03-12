@@ -246,10 +246,11 @@ function muProgressService() {
 muProgressFactory.$inject = ['$injector', '$muProgressService'];
 
 function muProgressFactory($injector, $muProgressService) {
-
+  var _instance = null;
   return {
     createInstance: function () {
-      return $injector.instantiate($muProgressService);
+      if (!_instance) _instance = $injector.instantiate($muProgressService);
+      return _instance;
     }
   };
 
