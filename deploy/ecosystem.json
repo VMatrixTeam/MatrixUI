@@ -14,13 +14,14 @@
     "env": {
       "COMMON_VARIABLE": "true"
     },
-    "error_file"      : "../matrixui-logs/matrixui-error.log",
-    "out_file"        : "../matrixui-logs/matrixui-output.log",
-    "merge_logs"      : true,
-    "log_date_format" : "YYYY-MM-DD HH:mm Z",
-    "watch"           : ["src", "public", "gulp", "views", "server.js"],
+    "watch": false,
+    // "error_file"      : "../matrixui-logs/matrixui-error.log",
+    // "out_file"        : "../matrixui-logs/matrixui-output.log",
+    // "merge_logs"      : true,
+    // "log_date_format" : "YYYY-MM-DD HH:mm Z",
+    // "watch"           : ["src", "public", "gulp", "views", "server.js"],
     "max_memory_restart": "2G",
-    "ignore_watch"    : ["node_modules", "bower_components"],
+    // "ignore_watch"    : ["node_modules", "bower_components"],
     "env"             : {
       "NODE_ENV": "production"
     },

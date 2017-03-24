@@ -1,15 +1,5 @@
 'use strict';
 
-/**
- *
- * @description button组件
- * @author 吴家荣 <jiarongwu.se@foxmail.com>
- *
- */
-
-angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab', 'matrixui.components.process']);
-'use strict';
-
 angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
 'use strict';
 
@@ -20,28 +10,17 @@ angular.module('matrixui', ['matrixui.components', 'matrixui.specials']);
  *
  */
 
-angular.module('matrixui.specials', ['matrixui.specials.report']);
+angular.module('matrixui.components', ['matrixui.components.button', 'matrixui.components.card', 'matrixui.components.checkbox', 'matrixui.components.codeeditor', 'matrixui.components.datatable', 'matrixui.components.dialog', 'matrixui.components.markdown', 'matrixui.components.mdeditor', 'matrixui.components.panel', 'matrixui.components.radio', 'matrixui.components.select', 'matrixui.components.spinner', 'matrixui.components.tab', 'matrixui.components.process']);
 'use strict';
 
 /**
  *
- * @description card组件
- * @author yourname <youremail>
+ * @description button组件
+ * @author 吴家荣 <jiarongwu.se@foxmail.com>
  *
  */
 
-angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
-
-muCardDirective.$inject = [];
-
-function muCardDirective() {
-  return {
-    restrict: 'E',
-    replace: true,
-    transclude: true,
-    template: '<h2>Card组件</h2>'
-  };
-}
+angular.module('matrixui.specials', ['matrixui.specials.report']);
 'use strict';
 
 /**
@@ -120,6 +99,27 @@ function muButtonDirective($timeout) {
 
 /**
  *
+ * @description card组件
+ * @author yourname <youremail>
+ *
+ */
+
+angular.module('matrixui.components.card', []).directive('muCard', muCardDirective);
+
+muCardDirective.$inject = [];
+
+function muCardDirective() {
+  return {
+    restrict: 'E',
+    replace: true,
+    transclude: true,
+    template: '<h2>Card\u7EC4\u4EF6</h2>'
+  };
+}
+'use strict';
+
+/**
+ *
  * @description checkbox组件
  * @author yourname <youremail>
  *
@@ -134,12 +134,12 @@ function muCheckboxDirective() {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<h2>mu-checkbox组件</h2>'
+    template: '<h2>mu-checkbox\u7EC4\u4EF6</h2>'
   };
 }
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -257,7 +257,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -934,7 +934,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -1126,6 +1126,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 'use strict';
 
+var _codemirror;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  *
  * @description codeeditor组件，代码编辑器，源代码参考：https://github.com/angular-ui/ui-codemirror
@@ -1138,18 +1142,39 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
  */
 
 angular.module('matrixui.components.codeeditor', []).constant('muCodeeditorConfig', {
-  codemirror: {
-    specialChars: /[\u0000-\u0008\u000a-\u001f\u007f\u00ad\u200b-\u200f\u2028\u2029\ufeff]/
-  }
+  languageOpts: {
+    "CPP": "text/x-c++src",
+    "C": "text/x-csrc",
+    "Java": "text/x-java",
+    "PHP": "text/x-php"
+  },
+  codemirror: (_codemirror = {
+    mode: 'c++',
+    theme: 'monokai',
+    lineNumbers: true
+  }, _defineProperty(_codemirror, 'mode', 'text/x-c++src'), _defineProperty(_codemirror, 'keyMap', 'sublime'), _defineProperty(_codemirror, 'tabSize', 2), _codemirror)
 }).directive('muCodeeditor', muCodeeditorDirective);
 
-muCodeeditorDirective.$inject = ['$timeout', 'muCodeeditorConfig'];
+muCodeeditorDirective.$inject = ['$timeout', '$parse', 'muCodeeditorConfig'];
 
-function muCodeeditorDirective($timeout, muCodeeditorConfig) {
+function muCodeeditorDirective($timeout, $parse, muCodeeditorConfig) {
 
   return {
     restrict: 'EA',
     require: '?ngModel',
+    transclude: true,
+    scope: {
+      uiCodemirror: '=',
+      uiCodemirrorOpts: '=',
+      contentObj: '='
+    },
+    template: '' +
+    // '<div class="mu-codeeditor-language">' +
+    //   '<select ng-model="language">' +
+    //     '<option ng-repeat="(language, mode) in languageOpts track by language">{{language}}</option>' +
+    //   '</select>' +
+    // '</div>' +
+    '<textarea class="editor-instance"></div>',
     compile: function compile() {
       // Require CodeMirror
       if (angular.isUndefined(window.CodeMirror)) {
@@ -1161,16 +1186,34 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
 
   function postLink(scope, iElement, iAttrs, ngModel) {
 
-    var codemirrorOptions = angular.extend({ value: iElement.text() }, muCodeeditorConfig.codemirror || {}, scope.$eval(iAttrs.uiCodemirror), scope.$eval(iAttrs.uiCodemirrorOpts));
+    var codemirrorOptions = angular.extend({ value: iElement.text() }, muCodeeditorConfig.codemirror || {}, scope.$eval('uiCodemirror'), scope.$eval('uiCodemirrorOpts'));
 
     var codemirror = newCodemirrorEditor(iElement, codemirrorOptions);
 
     configOptionsWatcher(codemirror, iAttrs.uiCodemirror || iAttrs.uiCodemirrorOpts, scope);
 
-    configNgModelLink(codemirror, ngModel, scope);
+    codemirror.on('beforeChange', function (instance, changeObj) {
+      var from = changeObj.from,
+          to = changeObj.to;
+      var text = changeObj.text;
+      text = text.map(function (line, index, text) {
+        return line.replace(/[\u0009]/g, ' ');
+      });
+
+      changeObj.update(from, to, text);
+    });
+
+    var modelName = iAttrs.ngModel;
+
+    configNgModelLink(codemirror, ngModel, scope, modelName);
+
+    configConverter(codemirror);
 
     configUiRefreshAttribute(codemirror, iAttrs.uiRefresh, scope);
 
+    //configLanguageOpts(codemirror, scope);
+
+    //configContentBlock(codemirror, scope, modelName);
     // Allow access to the CodeMirror instance through a broadcasted event
     // eg: $broadcast('CodeMirror', function(cm){...});
     scope.$on('CodeMirror', function (event, callback) {
@@ -1189,14 +1232,16 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
 
   function newCodemirrorEditor(iElement, codemirrorOptions) {
     var codemirrot;
+    var editorEle = angular.element(iElement[0].querySelectorAll('.editor-instance'));
+    if (!editorEle[0]) editorEle = iElement;
 
-    if (iElement[0].tagName === 'TEXTAREA') {
+    if (editorEle[0].tagName === 'TEXTAREA') {
       // Might bug but still ...
-      codemirrot = window.CodeMirror.fromTextArea(iElement[0], codemirrorOptions);
+      codemirrot = window.CodeMirror.fromTextArea(editorEle[0], codemirrorOptions);
     } else {
-      iElement.html('');
+      editorEle.html('');
       codemirrot = new window.CodeMirror(function (cm_el) {
-        iElement.append(cm_el);
+        editorEle.append(cm_el);
       }, codemirrorOptions);
     }
 
@@ -1209,7 +1254,7 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
     }
 
     var codemirrorDefaultsKeys = Object.keys(window.CodeMirror.defaults);
-    scope.$watch(uiCodemirrorAttr, updateOptions, true);
+    scope.$watch('uiCodemirrorOpts', updateOptions, true);
     function updateOptions(newValues, oldValue) {
       if (!angular.isObject(newValues)) {
         return;
@@ -1227,7 +1272,7 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
     }
   }
 
-  function configNgModelLink(codemirror, ngModel, scope) {
+  function configNgModelLink(codemirror, ngModel, scope, modelName) {
     if (!ngModel) {
       return;
     }
@@ -1260,6 +1305,18 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
         });
       }
     });
+
+    var getter = $parse(modelName);
+    var setter = getter.assign;
+
+    // 配置父scope的监视
+    scope.$parent.$watch(modelName, function (newVal, oldVal) {
+      setter(scope, newVal);
+    });
+
+    scope.$watch(modelName, function (newVal, oldVal) {
+      setter(scope.$parent, newVal);
+    });
   }
 
   function configUiRefreshAttribute(codeMirror, uiRefreshAttr, scope) {
@@ -1276,10 +1333,80 @@ function muCodeeditorDirective($timeout, muCodeeditorConfig) {
       }
     });
   }
+
+  /**
+   * @description 配置tab转换(非法的tab会被转化为合法的tab)
+   * @author 邓廷礼 <mymikotomisaka@gmail.com>
+   * @param {object} codemirror cm实例
+   */
+  function configConverter(codemirror) {
+    codemirror.on('beforeChange', function (instance, changeObj) {
+      var from = changeObj.from,
+          to = changeObj.to;
+      var text = changeObj.text;
+      text = text.map(function (line, index, text) {
+        return line.replace(/[\u0009]/g, ' ');
+      });
+
+      changeObj.update(from, to, text);
+    });
+  }
+
+  // function configLanguageOpts(codemirror, scope) {
+  //   var languageOpts = scope.languageOpts = muCodeeditorConfig.languageOpts;
+  //   scope.language = 'C';
+
+  //   codemirror.setOption('mode', languageOpts[scope.language]);
+
+  //   scope.$watch('language', function (newVal, oldVal) {
+  //     codemirror.setOption('mode', languageOpts[newVal]);
+  //   });
+  // }
+
+  // function configContentBlock(codemirror, scope, modelName) {
+  //   if (angular.isObject(scope.contentObj)) {
+  //     var keys = Object.key(scope.contentObj);
+  //     if (keys.length === 0) return;
+  //     scope.activeContent = keys[0];
+
+  //     scope.changeContent = function (name) {
+  //       if (angular.isUndefined(scope.contentObj[name])) return;
+
+  //       scope.activeContent = name;
+  //       codemirror.setValue(scope.contentObj[name]);
+  //     }
+
+  //     scope.deleteContent = function (name) {
+  //       if (angular.isUndefined(scope.contentObj[name])) return;
+
+  //       delete scope.contentObj[name];
+  //     }
+
+  //     scope.$watch('contentObj', function (newVal, oldVal) {
+  //       if (newVal[scope.activeContent]) codemirror.setValue(newVal[scope.activeContent]);
+  //       else {
+  //         let names = Object.keys(scope.contentObj);
+  //         if (angular.isUndefined(names[0])) {
+  //           scope.activeContent = '';
+  //           return;
+  //         }
+  //         scope.activeContent = names[0];
+  //         codemirror.setValue(newVal[names[0]]);
+  //       }
+  //     }, true);
+
+  //     scope.$watch(modelName, function (newVal, oldVal) {
+  //       var name = scope.activeContent;
+  //       if (angular.isUndefined(scope.contentObj[name])) return;
+
+  //       scope.contentObj[name] = newVal;
+  //     });
+  //   }
+  // }
 }
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -1496,7 +1623,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -1664,7 +1791,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -1798,7 +1925,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   var defaultOptions = {
     rangeFinder: CodeMirror.fold.auto,
-    widget: "↔",
+    widget: "\u2194",
     minFoldSize: 0,
     scanUp: false,
     clearOnEnter: true
@@ -1819,7 +1946,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -1975,7 +2102,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -2769,7 +2896,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -2898,7 +3025,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -3125,7 +3252,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -3395,7 +3522,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -3605,7 +3732,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 });
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
@@ -4235,7 +4362,7 @@ function muDatatableDirective() {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<h2>mu-datable组件</h2>'
+    template: '<h2>mu-datable\u7EC4\u4EF6</h2>'
   };
 }
 'use strict';
@@ -4256,7 +4383,7 @@ function muDialogDirective() {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<h2>mu-dialog组件</h2>'
+    template: '<h2>mu-dialog\u7EC4\u4EF6</h2>'
   };
 }
 'use strict';
@@ -4273,11 +4400,12 @@ function muDialogDirective() {
 
 angular.module('matrixui.components.markdown', []).directive('muMarkdown', muMarkdowndDirective);
 
-muMarkdowndDirective.$inject = [];
+muMarkdowndDirective.$inject = ['$parse'];
 
-function muMarkdowndDirective() {
+function muMarkdowndDirective($parse) {
 
   return {
+    require: '?ngModel',
     restrict: 'E',
     template: '\n      <div class=\'markdown-body\'>\n        <div ng-transclude></div>\n      </div>\n    ',
     transclude: true,
@@ -4294,22 +4422,25 @@ function muMarkdowndDirective() {
    * @author 吴家荣 <jiarongwu.se@foxmail.com>
    */
 
-  function muMarkdownLink(scope, element, attrs) {
+  function muMarkdownLink(scope, element, attrs, ngModel) {
 
     /* 指令绑定的ng-model属性 */
 
-    scope.name = attrs.ngModel;
-
+    var modelName = attrs.ngModel;
+    var getter = $parse(modelName);
+    var setter = getter.assign;
     /* 提取要显示的content的值，ng-model的重要性高于content */
 
     var content = attrs.content;
     if (!content) {
       content = '';
     }
-    if (scope.$parent[scope.name]) {
-      content = scope.$parent[scope.name];
-    } else {
-      scope.$parent[scope.name] = '';
+    if (ngModel) {
+      if (getter(scope.$parent)) {
+        content = getter(scope.$parent);
+      } else {
+        setter(scope.$parent, '');
+      }
     }
     scope.content = content;
 
@@ -4319,9 +4450,28 @@ function muMarkdowndDirective() {
 
     /* scope.name用来判断ng-model属性是否存在，如果ng-model属性存在，当ng-model属性改变的时候，动态渲染markdown文本 */
 
-    if (scope.name) {
-      scope.$parent.$watch(scope.name, function () {
-        var content = scope.$parent[scope.name];
+    if (modelName && ngModel) configNgModelLink(scope, ngModel, modelName);
+
+    function insertHTML(content) {
+      element.find('div').html(markdownToHTML(content));
+    }
+
+    /**
+     * @description 配置ng-model的函数
+     * @author 邓廷礼 <mymikotomisaka@gmail.com>
+     * @param {object} scope
+     * @param {object} ngModel 控制器
+     * @param {string} modelName ng-model监视的字符串
+     *
+     */
+    function configNgModelLink(scope, ngModel, modelName) {
+
+      scope.$watch(modelName, function (newVal, oldVal) {
+        setter(scope.$parent, newVal);
+      });
+
+      scope.$parent.$watch(modelName, function () {
+        var content = getter(scope.$parent);
 
         if (!content) {
           content = scope.content;
@@ -4344,10 +4494,6 @@ function muMarkdowndDirective() {
           throw Error('MathJax没有加载');
         }
       });
-    }
-
-    function insertHTML(content) {
-      element.find('div').html(markdownToHTML(content));
     }
   }
 
@@ -4644,7 +4790,7 @@ function muPanelDirective() {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<h2>mu-panel组件</h2>'
+    template: '<h2>mu-panel\u7EC4\u4EF6</h2>'
   };
 }
 'use strict';
@@ -4895,10 +5041,11 @@ function muProgressService() {
 muProgressFactory.$inject = ['$injector', '$muProgressService'];
 
 function muProgressFactory($injector, $muProgressService) {
-
+  var _instance = null;
   return {
     createInstance: function createInstance() {
-      return $injector.instantiate($muProgressService);
+      if (!_instance) _instance = $injector.instantiate($muProgressService);
+      return _instance;
     }
   };
 }
@@ -5676,7 +5823,7 @@ function muSpinnerDirective() {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<h2>mu-spinner组件</h2>'
+    template: '<h2>mu-spinner\u7EC4\u4EF6</h2>'
   };
 }
 'use strict';
@@ -5697,7 +5844,7 @@ function muTabDirective() {
     restrict: 'E',
     replace: true,
     transclude: true,
-    template: '<h2>mu-tab组件</h2>'
+    template: '<h2>mu-tab\u7EC4\u4EF6</h2>'
   };
 }
 'use strict';
@@ -6022,6 +6169,6 @@ function muReportDirective() {
   }
 
   function getTemplate() {
-    return '\n    <div id="matrixui-programming-report">\n      <div ng-if="config.grading[&quot;compile check&quot;]" class="compile-check report-section">\n        <div ng-click="toggleContent($event)" class="compile-check-score score">Compile Check : You Get {{compileCheck.grade? compileCheck.grade : 0}} Points of {{config.grading[\'compile check\']}} Points</div>\n        <div ng-if="compileCheck[&quot;compile check&quot;]" class="compile-error-content test-content">\n          <div ng-if="compileCheck.grade == config.grading[&quot;compile check&quot;]" class="report-detail">\n            <pre class="full-score">Pass compilation. You got full score!</pre>\n          </div>\n          <div ng-if="compileCheck &amp;&amp; compileCheck.grade != config.grading[&quot;compile check&quot;]" class="report-detail">\n            <pre class="error-content red-color">Compilation fail.</pre>\n            <div class="error-detail">\n              <pre class="error-content">{{compileCheck[\'compile check\']}}</pre>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;static check&quot;]" class="static-check report-section">\n        <div ng-click="toggleContent($event)" class="static-check-score score">Static Check : You Get {{staticCheck.grade? staticCheck.grade : 0}} Points of {{config.grading[\'static check\']}} Points<a href="http://oclint.org/" target="_blank" ng-if="staticCheck.grade != config.grading[&quot;static check&quot;] &amp;&amp; staticCheck" class="link">Why it went wrong？</a></div>\n        <div class="static-check-content test-content">\n          <div ng-if="!staticCheck &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of errors above.</pre>\n          </div>\n          <div ng-if="!staticCheck &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="staticCheck.grade == config.grading[&quot;static check&quot;]" class="report-detail">\n            <pre class="full-score">Pass static check. You got full score!</pre>\n          </div>\n          <div ng-if="staticCheck &amp;&amp; (staticCheck.grade != config.grading[&quot;static check&quot;])" class="report-detail">\n            <pre class="error-content red-color">Static check fail.</pre>\n            <div class="error-detail">\n              <div class="message"></div>\n              <div ng-if="staticCheck[&quot;static check&quot;].summary" class="summary"></div>\n              <div ng-if="staticCheck[&quot;static check&quot;].violation" ng-repeat="item in staticCheck[&quot;static check&quot;].violation" class="violations">\n                <pre ng-if="item.message" class="error-content">{{ item.path | deleteSpace}} {{item.startLine}}:{{item.startColumn}} : {{item.category}}: {{item.message}}</pre>\n                <pre ng-if="item.rule &amp;&amp; !item.message" class="error-content">{{ item.path | deleteSpace }} {{item.startLine}}:{{item.startColumn}} : {{item.category}}: {{item.rule}}</pre>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;standard tests&quot;]" class="standard-tests-check report-section">\n        <div ng-click="toggleContent($event)" class="standard-tests-check-score score">Standard Tests : You Get {{standardTests.grade | formatReportGrade }} Points of {{config.grading[\'standard tests\']}} Points</div>\n        <div class="standard-tests-content test-content">\n          <div ng-if="!standardTests &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!standardTests &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="standardTests.grade == config.grading[&quot;standard tests&quot;]" class="report-detail">\n            <pre class="full-score">Pass standard test. You got full score!</pre>\n          </div>\n          <div ng-if="standardTests &amp;&amp; standardTests.grade != config.grading[&quot;standard tests&quot;]" class="report-detail">\n            <pre class="error-content red-color">Some examples of failed standard test cases:</pre>\n            <div class="error-detail">\n              <div ng-repeat="test in standardTests[&quot;standard tests&quot;] | showWrongTests | limitTo: 3" class="standard-tests">\n                <hr ng-if="$index != 0"/>\n                <div ng-if="test.result != &quot;CR&quot;" class="standard-test">\n                  <div layout="layout" class="tests-check-summary">\n                    <pre layout="layout">[{{ $index+1 }}]</pre>\n                    <pre layout="layout" ng-if="test.memoryused">Memory Used : {{test.memoryused}}kb</pre>\n                    <pre layout="layout" ng-if="test.timeused">Time Used : {{test.timeused}}ms</pre>\n                    <pre layout="layout" ng-if="test.result">Result : {{test.result | formatReportResult}}</pre>\n                    <pre layout="layout" ng-if="test.memorylimit">Memory Limit : {{ test.memorylimit }}kb</pre>\n                    <pre layout="layout" ng-if="test.timelimit">Time Limit : {{ test.timelimit }}ms</pre>\n                  </div>\n                  <pre class="label">Standard Input :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdin }}</pre>\n                  <pre class="label">Standard Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.standard_stdout | formatReportOutput }}</pre>\n                  <pre class="label">Your Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdout | formatReportOutput }}</pre>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;random tests&quot;]" class="random-tests-check report-section">\n        <div ng-click="toggleContent($event)" class="random-tests-check-score score">Random Tests : You Get {{randomTests.grade | formatReportGrade}} Points of {{config.grading[\'random tests\']}} Points</div>\n        <div class="random-tests-content test-content">\n          <div ng-if="!randomTests &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!randomTest &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="randomTests.grade == config.grading[&quot;random tests&quot;]" class="report-detail">\n            <pre class="full-score">Pass random check. You got full score!</pre>\n          </div>\n          <div ng-if="randomTests &amp;&amp; randomTests.grade != config.grading[&quot;random tests&quot;]" class="report-detail">\n            <pre class="error-content red-color">Some examples of failed random test cases:</pre>\n            <div class="error-detail">\n              <div ng-repeat="test in randomTests[&quot;random tests&quot;] | showWrongTests | limitTo: 3" class="random-tests">\n                <hr ng-if="$index != 0"/>\n                <div ng-if="test.result != &quot;CR&quot;" class="random-test">\n                  <div layout="layout" class="tests-check-summary">\n                    <pre layout="layout">[{{ $index+1 }}]</pre>\n                    <pre layout="layout" ng-if="test.memoryused">Memory Used : {{ test.memoryused }}kb</pre>\n                    <pre layout="layout" ng-if="test.timeused">Time Used : {{ test.timeused }}ms</pre>\n                    <pre layout="layout" ng-if="test.result">Result : {{ test.result | formatReportResult}}</pre>\n                    <pre layout="layout" ng-if="test.memorylimit">Memory Limit : {{ test.memorylimit }}kb</pre>\n                    <pre layout="layout" ng-if="test.timelimit">Time Limit : {{ test.timelimit }}ms</pre>\n                  </div>\n                  <pre class="label">Standard Input :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdin }}</pre>\n                  <pre class="label">Standard Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.standard_stdout | formatReportOutput }}</pre>\n                  <pre class="label">Your Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdout | formatReportOutput }}</pre>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;memory check&quot;]" class="memory-check report-section">\n        <div ng-click="toggleContent($event)" class="memory-check-score score">Memory Check : You Get {{memoryCheck.grade | formatReportGrade}} Points of {{config.grading[\'memory check\']}} Points<a href="http://valgrind.org/" ng-if="memoryCheck.grade != config.grading[&quot;memory check&quot;] &amp;&amp; memoryCheck" class="link">Why it went wrong？</a></div>\n        <div class="memory-check-content test-content">\n          <div ng-if="!memoryCheck &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!memoryCheck &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="memoryCheck.grade == config.grading[&quot;memory check&quot;]" class="report-detail">\n            <pre class="full-score">Pass memory access check. You got full score!</pre>\n          </div>\n          <div ng-if="memoryCheck &amp;&amp; memoryCheck.grade != config.grading[&quot;memory check&quot;]" class="report-detail">\n            <pre class="error-content red-color">Memory check fail.</pre>\n            <div class="error-detail">\n              <div ng-repeat="check in memoryCheck[&quot;memory check&quot;]" class="memory-checks">\n                <hr ng-if="$index != 0"/>\n                <pre ng-if="check.message" class="memory-check-summary">[{{ $index+1 }}] {{ check.message }}</pre>\n                <pre ng-if="check.valgrindoutput.error.kind" class="memory-check-summary">[{{ $index+1 }}] Error :   {{ check.valgrindoutput.error.kind }}</pre>\n                <pre ng-if="check.stdin">Standard Input :</pre>\n                <pre ng-if="check.stdin" class="error-content inout-tests">{{ check.stdin }}</pre>\n                <div ng-if="check.valgrindoutput.error.stack.frame" class="memory-check">\n                  <div ng-repeat="frame in check.valgrindoutput.error.stack.frame">\n                    <hr ng-if="$index != 0"/>\n                    <pre ng-if="frame.obj" class="error-content">obj: {{ frame.obj }}</pre>\n                    <pre ng-if="frame.file &amp;&amp; frame.line" class="error-content">[{{ frame.file }}]: line {{ frame.line }}</pre>\n                    <pre ng-if="frame.fn" class="error-content">{{ frame.fn }}</pre>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;google tests&quot;]" class="google-test report-section">\n        <div ng-click="toggleContent($event)" class="google-test-score score">Google Test : You Get {{googleTest.grade | formatReportGrade}} Points of {{config.grading[\'google tests\']}} Points</div>\n        <div class="google-test-content test-content">\n          <div ng-if="!googleTest &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!googleTest &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="googleTest.grade == config.grading[&quot;google tests&quot;]" class="report-detail">\n            <pre class="full-score">Pass Google test. You got full score!</pre>\n          </div>\n          <div ng-if="googleTest &amp;&amp; googleTest.grade != config.grading[&quot;google tests&quot;]" class="report-detail">\n            <pre class="error-content red-color">Google test fail</pre>\n            <div ng-show="googleTest[&quot;google tests&quot;][0].gtest.info != null" class="error-detail">\n              <pre ng-repeat="fail in gtestFailedList" class="error-content">{{fail}} : {{googleTest[\'google tests\'][0].gtest.info[fail]}}</pre>\n            </div>\n            <div ng-show="googleTest[&quot;google tests&quot;][0].gtest.info == null" class="error-detail">\n              <pre class="error-content">error: {{ googleTest[\'google tests\'][0].gtest.failure[0][\'error\'] }}</pre>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    ';
+    return '\n    <div id="matrixui-programming-report">\n      <div ng-if="config.grading[&quot;compile check&quot;]" class="compile-check report-section">\n        <div ng-click="toggleContent($event)" class="compile-check-score score">Compile Check : You Get {{compileCheck.grade? compileCheck.grade : 0}} Points of {{config.grading[\'compile check\']}} Points</div>\n        <div ng-if="compileCheck[&quot;compile check&quot;]" class="compile-error-content test-content">\n          <div ng-if="compileCheck.grade == config.grading[&quot;compile check&quot;]" class="report-detail">\n            <pre class="full-score">Pass compilation. You got full score!</pre>\n          </div>\n          <div ng-if="compileCheck &amp;&amp; compileCheck.grade != config.grading[&quot;compile check&quot;]" class="report-detail">\n            <pre class="error-content red-color">Compilation fail.</pre>\n            <div class="error-detail">\n              <pre class="error-content">{{compileCheck[\'compile check\']}}</pre>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;static check&quot;]" class="static-check report-section">\n        <div ng-click="toggleContent($event)" class="static-check-score score">Static Check : You Get {{staticCheck.grade? staticCheck.grade : 0}} Points of {{config.grading[\'static check\']}} Points<a href="http://oclint.org/" target="_blank" ng-if="staticCheck.grade != config.grading[&quot;static check&quot;] &amp;&amp; staticCheck" class="link">Why it went wrong\uFF1F</a></div>\n        <div class="static-check-content test-content">\n          <div ng-if="!staticCheck &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of errors above.</pre>\n          </div>\n          <div ng-if="!staticCheck &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="staticCheck.grade == config.grading[&quot;static check&quot;]" class="report-detail">\n            <pre class="full-score">Pass static check. You got full score!</pre>\n          </div>\n          <div ng-if="staticCheck &amp;&amp; (staticCheck.grade != config.grading[&quot;static check&quot;])" class="report-detail">\n            <pre class="error-content red-color">Static check fail.</pre>\n            <div class="error-detail">\n              <div class="message"></div>\n              <div ng-if="staticCheck[&quot;static check&quot;].summary" class="summary"></div>\n              <div ng-if="staticCheck[&quot;static check&quot;].violation" ng-repeat="item in staticCheck[&quot;static check&quot;].violation" class="violations">\n                <pre ng-if="item.message" class="error-content">{{ item.path | deleteSpace}} {{item.startLine}}:{{item.startColumn}} : {{item.category}}: {{item.message}}</pre>\n                <pre ng-if="item.rule &amp;&amp; !item.message" class="error-content">{{ item.path | deleteSpace }} {{item.startLine}}:{{item.startColumn}} : {{item.category}}: {{item.rule}}</pre>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;standard tests&quot;]" class="standard-tests-check report-section">\n        <div ng-click="toggleContent($event)" class="standard-tests-check-score score">Standard Tests : You Get {{standardTests.grade | formatReportGrade }} Points of {{config.grading[\'standard tests\']}} Points</div>\n        <div class="standard-tests-content test-content">\n          <div ng-if="!standardTests &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!standardTests &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="standardTests.grade == config.grading[&quot;standard tests&quot;]" class="report-detail">\n            <pre class="full-score">Pass standard test. You got full score!</pre>\n          </div>\n          <div ng-if="standardTests &amp;&amp; standardTests.grade != config.grading[&quot;standard tests&quot;]" class="report-detail">\n            <pre class="error-content red-color">Some examples of failed standard test cases:</pre>\n            <div class="error-detail">\n              <div ng-repeat="test in standardTests[&quot;standard tests&quot;] | showWrongTests | limitTo: 3" class="standard-tests">\n                <hr ng-if="$index != 0"/>\n                <div ng-if="test.result != &quot;CR&quot;" class="standard-test">\n                  <div layout="layout" class="tests-check-summary">\n                    <pre layout="layout">[{{ $index+1 }}]</pre>\n                    <pre layout="layout" ng-if="test.memoryused">Memory Used : {{test.memoryused}}kb</pre>\n                    <pre layout="layout" ng-if="test.timeused">Time Used : {{test.timeused}}ms</pre>\n                    <pre layout="layout" ng-if="test.result">Result : {{test.result | formatReportResult}}</pre>\n                    <pre layout="layout" ng-if="test.memorylimit">Memory Limit : {{ test.memorylimit }}kb</pre>\n                    <pre layout="layout" ng-if="test.timelimit">Time Limit : {{ test.timelimit }}ms</pre>\n                  </div>\n                  <pre class="label">Standard Input :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdin }}</pre>\n                  <pre class="label">Standard Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.standard_stdout | formatReportOutput }}</pre>\n                  <pre class="label">Your Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdout | formatReportOutput }}</pre>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;random tests&quot;]" class="random-tests-check report-section">\n        <div ng-click="toggleContent($event)" class="random-tests-check-score score">Random Tests : You Get {{randomTests.grade | formatReportGrade}} Points of {{config.grading[\'random tests\']}} Points</div>\n        <div class="random-tests-content test-content">\n          <div ng-if="!randomTests &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!randomTest &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="randomTests.grade == config.grading[&quot;random tests&quot;]" class="report-detail">\n            <pre class="full-score">Pass random check. You got full score!</pre>\n          </div>\n          <div ng-if="randomTests &amp;&amp; randomTests.grade != config.grading[&quot;random tests&quot;]" class="report-detail">\n            <pre class="error-content red-color">Some examples of failed random test cases:</pre>\n            <div class="error-detail">\n              <div ng-repeat="test in randomTests[&quot;random tests&quot;] | showWrongTests | limitTo: 3" class="random-tests">\n                <hr ng-if="$index != 0"/>\n                <div ng-if="test.result != &quot;CR&quot;" class="random-test">\n                  <div layout="layout" class="tests-check-summary">\n                    <pre layout="layout">[{{ $index+1 }}]</pre>\n                    <pre layout="layout" ng-if="test.memoryused">Memory Used : {{ test.memoryused }}kb</pre>\n                    <pre layout="layout" ng-if="test.timeused">Time Used : {{ test.timeused }}ms</pre>\n                    <pre layout="layout" ng-if="test.result">Result : {{ test.result | formatReportResult}}</pre>\n                    <pre layout="layout" ng-if="test.memorylimit">Memory Limit : {{ test.memorylimit }}kb</pre>\n                    <pre layout="layout" ng-if="test.timelimit">Time Limit : {{ test.timelimit }}ms</pre>\n                  </div>\n                  <pre class="label">Standard Input :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdin }}</pre>\n                  <pre class="label">Standard Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.standard_stdout | formatReportOutput }}</pre>\n                  <pre class="label">Your Output :</pre>\n                  <pre class="error-content inout-tests">{{ test.stdout | formatReportOutput }}</pre>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;memory check&quot;]" class="memory-check report-section">\n        <div ng-click="toggleContent($event)" class="memory-check-score score">Memory Check : You Get {{memoryCheck.grade | formatReportGrade}} Points of {{config.grading[\'memory check\']}} Points<a href="http://valgrind.org/" ng-if="memoryCheck.grade != config.grading[&quot;memory check&quot;] &amp;&amp; memoryCheck" class="link">Why it went wrong\uFF1F</a></div>\n        <div class="memory-check-content test-content">\n          <div ng-if="!memoryCheck &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!memoryCheck &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="memoryCheck.grade == config.grading[&quot;memory check&quot;]" class="report-detail">\n            <pre class="full-score">Pass memory access check. You got full score!</pre>\n          </div>\n          <div ng-if="memoryCheck &amp;&amp; memoryCheck.grade != config.grading[&quot;memory check&quot;]" class="report-detail">\n            <pre class="error-content red-color">Memory check fail.</pre>\n            <div class="error-detail">\n              <div ng-repeat="check in memoryCheck[&quot;memory check&quot;]" class="memory-checks">\n                <hr ng-if="$index != 0"/>\n                <pre ng-if="check.message" class="memory-check-summary">[{{ $index+1 }}] {{ check.message }}</pre>\n                <pre ng-if="check.valgrindoutput.error.kind" class="memory-check-summary">[{{ $index+1 }}] Error :   {{ check.valgrindoutput.error.kind }}</pre>\n                <pre ng-if="check.stdin">Standard Input :</pre>\n                <pre ng-if="check.stdin" class="error-content inout-tests">{{ check.stdin }}</pre>\n                <div ng-if="check.valgrindoutput.error.stack.frame" class="memory-check">\n                  <div ng-repeat="frame in check.valgrindoutput.error.stack.frame">\n                    <hr ng-if="$index != 0"/>\n                    <pre ng-if="frame.obj" class="error-content">obj: {{ frame.obj }}</pre>\n                    <pre ng-if="frame.file &amp;&amp; frame.line" class="error-content">[{{ frame.file }}]: line {{ frame.line }}</pre>\n                    <pre ng-if="frame.fn" class="error-content">{{ frame.fn }}</pre>\n                  </div>\n                </div>\n              </div>\n            </div>\n          </div>\n        </div>\n      </div>\n      <div ng-if="config.grading[&quot;google tests&quot;]" class="google-test report-section">\n        <div ng-click="toggleContent($event)" class="google-test-score score">Google Test : You Get {{googleTest.grade | formatReportGrade}} Points of {{config.grading[\'google tests\']}} Points</div>\n        <div class="google-test-content test-content">\n          <div ng-if="!googleTest &amp;&amp; grade &gt;= 0" class="report-detail">\n            <pre class="not-executing-check">This check didn\'t execute because of error above.</pre>\n          </div>\n          <div ng-if="!googleTest &amp;&amp; grade == -1" class="report-detail">\n            <pre class="under-checking">Under testing...</pre>\n          </div>\n          <div ng-if="googleTest.grade == config.grading[&quot;google tests&quot;]" class="report-detail">\n            <pre class="full-score">Pass Google test. You got full score!</pre>\n          </div>\n          <div ng-if="googleTest &amp;&amp; googleTest.grade != config.grading[&quot;google tests&quot;]" class="report-detail">\n            <pre class="error-content red-color">Google test fail</pre>\n            <div ng-show="googleTest[&quot;google tests&quot;][0].gtest.info != null" class="error-detail">\n              <pre ng-repeat="fail in gtestFailedList" class="error-content">{{fail}} : {{googleTest[\'google tests\'][0].gtest.info[fail]}}</pre>\n            </div>\n            <div ng-show="googleTest[&quot;google tests&quot;][0].gtest.info == null" class="error-detail">\n              <pre class="error-content">error: {{ googleTest[\'google tests\'][0].gtest.failure[0][\'error\'] }}</pre>\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n    ';
   }
 }

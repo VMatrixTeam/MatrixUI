@@ -21,18 +21,18 @@ app.use(express.static(__dirname + '/data'));
 
 let env = process.env.NODE_ENV || 'production';
 let data = {};
+let port = 8099;
 
 if (env === 'development') {
   data = { dev: true };
 } else {
   data = { pro: true };
+  port = 8200;
 }
 
 app.get('/', function(req, res) {
   res.render('index', data);
 });
-
-let port = 8099;
 
 app.listen(port, function() {
   console.log(`MatrixUI开发服务器启动，正在监听端口：${port}，环境变量是：${env}`);
